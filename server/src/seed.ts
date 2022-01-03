@@ -1,5 +1,8 @@
 import 'reflect-metadata';
-import { createConnection, getConnectionOptions, getRepository } from 'typeorm';
+import {
+  createConnection,
+  getConnectionOptions,
+} from 'typeorm';
 
 import {
   Advert,
@@ -39,5 +42,7 @@ getConnectionOptions().then(async (config) => {
     const data = convert(dummyData[entity['name']]);
     await conn.createQueryBuilder().insert().into(entity).values(data).execute();
   }
+
+  conn.close();
 
 });

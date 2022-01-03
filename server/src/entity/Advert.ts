@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -14,11 +15,11 @@ export class Advert {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
-  @Column()
+  @Column('uuid')
   org_uuid: string;
 
-  @Column('datetime')
-  created_at: string;
+  @CreateDateColumn()
+  readonly created_at: Date;
 
   @Column()
   content: string;

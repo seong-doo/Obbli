@@ -11,13 +11,10 @@ import { Person } from "./Person";
 
 @Entity()
 export class Application {
-  // @PrimaryGeneratedColumn('uuid')
-  // uuid: string;
-
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   person_uuid: string;
 
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   position_uuid: string;
 
   @CreateDateColumn()

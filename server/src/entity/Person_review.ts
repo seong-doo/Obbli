@@ -1,4 +1,6 @@
-import { Column,
+import {
+  Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -9,12 +11,10 @@ import { Org } from "./Org";
 
 @Entity()
 export class Person_review {
-  // @PrimaryGeneratedColumn('uuid')
-  // uuid: string;
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   person_uuid: string;
 
-  @PrimaryColumn()
+  @PrimaryColumn('uuid')
   org_uuid: string;
 
   @Column()
@@ -22,6 +22,9 @@ export class Person_review {
 
   @Column({ nullable: true })
   comment: string;
+
+  @CreateDateColumn()
+  readonly created_at: Date;
 
   @ManyToOne(type => Person)
   @JoinColumn({ name: 'person_uuid' })

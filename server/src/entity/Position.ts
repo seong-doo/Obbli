@@ -15,10 +15,10 @@ export class Position {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
-  @Column()
+  @Column('uuid')
   advert_uuid: string;
 
-  @Column()
+  @Column('uuid')
   skill_uuid: string;
 
   @Column()

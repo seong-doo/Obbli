@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -37,8 +38,11 @@ export class Person {
   @Column({ nullable: true })
   cellular: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   skill_uuid: string;
+
+  @CreateDateColumn()
+  readonly created_at: Date;
 
   @OneToMany(() => Org_review, (Org_review) => Org_review.Person)
   Org_review: Org_review[];
