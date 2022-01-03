@@ -36,14 +36,12 @@ function SignIn (props: LoginModal) {
         }
       }
 
-
   return (
       <>
       {props.isModalVisible
       ? (
-    <div className="modalBackground">
-      <div className="signInWrap">
-      <span className="closeIcon" onClick={() => props.setIsModalVisible(false)}>&times;</span>
+    <div className="modalBackground" onClick={() => props.setIsModalVisible(false)}>
+      <div className="signInWrap" onClick={(e) => e.stopPropagation()}>
         <div className="signInLogo">로그인</div>
         <div className="signInChoiseWrap">
             <div>단체회원</div>
