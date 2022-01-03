@@ -1,15 +1,29 @@
 import { useNavigate } from 'react-router-dom';
 
-function Topnavigation() :any{
+interface UseModal {
+  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  isLogin: boolean;
+  setIsLogin:React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Topnavigation(props: UseModal) {
   const navigate = useNavigate();
+
+  const handleModal = () => {
+    props.setIsModalVisible(true)
+  }
 
   return (
     <div className="headWrapper">
       <img className="logoImg" src={require('../img/logo.png')} onClick={() => navigate('/')} />
       <div className="naviList">
         <ul className="naviList">
-          <li className="naviButtom">회원가입</li>
-          <li className="naviButtom">로그인</li>
+          {props.isLogin 
+          ? (
+            <li className="naviButtom" onClick={() => props.setIsLogin(false)}>로그아웃</li>
+          ) : (
+            <li className="naviButtom" onClick={handleModal}>로그인</li>
+          )}
         </ul>
       </div>
     </div>

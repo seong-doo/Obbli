@@ -1,7 +1,8 @@
 @import "MainPage";
+@import "LoginModal";
 
 .App{
-    height: 200vh;
+    height: 100vh;
 }
 
 nav {
@@ -12,5 +13,5 @@ nav {
 }
 
 body {
-    margin-top: 70px;
+    margin-top: 10vh;
 }
