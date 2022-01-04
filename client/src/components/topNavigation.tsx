@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 interface UseModal {
-  setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSignInVisible: React.Dispatch<React.SetStateAction<boolean>>;
   isLogin: boolean;
   setIsLogin:React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -10,7 +10,7 @@ function Topnavigation(props: UseModal) {
   const navigate = useNavigate();
 
   const handleModal = () => {
-    props.setIsModalVisible(true)
+    props.setIsSignInVisible(true)
   }
 
   return (
