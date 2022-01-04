@@ -1,10 +1,17 @@
+import axios from 'axios';
 import React, {useState} from 'react';
+
+interface UserStateType {
+  isSignedIn: boolean,
+  accessToken: string,
+  uuid: string,
+}
 
 interface LoginModal {
     isSignInVisible: boolean;
     setIsSignInVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
     setIsSignUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    setUserState: React.Dispatch<React.SetStateAction<UserStateType>>
 }
 
 interface LoginInfo {
@@ -15,8 +22,9 @@ interface LoginInfo {
 
 const myId:string = "kimcoding";
 const myPw:string = "qweqwe"
+const API_SERVER:string = '';
 
-function SignIn (props: LoginModal) {
+function SignIn (props: LoginModal):JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [loginInfo, setLoginInfo] = useState<LoginInfo>({
     id: '',
@@ -32,9 +40,23 @@ function SignIn (props: LoginModal) {
         
         if(myId === loginInfo.id && myPw === loginInfo.pw){
             setErrorMessage("로그인 성공!")
-            props.setIsLogin(true);
-            props.setIsSignInVisible(false);
-            // axios:get 비교후 로그인 승인
+            // //TODO: axios:get 비교 후 로그인 승인
+            // axios.post(API_SERVER,{
+            //   user_id: loginInfo.id,
+            //   pw: loginInfo.pw
+            // },
+            // { headers: { "Content-Type": "application/json" }})
+            // .then(({data: {uuid, access_token: accessToken}})=>{
+            //   props.setUserState({
+            //     isSignedIn: true,
+            //     accessToken,
+            //     uuid
+            //   })
+            // })
+            // .then(()=>{
+            //   props.setIsSignInVisible(false);
+            // })
+            // .catch((err)=> console.log(err))
         }else{
             setErrorMessage("아이디와 비밀번호를 확인해주세요!")
         }

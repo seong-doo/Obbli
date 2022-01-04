@@ -1,5 +1,6 @@
 @import "MainPage";
 @import "LoginModal";
+@import "reviewModal";
 
 .App{
     height: 100vh;
@@ -14,4 +15,10 @@ nav {
 
 body {
     margin-top: 10vh;
+}
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
 }

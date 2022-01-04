@@ -1,9 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 
+interface UserStateType {
+  isSignedIn: boolean,
+  accessToken: string,
+  uuid: string,
+}
+
 interface UseModal {
   setIsSignInVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  isLogin: boolean;
-  setIsLogin:React.Dispatch<React.SetStateAction<boolean>>;
+  userState: UserStateType;
+  setUserState: React.Dispatch<React.SetStateAction<UserStateType>>
 }
 
 function Topnavigation(props: UseModal) {
@@ -18,9 +24,9 @@ function Topnavigation(props: UseModal) {
       <img className="logoImg" src={require('../img/logo.png')} onClick={() => navigate('/')} />
       <div className="naviList">
         <ul className="naviList">
-          {props.isLogin 
+          {props.userState 
           ? (
-            <li className="naviButtom" onClick={() => props.setIsLogin(false)}>로그아웃</li>
+            <li className="naviButtom" onClick={() => props.setUserState({...props.userState, isSignedIn:false})}>로그아웃</li>
           ) : (
             <li className="naviButtom" onClick={handleModal}>로그인</li>
           )}
