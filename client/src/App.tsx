@@ -7,6 +7,7 @@ import SignUp from './modal/signUp';
 import MenuItem from './components/menuLink';
 import ReviewModal from './modal/reviewModal';
 import MypagePerson from './pages/MypagePerson';
+import MypageOrg from './pages/MypageOrg';
 import './App.css';
 
 interface UserStateType {
@@ -34,7 +35,8 @@ function App() {
         <SignUp {... {isSignUpVisible, setIsSignUpVisible, setUserState}} />
         <Routes>
           <Route path="/">
-            <Route path="/MypagePerson" element={<MypagePerson {... {userState, setUserState}}/>} />
+            <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState}}/>} />
+            <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState}}/>} />
           </Route>
         </Routes>
       </div>
