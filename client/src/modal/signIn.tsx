@@ -37,7 +37,6 @@ function SignIn (props: LoginModal):JSX.Element {
       };
 
       const handleLogin = () => {
-        
         if(myId === loginInfo.id && myPw === loginInfo.pw){
             setErrorMessage("로그인 성공!")
             // //TODO: axios:get 비교 후 로그인 승인
@@ -54,7 +53,7 @@ function SignIn (props: LoginModal):JSX.Element {
             //   })
             // })
             // .then(()=>{
-            //   props.setIsSignInVisible(false);
+              props.setIsSignInVisible(false);
             // })
             // .catch((err)=> console.log(err))
         }else{
@@ -75,10 +74,10 @@ function SignIn (props: LoginModal):JSX.Element {
       <div className="signInWrap" onClick={(e) => e.stopPropagation()}>
         <div className="signInLogo">로그인</div>
         <div className="signInChoiseWrap">
-            <input type="radio" id="orgLogin" name="rating" value="org" onChange={controlInput('permission')} />
-            <label htmlFor="5-stars" className="star pr-4">단체회원</label>
-            <input type="radio" id="perLogin" name="rating" value="person" onChange={controlInput('permission')} />
-            <label htmlFor="4-stars" className="star">개인회원</label>
+            <input type="radio" id="perLogin" name="permission" value="person" checked={true} onChange={controlInput('permission')} />
+            <label htmlFor="perLogin" className="permissionPerson">개인회원</label>
+            <input type="radio" id="orgLogin" name="permission" value="org" onChange={controlInput('permission')} />
+            <label htmlFor="orgLogin" className="permissionOrg">단체회원</label>
         </div>
         <div className="signInInputWrap">
             <div>아이디</div>

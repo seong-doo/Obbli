@@ -63,7 +63,7 @@ function SignUp( props:LoginModal ):JSX.Element {
         //       })
         // })
         // .then(()=>{
-        //   props.setIsSignUpVisible(false);
+          props.setIsSignUpVisible(false);
         // })
         // .catch((err)=> console.log(err))
     }

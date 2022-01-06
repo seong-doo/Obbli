@@ -1,6 +1,7 @@
 @import "MainPage";
 @import "LoginModal";
 @import "reviewModal";
+@import "Mypage";
 
 .App{
     height: 100vh;
@@ -13,7 +14,7 @@ nav {
     right: 0;
 }
 
-body {
+.body {
     margin-top: 10vh;
 }
 

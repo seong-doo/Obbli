@@ -6,6 +6,7 @@ import SignIn from './modal/signIn';
 import SignUp from './modal/signUp';
 import MenuItem from './components/menuLink';
 import ReviewModal from './modal/reviewModal';
+import MypagePerson from './pages/MypagePerson';
 import './App.css';
 
 interface UserStateType {
@@ -28,11 +29,15 @@ function App() {
       <nav>
         <Topnavigation {...{ userState, setUserState, setIsSignInVisible}} />
       </nav>
-      <body>
+      <div className="body">
         <SignIn {... {isSignInVisible, setIsSignInVisible, setIsSignUpVisible, setUserState}} />
         <SignUp {... {isSignUpVisible, setIsSignUpVisible, setUserState}} />
-
-      </body>
+        <Routes>
+          <Route path="/">
+            <Route path="/MypagePerson" element={<MypagePerson {... {userState, setUserState}}/>} />
+          </Route>
+        </Routes>
+      </div>
       <footer>
         <Footer />
       </footer>

@@ -23,14 +23,18 @@ function Topnavigation(props: UseModal) {
     <div className="headWrapper">
       <img className="logoImg" src={require('../img/logo.png')} onClick={() => navigate('/')} />
       <div className="naviList">
-        <ul className="naviList">
-          {props.userState 
+          {props.userState.isSignedIn
           ? (
+          <ul className="naviList">
+            <li className="naviButtom" onClick={() => navigate('/advList')}>공고보기</li>
             <li className="naviButtom" onClick={() => props.setUserState({...props.userState, isSignedIn:false})}>로그아웃</li>
+          </ul>
           ) : (
+          <ul className="naviList">
+            <li className="naviButtom" onClick={() => navigate('/advList')}>공고보기</li>
             <li className="naviButtom" onClick={handleModal}>로그인</li>
+          </ul>
           )}
-        </ul>
       </div>
     </div>
   )
