@@ -19,6 +19,7 @@ interface UserStateType {
 function App() {
   const [isSignInVisible, setIsSignInVisible] = useState<boolean>(false)
   const [isSignUpVisible, setIsSignUpVisible] = useState<boolean>(false)
+  const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
   const [userState, setUserState] = useState<UserStateType>({
     isSignedIn: false,
     accessToken:'',
@@ -33,10 +34,11 @@ function App() {
       <div className="body">
         <SignIn {... {isSignInVisible, setIsSignInVisible, setIsSignUpVisible, setUserState}} />
         <SignUp {... {isSignUpVisible, setIsSignUpVisible, setUserState}} />
+        <ReviewModal {... {isReviewVisible, setIsReviewVisible}} />
         <Routes>
           <Route path="/">
-            <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState}}/>} />
-            <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState}}/>} />
+            <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState, setIsReviewVisible}}/>} />
+            <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState, setIsReviewVisible}}/>} />
           </Route>
         </Routes>
       </div>

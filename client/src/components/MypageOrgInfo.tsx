@@ -20,8 +20,11 @@ function MypageOrgInfo(props:historyType):JSX.Element {
   };
 
   const onClickUpdate = () => {
+    // TODO: axios fetch 정보 수정
     setIsEditing(false);
   }
+
+  // TODO: axios get 기관 정보 가져오기
 
   return (
     <>

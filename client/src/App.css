@@ -81,6 +81,46 @@ footer {
 .star-rating label:hover ~ label {
   -webkit-text-fill-color: #fff58c; }
 
+.reviewItemWrap {
+  display: flex;
+  width: 160px;
+  height: 120px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-style: solid;
+  margin: 5px; }
+
+.reviewStars {
+  width: 146.7px; }
+
+.star-ratings {
+  color: #aaa9a9;
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent;
+  /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29; }
+
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+  font-size: 1.5rem;
+  margin-left: 12px; }
+
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+  font-size: 1.5rem;
+  margin-left: 12px; }
+
 .mypageWrap {
   display: flex;
   flex-direction: column;
@@ -143,6 +183,10 @@ footer {
 
 .mypageBtu {
   padding: 5px; }
+
+.mypageMenu {
+  height: 100%;
+  width: 100%; }
 
 .App {
   height: 100vh; }

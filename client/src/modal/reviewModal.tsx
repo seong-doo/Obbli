@@ -1,8 +1,8 @@
 import { useState } from "react"
 
 interface ReviewType {
-    isModalVisible: boolean,
-    setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+  isReviewVisible: boolean,
+  setIsReviewVisible: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function ReviewModal(props: ReviewType):JSX.Element {
@@ -21,14 +21,14 @@ function ReviewModal(props: ReviewType):JSX.Element {
 
   return (
     <>
-      {props.isModalVisible
+      {props.isReviewVisible
         ? (
-          <div className="modalBackground" onClick={() => props.setIsModalVisible(false)}>
+          <div className="modalBackground" onClick={() => props.setIsReviewVisible(false)}>
             <div className="signInWrap" onClick={(e) => e.stopPropagation()}>
               <div className="signInLogo">리뷰를 남겨보세요!</div>
-              <div className="star-rating space-x-4 mx-auto">
+              <div className="star-rating">
                 <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings" onChange={controlInput('rating')} />
-                <label htmlFor="5-stars" className="star pr-4">★</label>
+                <label htmlFor="5-stars" className="star">★</label>
                 <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings" onChange={controlInput('rating')} />
                 <label htmlFor="4-stars" className="star">★</label>
                 <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings" onChange={controlInput('rating')} />
