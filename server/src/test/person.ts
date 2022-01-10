@@ -37,7 +37,7 @@ export default (server) => {
         { headers: { Authorization: `Bearer ${token}` } },
       );
       expect(status).to.equal(200);
-      expect(data).to.have.keys(['realname', 'professional', 'instrument', 'history']);
+      expect(data).to.have.keys(['realname', 'professional', 'skill', 'history']);
     })
 
     it('Sign up', async () => {
@@ -68,7 +68,7 @@ export default (server) => {
       );
 
       expect(status).to.equal(200);
-      expect(data).to.have.keys(['realname', 'professional', 'instrument', 'history']);
+      expect(data).to.have.keys(['realname', 'professional', 'skill', 'history']);
       for (const key in newProfile) {
         expect(data[key]).to.equal(newProfile[key]);
       }
