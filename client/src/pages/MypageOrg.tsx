@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import MypageOrgInfo from '../components/MypageOrgInfo'
 import ReviewItem from '../components/reviewItem'
+import ReviewModal from '../modal/reviewModal';
+
 
 interface UserStateType {
     isSignedIn: boolean,
@@ -17,9 +19,38 @@ interface mypageInfoType{
 
 interface MypageType {
   userState: UserStateType,
-  setUserState: React.Dispatch<React.SetStateAction<UserStateType>>,
-  setIsReviewVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setUserState: React.Dispatch<React.SetStateAction<UserStateType>>
 }
+
+interface ReviewInfoType {
+  username : string,
+  rating : number,
+  comment : string
+}
+
+const listData = [
+  {
+    username : '김코딩',
+    rating : 4,
+    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
+  },
+  {
+    username : '나코딩',
+    rating : 4,
+    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '박코딩',
+    rating : 4,
+    comment : "아무리 그래도 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '이코딩',
+    rating : 4,
+    comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  }
+]
+
 
 function MypageOrg(props:MypageType):JSX.Element {
   const [mypageInfo, setMypageInfo] = useState<mypageInfoType>({
@@ -29,6 +60,20 @@ function MypageOrg(props:MypageType):JSX.Element {
     headcount: 222
   })
   const [selectMenu, setSelectMenu] = useState<string>('adv')
+  const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
+  const [reviewInfoList, setReviewInfoList] = useState<ReviewInfoType[]>([])
+  const [data, setData] = useState({
+    rating : 0,
+    comment : ''
+  })
+
+  const clickReview = (data:ReviewInfoType) => {
+    setData({
+      rating: data.rating,
+      comment: data.comment
+    })
+    setIsReviewVisible(true)
+  }
 
   const controlAccount = () => {
     // TODO: axios delete 보내기
@@ -36,11 +81,16 @@ function MypageOrg(props:MypageType):JSX.Element {
 
     // TODO: axios get 공고 및 리뷰 가져오기
 
+useEffect(() => {
+    setReviewInfoList(listData)
+}, [])
+
   return (
     <>
     {true
     ? (
       <div className="mypageWrap">
+        <ReviewModal {... {isReviewVisible, setIsReviewVisible, data, selectMenu}} />
         <div className="mypageProfileWrap">
           <div className="mypageProfile">
             <img className="profileImg" src={require('../img/user.png')} />
@@ -63,10 +113,24 @@ function MypageOrg(props:MypageType):JSX.Element {
                 <div>advadv</div>
               ) : selectMenu === 'reviewToMe' ? (
                 // TODO: 가져온 리뷰를 reviewItem에 하나씩 넘겨줌
-                <ReviewItem />
+                <ul className="reviewList">
+                  {reviewInfoList.map((data, key)=>{
+                    return (
+                    <li onClick={()=>clickReview(data)} key={key}>
+                      <ReviewItem  {... {data}} />
+                    </li>)
+                  })}
+                </ul>
               ) : selectMenu === 'reviewFromMe' ? (
                 // TODO: 가져온 리뷰를 reviewItem에 하나씩 넘겨줌
-                <ReviewItem />
+                <ul className="reviewList">
+                  {reviewInfoList.map((data, key)=>{
+                    return (
+                    <li onClick={()=>clickReview(data)} key={key}>
+                      <ReviewItem  {... {data}} />
+                    </li>)
+                  })}
+                </ul>
               ) : null
             }
           </div>

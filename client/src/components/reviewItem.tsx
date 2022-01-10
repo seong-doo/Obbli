@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 
-function ReviewItem(): JSX.Element{
+interface ReviewInfoType {
+  username : string,
+  rating : number,
+  comment : string
+}
+
+interface propsType {
+  data : ReviewInfoType
+}
+
+function ReviewItem(props:propsType): JSX.Element{
 
   // TODO: props로 받아온 데이터로 리뷰 나타내기
-  const username = '김코딩';
-  const rating = 4;
-  const comment = "역시 K-오케스트라"
 
   const style = {
-    width: `${24.5*rating}px`
+    width: `${24.5*props.data.rating}px`
   }
 
   return (
@@ -23,10 +30,15 @@ function ReviewItem(): JSX.Element{
         </div>
       </div>
         <div className="userName">
-          {username}
+          {props.data.username}
         </div>
         <div className="reviewComment">
-          {comment}
+          {props.data.comment.length > 10 ? 
+          <div> 
+            {props.data.comment.substring(0,10)}...
+              <br />
+            <div className="showMore">더보기..</div>
+          </div> : props.data.comment}
         </div>
     </div>
   </>

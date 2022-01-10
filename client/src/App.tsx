@@ -4,8 +4,7 @@ import Topnavigation from './components/topNavigation';
 import Footer from './components/footer';
 import SignIn from './modal/signIn';
 import SignUp from './modal/signUp';
-import MenuItem from './components/menuLink';
-import ReviewModal from './modal/reviewModal';
+// import ReviewModal from './modal/ReviewModal';
 import MypagePerson from './pages/MypagePerson';
 import MypageOrg from './pages/MypageOrg';
 import './App.css';
@@ -34,11 +33,10 @@ function App() {
       <div className="body">
         <SignIn {... {isSignInVisible, setIsSignInVisible, setIsSignUpVisible, setUserState}} />
         <SignUp {... {isSignUpVisible, setIsSignUpVisible, setUserState}} />
-        <ReviewModal {... {isReviewVisible, setIsReviewVisible}} />
         <Routes>
           <Route path="/">
-            <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState, setIsReviewVisible}}/>} />
-            <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState, setIsReviewVisible}}/>} />
+            <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState }}/>} />
+            <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState }}/>} />
           </Route>
         </Routes>
       </div>

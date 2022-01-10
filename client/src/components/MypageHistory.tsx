@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 interface mypageInfoType {
     user_id: string,
-    realname: string,
+    name: string,
     professional: boolean,
     instrument: string,
     history: string
@@ -36,7 +36,7 @@ function MypageHistory(props:historyType):JSX.Element {
           <div className="mypageInfoName">아이디</div>
           <input type="id" value={props.mypageInfo.user_id} onChange={controlInputValue('user_id')} />
           <div className="mypageInfoName">이름</div>
-          <input type="name" value={props.mypageInfo.realname} onChange={controlInputValue('realname')} />
+          <input type="name" value={props.mypageInfo.name} onChange={controlInputValue('realname')} />
         </div>
         <div>
           <div className="mypageInfoName">악기</div>
@@ -59,7 +59,7 @@ function MypageHistory(props:historyType):JSX.Element {
           <div className="mypageInfoName">아이디</div>
           <div className="mypageInfo">{props.mypageInfo.user_id}</div>
           <div className="mypageInfoName">이름</div>
-          <div className="mypageInfo">{props.mypageInfo.realname}</div>
+          <div className="mypageInfo">{props.mypageInfo.name}</div>
         </div>
         <div>
           <div className="mypageInfoName">악기</div>

@@ -26,7 +26,8 @@ footer {
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.6); }
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2; }
 
 .signInWrap {
   display: flex;
@@ -84,12 +85,13 @@ footer {
 .reviewItemWrap {
   display: flex;
   width: 160px;
-  height: 120px;
+  height: 150px;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   border-style: solid;
-  margin: 5px; }
+  margin: 5px;
+  padding-top: 10px; }
 
 .reviewStars {
   width: 146.7px; }
@@ -120,6 +122,18 @@ footer {
   padding: 0;
   font-size: 1.5rem;
   margin-left: 12px; }
+
+.reviewComment {
+  white-space: pre-line; }
+
+.showMore {
+  color: rgba(0, 0, 0, 0.4);
+  margin-top: 10px;
+  font-size: 13px; }
+
+.reviewList {
+  display: flex;
+  list-style: none; }
 
 .mypageWrap {
   display: flex;

@@ -32,12 +32,13 @@
   .reviewItemWrap {
     display: flex;
     width: 160px;
-    height: 120px;
+    height: 150px;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     border-style: solid;
     margin: 5px;
+    padding-top: 10px;
   }
 
   .reviewStars {
@@ -73,3 +74,17 @@
     margin-left: 12px;
   }
   
+  .reviewComment {
+    white-space: pre-line;
+  }
+
+  .showMore {
+    color: rgba(0, 0, 0, 0.4);
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .reviewList {
+    display: flex;
+    list-style:none;
+  }
