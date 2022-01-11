@@ -1,10 +1,8 @@
 import { AppPerson } from '../controllers/Application';
-import {PersonReview} from '../controllers/Review'
-import {SignIn,SignUp,SignOut,UserInfo} from '../controllers/Person'
+import { PersonReview } from '../controllers/Review'
+import { SignIn, SignUp, SignOut, UserInfo } from '../controllers/Person'
 
 const router = require("express").Router();
-
-
 
 //회원가입
 router.post("/", SignUp.post);
@@ -32,3 +30,4 @@ router.delete("/:person_uuid/review/:org_uuid", PersonReview.delete);
 router.get("/:person_uuid/application", AppPerson.get);
 
 export default router
+

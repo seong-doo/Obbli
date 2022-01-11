@@ -5,14 +5,13 @@ import "reflect-metadata";
 import { createConnection, getConnectionOptions } from "typeorm";
 import {Advert,Application,Org,Org_review,Person,Person_review,Position,Skill } from "./entity";
 
+
 const app = express();
 const port = 3000;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
-
-
 
 app.use("/person", indexRouter.Person);
 app.use("/org", indexRouter.Org);

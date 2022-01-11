@@ -2,9 +2,7 @@ import * as route from "express";
 import {advertList, Mainadvert} from '../controllers/Advert'
 import { AppAdvert } from "../controllers/Application";
 
-
 const router = route.Router();
-
 
 
 //게시글 전체 목록 가져오기
