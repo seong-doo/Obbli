@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import MypageOrgInfo from '../components/MypageOrgInfo'
-import ReviewItem from '../components/reviewItem'
-import ReviewModal from '../modal/reviewModal';
+import ReviewItem from '../components/ReviewItem'
+import ReviewModal from '../modal/ReviewModal';
 
 
 interface UserStateType {
@@ -29,6 +29,66 @@ interface ReviewInfoType {
 }
 
 const listData = [
+  {
+    username : '김코딩',
+    rating : 4,
+    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
+  },
+  {
+    username : '나코딩',
+    rating : 4,
+    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '박코딩',
+    rating : 4,
+    comment : "아무리 그래도 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '이코딩',
+    rating : 4,
+    comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '김코딩',
+    rating : 4,
+    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
+  },
+  {
+    username : '나코딩',
+    rating : 4,
+    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '박코딩',
+    rating : 4,
+    comment : "아무리 그래도 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '이코딩',
+    rating : 4,
+    comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '김코딩',
+    rating : 4,
+    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
+  },
+  {
+    username : '나코딩',
+    rating : 4,
+    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '박코딩',
+    rating : 4,
+    comment : "아무리 그래도 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '이코딩',
+    rating : 4,
+    comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
   {
     username : '김코딩',
     rating : 4,

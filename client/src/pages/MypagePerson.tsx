@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import MypageHistory from '../components/MypageHistory'
-import ReviewItem from '../components/reviewItem'
-import ReviewModal from '../modal/reviewModal';
+import ReviewItem from '../components/ReviewItem'
+import ReviewModal from '../modal/ReviewModal';
 
 
 interface UserStateType {
@@ -93,7 +93,7 @@ function MypagePerson(props:MypageType):JSX.Element {
 
   return (
     <>
-    {props.userState.isSignedIn
+    {true
     ? (
       <div className="mypageWrap">
         <ReviewModal {... {isReviewVisible, setIsReviewVisible, data, selectMenu}} />
