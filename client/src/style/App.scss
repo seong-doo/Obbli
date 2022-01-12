@@ -1,0 +1,25 @@
+@import "MainPage";
+@import "LoginModal";
+@import "review";
+@import "Mypage";
+
+.App{
+    height: 100vh;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.body {
+    margin-top: 10vh;
+}
+
+section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
