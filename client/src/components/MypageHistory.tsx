@@ -25,6 +25,11 @@ function MypageHistory(props:historyType):JSX.Element {
     setIsEditing(false);
   }
 
+  const onClickCancel = () => {
+    // TODO: axios로 수정하기 않고 닫기
+    setIsEditing(false);
+  }
+
     // TODO: axios get 기관 정보 가져오기
 
   return (
@@ -51,6 +56,7 @@ function MypageHistory(props:historyType):JSX.Element {
         
       </div>
       <div className="btu" onClick={onClickUpdate}>확인</div>
+      <div className="btu" onClick={onClickCancel}>취소하기</div>
     </div>
     ) : (
     <div>

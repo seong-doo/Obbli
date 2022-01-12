@@ -12,7 +12,7 @@ interface UseModal {
   setUserState: React.Dispatch<React.SetStateAction<UserStateType>>
 }
 
-function Topnavigation(props: UseModal) {
+function TopNavigation(props: UseModal) {
   const navigate = useNavigate();
 
   const handleModal = () => {
@@ -40,4 +40,4 @@ function Topnavigation(props: UseModal) {
   )
 }
 
-export default Topnavigation
+export default TopNavigation

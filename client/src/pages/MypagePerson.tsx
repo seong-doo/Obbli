@@ -93,7 +93,7 @@ function MypagePerson(props:MypageType):JSX.Element {
 
   return (
     <>
-    {props.userState.isSignedIn
+    {true
     ? (
       <div className="mypageWrap">
         <ReviewModal {... {isReviewVisible, setIsReviewVisible, data, selectMenu}} />
