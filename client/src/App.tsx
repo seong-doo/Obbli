@@ -8,6 +8,10 @@ import SignUp from './modal/signUp';
 import MypagePerson from './pages/MypagePerson';
 import MypageOrg from './pages/MypageOrg';
 import './App.css';
+import Advertise from './pages/Advertise'
+import AdvView from './pages/AdvView';
+import AdvertiseWrite from './pages/AdvertiseWrite';
+import AdvMap from './components/AdvMap';
 
 interface UserStateType {
   isSignedIn: boolean,
@@ -37,6 +41,9 @@ function App() {
           <Route path="/">
             <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState }}/>} />
             <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState }}/>} />
+            <Route path="advert" element={<Advertise/>}></Route>
+            <Route path="advert/:uuid" element={<AdvView />} />
+            <Route path="advert/write" element={<AdvertiseWrite />} />
           </Route>
         </Routes>
       </div>
