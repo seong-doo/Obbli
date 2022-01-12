@@ -43,7 +43,8 @@ export default (server) => {
       expect(status).to.equal(200);
       expect(data).to.have.keys(['description', 'headcount', 'name', 'since']);
       for (const key in data) {
-        expect(data[key]).to.equal(dummyOrg[key]);
+        const source = dummyOrg[key];
+        expect(data[key]).to.equal(source instanceof Date ? source.toISOString() : source);
       }
     });
 
@@ -54,10 +55,9 @@ export default (server) => {
     });
 
     it('Sign in', async () => {
-      const { uuid, user_id, created_at } = dummyOrg;
-      const token = signToken({ uuid, user_id, created_at }, '1h');
+      const { user_id, pw_hash: pw } = dummyOrg;
 
-      const { data, status } = await axios.post('/org/sign-in', dummyOrg);
+      const { data, status } = await axios.post('/org/sign-in', { user_id, pw });
       expect(status).to.equal(200);
       expect(data).to.have.property('access_token');
     })
