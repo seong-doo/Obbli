@@ -1,4 +1,6 @@
+import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router';
 import MypageHistory from '../components/MypageHistory'
 import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
@@ -10,7 +12,7 @@ interface UserStateType {
     uuid: string,
 }
 
-interface mypageInfoType{
+interface MypageInfoType{
     user_id: string,
     name: string,
     professional: boolean,
@@ -58,12 +60,12 @@ const listData = [
 ]
 
 function MypagePerson(props:MypageType):JSX.Element {
-  const [mypageInfo, setMypageInfo] = useState<mypageInfoType>({
-    user_id: 'kimcoding',
-    name: '김코딩',
-    professional: true,
-    instrument: '바이올린',
-    history: `2022 신년 연주회 \n dksldksl`
+  const [mypageInfo, setMypageInfo] = useState<MypageInfoType>({
+    user_id: '',
+    name: '',
+    professional: false,
+    instrument: '',
+    history: ``
   })
   const [selectMenu, setSelectMenu] = useState<string>('adv')
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
@@ -72,6 +74,20 @@ function MypagePerson(props:MypageType):JSX.Element {
     rating : 0,
     comment : ''
   })
+  const navigate = useNavigate();
+
+  const fetchUserInfo = () => {
+    axios.get(`/person`)
+    .then(res => {
+      setMypageInfo({
+        user_id:'',
+        name: res.data.name,
+        professional: res.data.professional,
+        instrument: res.data.skill,
+        history: res.data.history
+      })
+    })
+  }
 
   const clickReview = (data:ReviewInfoType) => {
     setData({
@@ -83,11 +99,17 @@ function MypagePerson(props:MypageType):JSX.Element {
 
   const controlAccount = () => {
     // TODO: axios delete 보내기
+    axios.delete(`/person/${props.userState.uuid}`)
+    .then(res=>{
+      props.setUserState({...props.userState, isSignedIn:false});
+      navigate('/');
+    })
   }
 
     // TODO: axios get 공고 및 리뷰 가져오기
 
     useEffect(() => {
+      fetchUserInfo()
       setReviewInfoList(listData)
   }, [])
 

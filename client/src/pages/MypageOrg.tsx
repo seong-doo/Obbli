@@ -10,7 +10,7 @@ interface UserStateType {
     uuid: string,
 }
 
-interface mypageInfoType{
+interface MypageInfoType{
     name: string,
     description: string,
     since: string,
@@ -113,7 +113,7 @@ const listData = [
 
 
 function MypageOrg(props:MypageType):JSX.Element {
-  const [mypageInfo, setMypageInfo] = useState<mypageInfoType>({
+  const [mypageInfo, setMypageInfo] = useState<MypageInfoType>({
     name: 'K-오케스트라',
     description: 'K-클래식을 연주하는 K-오케스트라',
     since: '2022-02-22',

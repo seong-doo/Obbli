@@ -83,7 +83,6 @@ function ReviewModal(props: ReviewType):JSX.Element {
           </div>
         )
          : null}
-    
     </>
   )
 }
