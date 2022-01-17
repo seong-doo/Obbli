@@ -7,6 +7,8 @@ import { createConnection, getConnectionOptions } from "typeorm";
 import {Advert,Application,Org,Org_review,Person,Person_review,Position,Skill } from "./entity";
 import dotenv from 'dotenv';
 
+import { cookieParser } from './Util';
+
 dotenv.config();
 const app = express();
 const port = process.env.APP_PORT;
@@ -25,6 +27,7 @@ app.use("/person", indexRouter.Person);
 app.use("/org", indexRouter.Org);
 app.use("/advert", indexRouter.Advert);
 app.use("/application", indexRouter.Application);
+app.use(cookieParser);
 
 
 export default app;

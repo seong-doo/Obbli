@@ -1,6 +1,7 @@
 require("dotenv").config();
 import { sign, verify } from 'jsonwebtoken'
 import { bcrypt } from 'bcrypt'
+import { RequestHandler } from 'express';
 
 
 
@@ -34,3 +35,12 @@ import { bcrypt } from 'bcrypt'
     return bcrypt.hashSync(word, 10);
   } 
 
+export const cookieParser: RequestHandler = function (req, res, next) {
+  const cookies: string = req.headers.cookie;
+  if (cookies === undefined) { return next(); }
+  req.cookies = cookies.split(';').reduce((obj, each) => {
+    const [k, v] = each.split('='); obj[k.trim()] = v.trim(); return obj;
+  }, {});
+
+  return next();
+}
