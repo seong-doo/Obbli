@@ -8,6 +8,7 @@ import {Advert,Application,Org,Org_review,Person,Person_review,Position,Skill } 
 import dotenv from 'dotenv';
 
 import { cookieParser } from './Util';
+import auth from './controllers/Auth';
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,8 @@ app.use("/org", indexRouter.Org);
 app.use("/advert", indexRouter.Advert);
 app.use("/application", indexRouter.Application);
 app.use(cookieParser);
+app.post('/auth', auth);
+// TODO: move routing configs to router/index.ts
 
 
 export default app;
