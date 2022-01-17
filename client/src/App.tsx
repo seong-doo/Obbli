@@ -6,6 +6,7 @@ import SignIn from './modal/SignIn';
 import SignUp from './modal/SignUp';
 import MypagePerson from './pages/MypagePerson';
 import MypageOrg from './pages/MypageOrg';
+import AdvFilter from './pages/AdvFilter';
 import Home from './pages/Home';
 import './App.css';
 import Advertise from './pages/Advertise'
@@ -16,7 +17,7 @@ import axios from 'axios';
 
 export interface UserStateType {
   isSignedIn: boolean,
-  accessToken: string
+  accessToken: string,
 }
 
 function App() {
@@ -62,6 +63,8 @@ function App() {
             <Route path="advert" element={<Advertise/>}></Route>
             <Route path="advert/:uuid" element={<AdvView />} />
             <Route path="advert/write" element={<AdvertiseWrite />} />
+            <Route path="advert/edit/:uuid" element={<AdvertiseWrite />} />
+            <Route path="filter" element={<AdvFilter />} />
           </Route>
         </Routes>
       </div>
