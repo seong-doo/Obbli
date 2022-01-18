@@ -11,23 +11,23 @@ import { RequestHandler } from 'express';
     created_at: Date
   }
   
-  export function signToken (TokenMaterial:DataCase,expir:string):string {
+  export function signToken (TokenMaterial: any, expiresIn: string):string {
     const key:string = process.env.JWT_KEY;
-    const option:object = { expiresIn: expir, issuer: "Obbli", subject: "data" };
+    const option:object = { expiresIn, issuer: "Obbli", subject: "data" };
     const token:string = sign(TokenMaterial, key, option);
 
     return token;
   }
 
-  export function verifyToken(token:string){
-    try{
-      const target = token.split(' ')[1]
+  export function verifyToken(token: string): any {
+    try {
+      const target = token.split(' ')[1];
       const key:string = process.env.JWT_KEY;
       const result:DataCase = verify(target, key);
       return result;
     }
-    catch{
-      return undefined
+    catch {
+      return undefined;
     }
   }
   

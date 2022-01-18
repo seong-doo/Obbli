@@ -26,5 +26,7 @@ export default async function (req, res) {
     access_token: signToken(data, '1h'),
     token_type: 'Bearer',
     expires_in: 3600, // 1h
+    uuid: data.uuid,
+    permission: data.permission,
   });
 };

@@ -26,15 +26,22 @@ const SignIn = {
         return res.status(400).send();
       }
       const { uuid, user_id, created_at } = result;
-      const access_token = signToken({ uuid, user_id, created_at }, "1h");
-      const refresh_token = signToken({ uuid, user_id, created_at }, "1d");
+      const data = { uuid, user_id, created_at, permission: 'person' };
+      const access_token = signToken(data, "1h");
+      const refresh_token = signToken(data, "1d");
 
       return res
         .cookie("refresh_token", refresh_token, {
           httpOnly: true,
         })
         .status(200)
-        .send({ access_token: `Bearer ${access_token}` });
+        .send({
+          access_token,
+          token_type: 'Bearer',
+          expires_in: 3600,
+          uuid,
+          permission: 'person',
+        });
     });
   },
 };
