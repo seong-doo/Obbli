@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Routes, Route, useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import TopNavigation from './components/TopNavigation';
 // import Footer from './components/Footer';
 import SignIn from './modal/SignIn';
@@ -15,9 +15,8 @@ import AdvertiseWrite from './pages/AdvertiseWrite';
 import AdvMap from './components/AdvMap';
 import axios from 'axios';
 
-export interface UserStateType {
-  isSignedIn: boolean,
-  accessToken: string,
+interface UserState {
+  uuid: string,
 }
 
 
@@ -31,11 +30,8 @@ function App() {
 
   const [isSignInVisible, setIsSignInVisible] = useState<boolean>(false)
   const [isSignUpVisible, setIsSignUpVisible] = useState<boolean>(false)
-  const navigate = useNavigate();
-  const [userState, setUserState] = useState<UserStateType>({
-    isSignedIn: Boolean(accessToken),
-    accessToken: accessToken ?? '',
-  })
+  const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
+  const [userState, setUserState] = useState(JSON.parse(sessionStorage.getItem('auth') as string));
 
   const onClickSignOut = () => {
     axios.post(`/sign-out`, {})
@@ -57,7 +53,7 @@ function App() {
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet" /> 
       <nav>
-        <TopNavigation {...{ userState, setUserState, setIsSignInVisible, onClickSignOut}} />
+        <TopNavigation {...{ userState, setUserState, setIsSignInVisible}} />
       </nav>
       <div className="body">
         <SignIn {... {isSignInVisible, setIsSignInVisible, setIsSignUpVisible, setUserState}} />

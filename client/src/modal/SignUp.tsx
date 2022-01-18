@@ -1,28 +1,32 @@
 import axios from "axios";
 import { useState } from "react";
 
-interface UserStateType {
-    isSignedIn: boolean,
-    accessToken: string,
-  }
+// interface UserStateType {
+//     isSignedIn: boolean,
+//     accessToken: string,
+//     uuid: string,
+//   }
 
-interface LoginModal {
-  isSignUpVisible: boolean;
-  setIsSignUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setUserState: React.Dispatch<React.SetStateAction<UserStateType>>;
-}
+// interface LoginModal {
+//   isSignUpVisible: boolean;
+//   setIsSignUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
+//   setUserState: React.Dispatch<React.SetStateAction<UserStateType>>;
+// }
 
-interface SignUPType {
-    user_id: string,
-    pw: string,
-    pw_check: string,
-    name: string,
-    permission: string
-  }  
+// interface SignUPType {
+//     user_id: string,
+//     pw: string,
+//     pw_check: string,
+//     name: string,
+//     permission: string
+//   }
 
-function SignUp( props:LoginModal ):JSX.Element {
+  const API_SERVER:string = '';
+  
+
+function SignUp(props: any):JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string>('');  
-  const [signUpInfo, setSignUpInfo] = useState<SignUPType>({
+  const [signUpInfo, setSignUpInfo] = useState({
     user_id: '',
     pw: '',
     pw_check: '',
