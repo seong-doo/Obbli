@@ -14,6 +14,8 @@ dotenv.config();
 const app = express();
 const port = process.env.APP_PORT;
 
+if (!module.parent) { app.use(morgan('dev')); }
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors({
@@ -33,11 +35,9 @@ app.post('/auth', Auth.refreshToken);
 app.post('/sign-out', Auth.signOut);
 // TODO: move routing configs to router/index.ts
 
-
 export default app;
 
 if (!module.parent) {
-  app.use(morgan("dev"));
   getConnectionOptions().then((config) => {
     Object.assign(config, {
       entities: [Skill,Person,Org,Advert,Position,Application,Org_review,Person_review,],
