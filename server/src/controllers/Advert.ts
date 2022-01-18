@@ -11,15 +11,9 @@ interface TokenInfo {
 const advertList = {
   get: async (req, res): Promise<void> => {
     //게시글 가져오기
-    const advertList = await Advert.createQueryBuilder()
-      .select([
-        "Advert.uuid as uuid",
-        "title",
-        "location",
-        "org.name as org_name",
-        "active_until",
-      ])
-      .innerJoin("Org", "org")
+    const advertList = await Advert.createQueryBuilder('advert')
+      .select(['advert.uuid as uuid', 'title', 'location', 'org.name as org_name', 'active_until'])
+      .innerJoin('Org', 'org', 'advert.org_uuid = org.uuid')
       .execute();
     return res.status(200).json(advertList);
   },
