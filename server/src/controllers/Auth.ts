@@ -5,7 +5,7 @@ const map = { 'person': Person, 'org': Org };
 
 // TODO: integrate with sign-in controller
 // TODO: refresh token rotation
-export default async function (req, res) {
+export async function refreshToken(req, res) {
   return res.status(401).send();
   if (!req.cookies) { return res.status(401).send(); }
 
@@ -30,3 +30,11 @@ export default async function (req, res) {
     permission: data.permission,
   });
 };
+
+export function signOut(req, res) {
+  res.clearCookie(
+    'refreshToken',
+    { httpOnly: true },
+  );
+  return res.status(204).send();
+}
