@@ -1,34 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MypageHistory from '../components/MypageHistory'
 import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
-
-
-// interface UserStateType {
-//     isSignedIn: boolean,
-//     accessToken: string,
-//     uuid: string,
-// }
-
-// interface mypageInfoType{
-//     user_id: string,
-//     name: string,
-//     professional: boolean,
-//     instrument: string,
-//     history: string
-// }
-
-// interface MypageType {
-//   userState: UserStateType,
-//   setUserState: React.Dispatch<React.SetStateAction<UserStateType>>
-// }
-
-// interface ReviewInfoType {
-//   key : number,
-//   username : string,
-//   rating : number,
-//   comment : string
-// }
+import axios from 'axios';
 
 const listData = [
   {
@@ -58,13 +33,9 @@ const listData = [
 ]
 
 function MypagePerson(props: any):JSX.Element {
-  const [mypageInfo, setMypageInfo] = useState({
-    user_id: 'kimcoding',
-    name: '김코딩',
-    professional: true,
-    instrument: '바이올린',
-    history: `2022 신년 연주회 \n dksldksl`
-  })
+  const navigate = useNavigate();
+  if (!props.userState) { navigate('/') }
+  const [mypageInfo, setMypageInfo] = useState({});
   const [selectMenu, setSelectMenu] = useState<string>('adv')
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
   const [reviewInfoList, setReviewInfoList] = useState([] as any[])
@@ -87,14 +58,14 @@ function MypagePerson(props: any):JSX.Element {
 
     // TODO: axios get 공고 및 리뷰 가져오기
 
-    useEffect(() => {
-      setReviewInfoList(listData)
+  useEffect(() => {
+    console.log(axios.defaults.headers.common);
+    axios.get('/person').then(resp => setMypageInfo(resp.data));
   }, [])
 
   return (
     <>
-    {props.userState.isSignedIn
-    ? (
+    {
       <div className="mypageWrap">
         <ReviewModal {... {isReviewVisible, setIsReviewVisible, data, selectMenu}} />
         <div className="mypageProfileWrap">
@@ -141,10 +112,6 @@ function MypagePerson(props: any):JSX.Element {
               }
           </div>
         </div>
-      </div>
-    ) : 
-      <div>
-          로그인이 필요합니다!
       </div>
     }
     </>

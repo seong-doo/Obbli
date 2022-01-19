@@ -21,8 +21,7 @@ interface UserState {
 
 
 function App() {
-
-
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   if (accessToken) {
     axios.defaults.headers.common.authorization = accessToken;
@@ -61,8 +60,8 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Home {... { userState, setUserState, setIsSignInVisible, setIsSignUpVisible, onClickSignOut }} />} />
-            <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState }}/>} />
-            <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState }}/>} />
+            <Route path="/mypage/person" element={<MypagePerson {... {userState, setUserState }}/>} />
+            <Route path="/mypage/org" element={<MypageOrg {... {userState, setUserState }}/>} />
             <Route path="advert" element={<Advertise/>}></Route>
             <Route path="advert/:uuid" element={<AdvView />} />
             <Route path="advert/write" element={<AdvertiseWrite />} />
