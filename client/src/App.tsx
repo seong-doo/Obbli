@@ -22,9 +22,9 @@ interface UserState {
 
 function App() {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
-  if (accessToken) {
-    axios.defaults.headers.common.authorization = accessToken;
+  const auth = JSON.parse(localStorage.getItem('auth') ?? null as unknown as string);
+  if (auth) {
+    axios.defaults.headers.common['Authorization'] = `${auth.token_type} ${auth.access_token}`;
   }
 
   const [isSignInVisible, setIsSignInVisible] = useState<boolean>(false)

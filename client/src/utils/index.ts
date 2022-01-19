@@ -1,9 +1,10 @@
 import axios, { Axios } from 'axios';
 
 export function storeAccessToken(data: Record<string, any>) {
-  const { access_token, expires_in, permission } = data;
+  const { access_token, token_type, expires_in, permission } = data;
   localStorage.setItem('auth', JSON.stringify({
     access_token,
+    token_type,
     expires_at: new Date().getTime() + (data.expires_in * 1000),
     permission,
   }));
