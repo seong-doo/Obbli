@@ -34,6 +34,7 @@ const Mainadvert = {
         "title",
         "body",
         "skill.name as skill_name",
+        "position.uuid as position_uuid",
         "position.quota as quota",
         "active_until",
         "location",
@@ -74,6 +75,7 @@ const Mainadvert = {
       data[key] = positions[0][key];
     }
     data.positions = positions.map((obj) => ({
+      uuid: obj.position_uuid,
       skill_name: obj.skill_name,
       quota: obj.quota,
     }));
