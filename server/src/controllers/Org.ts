@@ -48,7 +48,6 @@ const SignIn = {
           uuid,
           permission: 'org',
         });
->>>>>>> 83c57b1 (server: Extend sign-in controllers)
     }
   },
 };
