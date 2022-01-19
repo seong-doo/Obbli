@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 
 import { cookieParser } from './Util';
 import * as Auth from './controllers/Auth';
+import skillController from './controllers/Skill';
 
 dotenv.config();
 const app = express();
@@ -33,6 +34,7 @@ app.use("/application", indexRouter.Application);
 app.use(cookieParser);
 app.post('/auth', Auth.refreshToken);
 app.post('/sign-out', Auth.signOut);
+app.get('/skill', skillController);
 // TODO: move routing configs to router/index.ts
 
 export default app;

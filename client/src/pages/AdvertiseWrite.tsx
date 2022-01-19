@@ -12,7 +12,8 @@ const AdvertiseWrite: React.FC =  () => {
 
     const {uuid} =useParams();
     const navigate = useNavigate();
-
+    const [skills, setSkills] = useState([]);
+    const [positions, setPositions] = useState([]);
     
 
     const [userInput, setUserInput] = useState({
@@ -130,7 +131,7 @@ const AdvertiseWrite: React.FC =  () => {
     
     useEffect(()=>{
         if(uuid) {fetchAdvertise();}
-        
+      axios.get('/skill').then(resp => setSkills(resp.data));
     }, [])
 
     return(
