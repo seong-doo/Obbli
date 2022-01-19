@@ -1,8 +1,8 @@
 import axios, { Axios } from 'axios';
 
-export function storeAccessToken(data: Record<string, any>, permission: string) {
-  const { access_token, expires_in } = data;
-  sessionStorage.setItem('auth', JSON.stringify({
+export function storeAccessToken(data: Record<string, any>) {
+  const { access_token, expires_in, permission } = data;
+  localStorage.setItem('auth', JSON.stringify({
     access_token,
     expires_at: new Date().getTime() + (data.expires_in * 1000),
     permission,
@@ -11,11 +11,11 @@ export function storeAccessToken(data: Record<string, any>, permission: string) 
 
 export function refresh(axiosInstance: Axios) {
   return async function (config: any) {
-    const auth = sessionStorage.getItem('auth');
+    const auth = localStorage.getItem('auth');
     if (auth !== null && JSON.parse(auth).expires_at <= (new Date()).getTime()) {
       const { data, status } = await axiosInstance.post('/auth');
       if (status !== 200) { return config; }
-      storeAccessToken(data, 'person');
+      storeAccessToken(data);
       axios.defaults.headers.common['Authorization'] = data.access_token;
     }
     return config;

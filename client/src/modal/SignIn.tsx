@@ -50,8 +50,8 @@ function SignIn (props: any):JSX.Element {
               setErrorMessage("아이디와 비밀번호를 확인하세요");
               return;
             }
-            storeAccessToken(resp.data, permission);
-            props.setUserState({ uuid: resp.data.uuid });
+            storeAccessToken(resp.data);
+            props.setUserState({ uuid: resp.data.uuid, permission: resp.data.permission });
             props.setIsSignInVisible(false);
             setUserInput({ ...emptyInput });
             navigate('/');

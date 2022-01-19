@@ -31,7 +31,7 @@ function App() {
   const [isSignInVisible, setIsSignInVisible] = useState<boolean>(false)
   const [isSignUpVisible, setIsSignUpVisible] = useState<boolean>(false)
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
-  const [userState, setUserState] = useState(JSON.parse(sessionStorage.getItem('auth') as string));
+  const [userState, setUserState] = useState(JSON.parse(localStorage.getItem('auth') as string));
 
   const onClickSignOut = () => {
     axios.post(`/sign-out`, {})

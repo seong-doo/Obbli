@@ -9,7 +9,7 @@ function TopNavigation({ userState, setUserState, setIsSignInVisible }) {
   }
   function signOut() {
     setUserState(null);
-    sessionStorage.removeItem('auth');
+    localStorage.removeItem('auth');
     axios.post('/sign-out')
       .then((resp) => { setIsSignInVisible(false); navigate('/'); });
   }
