@@ -52,7 +52,7 @@ function MypageHistory({ data }):JSX.Element {
         </div>
         <div>
           <div className="mypageInfoName">악기</div>
-          <input type="text" value={data.Skill.name} />
+          <input type="text" value={data.skill_name} />
           <div className="mypageInfoName">전공 여부</div>
           <div className="mypageInfo">{data.professional ? '전공' : null}</div>
         </div>
@@ -78,7 +78,7 @@ function MypageHistory({ data }):JSX.Element {
         </div>
         <div>
           <div className="mypageInfoName">악기</div>
-          <div className="mypageInfo">{data.Skill.name}</div>
+          <div className="mypageInfo">{data.skill_name}</div>
           <div className="mypageInfoName">전공 여부</div>
           <div className="mypageInfo">{data.professional ? '전공' : null}</div>
         </div>
