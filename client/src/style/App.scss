@@ -6,7 +6,7 @@
 @import "AdvertWrite";
 
 .App{
-    height: 100vh;
+    height: 90vh;
 }
 
 nav {
@@ -17,6 +17,8 @@ nav {
 }
 
 .body {
+    display: flex;
+    justify-content: center;
     margin-top: 10vh;
 }
 
