@@ -25,7 +25,7 @@ section {
 }
 
 footer {
-    position: relative;
+    margin-top: 30px;
 }
 
 
@@ -34,9 +34,7 @@ body {
 }
 
 .advertise{
-    margin: 0px 20px;
-    width:70rem;
-    padding: 10px 20px;
+    
 }
 
 
@@ -87,7 +85,10 @@ Table tr td{
 }
 
 
-
+.advertise{
+    margin: 0px 20px;
+    padding: 10px 20px;
+}
 
 .advListTable tr:hover {
     background-color: #eee;
@@ -95,7 +96,7 @@ Table tr td{
 
 .filter {
     width:70rem;
- 
+    
     
 }
 
@@ -106,14 +107,12 @@ Table tr td{
 
 .advView{
     margin: 0px 20px;
-    width:70rem;
     padding: 10px 20px;
 }
 
 
 .advertiseWrite {
     margin: 0px 20px;
-    width:70rem;
     padding: 10px 20px;
     
 }
@@ -121,6 +120,8 @@ Table tr td{
 .advWriteTable {
     margin-bottom: 4rem;
 }
+
+
 
 
 
@@ -166,21 +167,42 @@ input {
 
 
 .advMap {
-    margin-bottom: 4rem;
-}
-
-.advMapFilter .location {
-    width:80vw;
-    height:80vw;
+    width:90vw;
+    margin: auto;
+    padding-bottom: 20px;
 
 }
-
-.location {
-    width:70rem;
-    height:400px;
+.advMap .location{
+    width:90vw;
+    height:50vh;
+    margin: 0 auto;
     border: 1px solid #000;
-    margin-bottom: 4rem;
 }
+
+
+
+.advMapFilter{
+    
+    width:100%;
+
+
+}
+.advMapFilter_location {
+    float: left;
+    width:65%;
+    height:70vh;
+    border: 1px solid #000;
+
+}
+.advMapFilter_view{
+    float: left;
+    margin-left: 20px;
+    width:32%;
+    height:70vh;
+    
+}
+
+
 
 
 .pagination {
@@ -218,5 +240,20 @@ input {
     background-color: #036;
 }
 
+.inputAddress {
+    width:70%;
+    
+}
+.inputAddressbtn {
+    margin-left: 20px;
+    width:10%
+}
 
 
+.inputMap {
+    width:90%;
+    margin:10px auto;
+    height:300px;
+    border: 1px solid #000;
+    
+}

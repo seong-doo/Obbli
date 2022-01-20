@@ -72,7 +72,7 @@ const AdvMap: React.FC<AddressProps> =  ({location}) => {
     return(
         <div className="advMap">
             <div><span>공연 장소 : {location}</span></div>
-            <div  className="location"></div>
+            <div  className="advMap location"></div>
        </div>
         
         

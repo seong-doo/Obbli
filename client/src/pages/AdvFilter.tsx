@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import AdvList from "../components/AdvList";
 import Filter from "../components/Filter";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import Pagination from "../components/Pagination";
 import AdvMapFilter from '../components/AdvMapfilter';
 
@@ -16,15 +16,18 @@ const AdvFilter: React.FC =  () => {
     useEffect(() => {
       // axios.get('http://api.obb.li/advert')
       axios.get('/advert')
-          .then((resp) => { setAdverts(resp.data); });
+          .then((resp) => { 
+              const result = resp.data.map((el: any)=>{
+                return {...el, visible:false}
+              })
+              setAdverts(result) });
     }, [])
     
     return(
-        <div className="adverFilter">
+        <div className="advMapFilter">
             {
-                adverts.length===0 ? <div>아직 작성된 글이 없습니다.</div> : <AdvMapFilter adverts={ adverts }/>
+                adverts.length===0 ? <div>아직 작성된 글이 없습니다.</div> : <AdvMapFilter adverts={ adverts } setAdverts={setAdverts}/>
             }
-
             {
                 isAdmin ? <Link to={`/advert/write`}><button className="advwritebtn" type="button">작성하기</button></Link> : null
             }

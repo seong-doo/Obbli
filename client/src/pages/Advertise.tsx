@@ -98,7 +98,17 @@ const Advertise: React.FC =  () => {
     useEffect(() => {
       // axios.get('http://api.obb.li/advert')
       axios.get('/advert')
-          .then((resp) => { setAdverts(resp.data); });
+          .then((resp) => { 
+            const result = resp.data.filter((item: { uuid: any; }, i: any) => {
+                return (
+                  resp.data.findIndex((item2: { uuid: any; }, j: any) => {
+                    return item.uuid === item2.uuid;
+                  }) === i
+                );
+              });
+            setAdverts(result)
+        });
+
     }, [])
     //목록 정상 출력!
 

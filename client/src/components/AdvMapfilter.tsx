@@ -1,128 +1,73 @@
 import axios from "axios";
-import React, {useEffect} from "react";
+import { resolve } from "node:path/win32";
+import React, { createRef, useEffect, useState } from "react";
+import AdvMapFilterView from "./AdvMapFilterView";
 const  kakao  = (window as any).kakao;
 
-
-
-
-const AdvMapFilter =  ({ adverts }: { adverts: any }) => {
-
-    useEffect(() => {
-        mapScript();
-        
-    }, [adverts]);
+export default function AdvMapFilter ({ adverts, setAdverts }: { adverts: any ; setAdverts:any }) {
+    const [result, setResult] = useState([] as any);
+    const [userInfo, setUserInfo] = useState([] as any);
+    useEffect(() => { mapScript() }, [adverts]);
 
     const mapScript = () => {
-        const container = document.querySelector('.location');
-		const options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 10
-		};
+        const container = document.querySelector('.advMapFilter_location');
+        const options = { center: new kakao.maps.LatLng(33.450701, 126.570667) };
         const map = new kakao.maps.Map(container, options);
-        
-        
-        // var clusterer = new kakao.maps.MarkerClusterer({
-        //     map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-        //     averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-        //     minLevel: 10 // 클러스터 할 최소 지도 레벨 
-        // });
+        const clusterer = new kakao.maps.MarkerClusterer({
+            map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+            averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+            minLevel: 5 // 클러스터 할 최소 지도 레벨
+        });
+        const bounds = new kakao.maps.LatLngBounds();
+        const geocoder = new kakao.maps.services.Geocoder();
+        const addressSearch = async function (address: any) {
+            return new Promise((resolve, reject) => {
+                geocoder.addressSearch(address, function(result: any[], status: any) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        resolve({ "lat": result[0].y, "lng": result[0].x, "address_name": result[0].address_name });
+                    } else {
+                        reject(status);
+                    }
+                });
+            });
+        };
 
-        // var positions = [
-        //     {
-        //         title: '카카오', 
-        //         latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-        //     },
-        //     {
-        //         title: '생태연못', 
-        //         latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-        //     },
-        //     {
-        //         title: '텃밭', 
-        //         latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-        //     },
-        //     {
-        //         title: '근린공원',
-        //         latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-        //     }
-        // ];
-        
-        //axios call을 통해 주소지 목록화 
-        const location = adverts.map((el: { location: any; })=>{
-            return [el.location]
-        })
-        console.log(location)
 
-        //가져온 주소지를 통해 위도와 경도를 나타내기
-        var ps = new kakao.maps.services.Places();  
-        location.map((el:any)=>{
-            ps.keywordSearch(el, (data:any)=>{
-                data.map((latLng:any)=>{
-                    var bounds = new kakao.maps.LatLngBounds();
-                    new kakao.maps.Marker({
-                              //마커가 표시 될 지도
-                              map: map,
-                              //마커가 표시 될 위치
-                              position: new kakao.maps.LatLng(latLng.y, latLng.x),
-                              //마커에 hover시 나타날 title
-                              title: latLng.address_name,
-                              level: 10
-                    });
-                    bounds.extend(new kakao.maps.LatLng(latLng.y, latLng.x),);
-                    map.setBounds(bounds);
-                })
-                
-            })
-        })
+        const markers: any[] = [];
+        adverts.map(async (el: any) => {
+            const result = await addressSearch(el.location);
+            const position: any[] = [];
+            position.push(result);
+            const marker = new kakao.maps.Marker({
+                map: map,
+                position: new kakao.maps.LatLng(position[0].lat, position[0].lng),
+                title:el.title,
+            });
+            el.marker = marker;
+            markers.push(marker);
+            bounds.extend(new kakao.maps.LatLng(position[0].lat, position[0].lng));
+            map.setBounds(bounds);
+            await clusterer.addMarkers(markers);
+        });
 
-        
-        
+        kakao.maps.event.addListener(map, 'dragend', function()  {
+            let inBounds: any[];
+            const userView: { uuid: any; }[] = [];
 
-        const locatinLatLng = location.map((el: any)=>{
-            return console.log(ps.keywordSearch(el, ))
-        })
+            const bounds = map.getBounds();
 
-    
-        
-        var positions = [
-            {
-                title: '카카오', 
-                latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-            },
-            {
-                title: '생태연못', 
-                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-            },
-            {
-                title: '텃밭', 
-                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-            },
-            {
-                title: '근린공원',
-                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-            }
-        ];
+            const visibleAdverts = adverts.filter(({ marker }: { marker: any }) => {
+              return bounds.contain(marker.getPosition());
+            });
 
-       
-        
-    }
-        
-
+            setUserInfo(visibleAdverts);
+        });
+    } // end of mapScript()
 
     return(
         <div className="advMapFilter">
-            <div><span>공연 장소 : </span></div>
-            <div  className="advMapFilter location"></div>
+            <div className="advMapFilter_location"></div>
+            { userInfo.length===0 ? <AdvMapFilterView userInfo={adverts}/>:<AdvMapFilterView userInfo={userInfo}/> }
        </div>
-        
-        
-
-    ) 
-    
+    );
 }
-
-
-
-export default AdvMapFilter;
-
-
-
