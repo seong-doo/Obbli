@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 // interface mypageInfoType {
 //     user_id: string,
@@ -28,6 +30,8 @@ function MypageHistory(props):JSX.Element {
   const controlInputPw = (key:string) => (e:any) => {
     setPwChange({ ...pwChange, [key]: e.target.value});
   };
+  const navigate = useNavigate();
+
 
   const onClickUpdate = () => {
     // TODO: axios fetch 정보 수정
@@ -48,9 +52,32 @@ function MypageHistory(props):JSX.Element {
     })
   }
 
+  const checkBoxChecked = (e:any) => {
+    if(e.target.checked){
+      props.setMypageInfo({
+        ...props.mypageInfo,
+        professional: true,
+      })
+    }
+    else{
+      props.setMypageInfo({
+        ...props.mypageInfo,
+        professional: false,
+      })
+    }
+  }
+
   const onClickCancel = () => {
     // TODO: axios로 수정하기 않고 닫기
     setIsEditing(false);
+  }
+
+  const controlAccount = () => {
+    // TODO: axios delete 보내기
+    axios.delete(`/person`)
+    .then((res) => {
+      navigate('/')
+    })
   }
 
   useEffect(() => {
@@ -63,53 +90,53 @@ function MypageHistory(props):JSX.Element {
     <div>
       <div className="userInfoWrap">
         <div>
-          <div className="mypageInfoName">아이디</div>
-          <div className="mypageInfo">{}</div>
-          <div className="mypageInfoName">이름</div>
-          <input type="text" value={props.mypageInfo.name} onChange={controlInputValue('realname')} />
-        </div>
-        <div>
-          <div className="mypageInfoName">악기</div>
-          <input type="text" value={props.mypageInfo.skill} onChange={controlInputValue('skill')} />
-          <div className="mypageInfoName">전공 여부</div>
-          <div className="mypageInfo">{props.mypageInfo.professional ? '전공' : null}</div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">이름 : </div>
+            <input type="text" value={props.mypageInfo.name} onChange={controlInputValue('realname')} />
+          </div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">악기 : </div>
+            <input type="text" value={props.mypageInfo.skill} onChange={controlInputValue('skill')} />
+          </div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">전공 여부</div>
+            <input type='checkbox' onChange={(e)=>checkBoxChecked(e)} />
+          </div>
         </div>
         <div className="pwChangeWrap">
-          <div className="mypageInfoName">비밀번호</div>
-          <input type="password" value={pwChange.pw} onChange={controlInputPw('pw')} />
-          <div className="mypageInfoName">비밀번호 확인</div>
-          <input type="password" value={pwChange.pw_cheke} onChange={controlInputPw('pw_cheke')} />
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">비밀번호 : </div>
+            <input type="password" value={pwChange.pw} onChange={controlInputPw('pw')} />
+          </div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">비밀번호 확인 : </div>
+            <input type="password" value={pwChange.pw_cheke} onChange={controlInputPw('pw_cheke')} />
+          </div>
         </div>
       </div>
-      <div className="userHistory">
-        {/* 엔터로 구분?? */}
-        {props.mypageInfo.history}
-        
+      <div className="userHistoryWrap">
+        <textarea className="userHistoryText">{props.mypageInfo.history}</textarea>        
       </div>
-      <div className="btu" onClick={onClickUpdate}>확인</div>
-      <div className="btu" onClick={onClickCancel}>취소하기</div>
+      <button type='button' className="mypageBtu delete" onClick={controlAccount}>탈퇴하기</button>
+      <button type='button' className="mypageBtu" onClick={onClickUpdate}>확인</button>
+      <button type='button' className="mypageBtu" onClick={onClickCancel}>취소하기</button>
     </div>
     ) : (
     <div>
       <div className="userInfoWrap">
         <div>
-          <div className="mypageInfoName">아이디</div>
-          <div className="mypageInfo">{}</div>
-          <div className="mypageInfoName">이름</div>
-          <div className="mypageInfo">{props.mypageInfo.name}</div>
+          <div className="mypageInfoName">이름 : {props.mypageInfo.name}</div>
+          <div className="mypageInfoName">악기 : {props.mypageInfo.skill}</div>
         </div>
         <div>
-          <div className="mypageInfoName">악기</div>
-          <div className="mypageInfo">{props.mypageInfo.skill}</div>
-          <div className="mypageInfoName">전공 여부</div>
-          <div className="mypageInfo">{props.mypageInfo.professional ? '전공' : null}</div>
+          <div className="mypageInfoName">전공 여부 {props.mypageInfo.professional ? '✔' : null}</div>
         </div>
       </div>
       <div className="userHistory">
         {/* 엔터로 구분?? */}
         {props.mypageInfo.history}
       </div>
-      <div className="btu" onClick={() => setIsEditing(true)}>수정하기</div>
+      <button type='button' className="mypageBtu" onClick={() => setIsEditing(true)}>수정하기</button>
     </div>
     )}
       

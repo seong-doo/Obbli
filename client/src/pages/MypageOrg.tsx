@@ -48,6 +48,36 @@ const listData = [
     username : '이코딩',
     rating : 4,
     comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '김코딩',
+    rating : 4,
+    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
+  },
+  {
+    username : '나코딩',
+    rating : 4,
+    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '박코딩',
+    rating : 4,
+    comment : "아무리 그래도 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '이코딩',
+    rating : 4,
+    comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
+  },
+  {
+    username : '김코딩',
+    rating : 4,
+    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
+  },
+  {
+    username : '나코딩',
+    rating : 4,
+    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
   }
 ]
 
@@ -94,7 +124,6 @@ useEffect(() => {
         <div className="mypageProfileWrap">
           <div className="mypageProfile">
             <img className="profileImg" src={require('../img/user.png')} />
-            <div className="btu" onClick={controlAccount}>탈퇴하기</div>
           </div>
           <div className="mypageHistoryWrap">
             <MypageOrgInfo {...{ mypageInfo, setMypageInfo }} />
@@ -102,9 +131,12 @@ useEffect(() => {
         </div>
         <div className="mypageMenuWrap">
           <div className="mypageNav">
-              <span className="mypageBtu" onClick={() => {setSelectMenu('adv')}}>공고</span>
-              <span className="mypageBtu" onClick={() => {setSelectMenu('reviewToMe')}}>나에대한리뷰</span>
-              <span className="mypageBtu" onClick={() => {setSelectMenu('reviewFromMe')}}>내가쓴리뷰</span>
+            <input type="radio" id="advView" name="mypageTab" value="adv" defaultChecked onChange={() => {setSelectMenu('adv')}} />
+            <label htmlFor="advView" className="mypageTab">공고보기</label>
+            <input type="radio" id="reviewToMe" name="mypageTab" value="reviewToMe" onChange={() => setSelectMenu('reviewToMe')} />
+            <label htmlFor="reviewToMe" className="mypageTab">나에대한리뷰</label>
+            <input type="radio" id="reviewFromMe" name="mypageTab" value="reviewFromMe" onChange={() => {setSelectMenu('reviewFromMe')}} />
+            <label htmlFor="reviewFromMe" className="mypageTab">내가쓴리뷰</label>
           </div>
           <div className="mypageMenu">
             {/* 공고 메뉴 + 리뷰 상태(써야하는지 썼는지 수정할지)

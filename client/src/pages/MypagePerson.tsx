@@ -52,10 +52,6 @@ function MypagePerson(props: any):JSX.Element {
     setIsReviewVisible(true)
   }
 
-  const controlAccount = () => {
-    // TODO: axios delete 보내기
-  }
-
     // TODO: axios get 공고 및 리뷰 가져오기
 
   useEffect(() => {
@@ -71,7 +67,6 @@ function MypagePerson(props: any):JSX.Element {
         <div className="mypageProfileWrap">
           <div className="mypageProfile">
             <img className="profileImg" src={require('../img/user.png')} />
-            <div className="btu" onClick={controlAccount}>탈퇴하기</div>
           </div>
           <div className="mypageHistoryWrap">
             <MypageHistory {...{ mypageInfo, setMypageInfo }} />
@@ -79,9 +74,12 @@ function MypagePerson(props: any):JSX.Element {
         </div>
         <div className="mypageMenuWrap">
           <div className="mypageNav">
-              <span className="mypageBtu" onClick={() => {setSelectMenu('adv')}}>공고</span>
-              <span className="mypageBtu" onClick={() => {setSelectMenu('reviewToMe')}}>나에대한리뷰</span>
-              <span className="mypageBtu" onClick={() => {setSelectMenu('reviewFromMe')}}>내가쓴리뷰</span>
+            <input type="radio" id="advView" name="mypageTab" value="adv" defaultChecked onChange={() => {setSelectMenu('adv')}} />
+            <label htmlFor="advView" className="mypageTab">공고보기</label>
+            <input type="radio" id="reviewToMe" name="mypageTab" value="reviewToMe" onChange={() => setSelectMenu('reviewToMe')} />
+            <label htmlFor="reviewToMe" className="mypageTab">나에대한리뷰</label>
+            <input type="radio" id="reviewFromMe" name="mypageTab" value="reviewFromMe" onChange={() => {setSelectMenu('reviewFromMe')}} />
+            <label htmlFor="reviewFromMe" className="mypageTab">내가쓴리뷰</label>
           </div>
           <div className="mypageMenu">
             {/* 공고 메뉴 + 리뷰 상태(써야하는지 썼는지 수정할지)
