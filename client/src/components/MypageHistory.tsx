@@ -90,7 +90,6 @@ function MypageHistory({ data }):JSX.Element {
       <div className="btu" onClick={() => setIsEditing(true)}>수정하기</div>
     </div>
     )}
-    <p>{ JSON.stringify(userInput) }</p>
     </>
   )
 }

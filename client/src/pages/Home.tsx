@@ -8,9 +8,9 @@ const navigate = useNavigate();
       <img className="homeLogoImg" src={require('../img/logo.png')} onClick={() => navigate('/')} />
       <div className="homeWrap">
         <div className="buttonWrap">
-        { props.userState ? (
+        { props.auth ? (
           <div className="logButtonWrap">
-            <div className="homeBtu hoverBtu" onClick={()=>navigate(`/mypage/${props.userState.permission}`)}>마이페이지</div>
+            <div className="homeBtu hoverBtu" onClick={()=>navigate(`/mypage/${props.auth.permission}`)}>마이페이지</div>
             <div className="homeBtu hoverBtu" onClick={props.signOut}>로그아웃</div>
           </div>
         ) : (

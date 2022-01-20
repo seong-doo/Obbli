@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function MypagePerson(props: any):JSX.Element {
   const navigate = useNavigate();
-  if (!props.userState) { navigate('/') }
+  if (!props.auth) { navigate('/') }
   const placeHolder = <p>내용이 없습니다</p>;
   const [data, setData] = useState(null as any);
   const [tabs, setTabs] = useState({
