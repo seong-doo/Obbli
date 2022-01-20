@@ -34,9 +34,104 @@
   cursor: pointer; }
 
 footer {
-  font: italic 1.1em "Hi Melody";
-  background-color: #FFE6CF;
-  align-items: center; }
+  position: fixed;
+  bottom: 0;
+  padding: 3vh; }
+
+.homeWrap {
+  display: block;
+  height: 80vh;
+  width: 167vh;
+  position: absolute;
+  right: 0;
+  z-index: 1; }
+
+.homeWrap::after {
+  height: 80vh;
+  width: 167vh;
+  content: "";
+  background-image: url(./img/mainimg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  opacity: 0.5; }
+
+.buttonWrap {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between; }
+
+.logButtonWrap {
+  display: flex;
+  height: 35vh;
+  width: 30vh;
+  border-radius: 25% 10%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  font-family: 'Hi Melody', cursive;
+  font-size: 3vh;
+  margin-left: 15vh; }
+
+.homeBtu {
+  display: block;
+  width: 18vh;
+  height: 5vh;
+  border-radius: 20%;
+  line-height: 5vh;
+  border: 2px #D6B2B2 solid;
+  margin: 15px;
+  text-align: center;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.6s; }
+
+.hoverBtu:hover {
+  box-shadow: 16vh 0 0 0 #D6B2B2 inset;
+  border: 2px #D6B2B2 solid;
+  color: white; }
+
+.advButtonWrap {
+  display: flex;
+  height: 35vh;
+  width: 30vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Hi Melody', cursive;
+  font-size: 3vh;
+  margin-right: 50vh; }
+
+.advBtu {
+  width: 70vh;
+  height: 4vh;
+  border: 2px #D6B2B2 solid;
+  background-color: #D6B2B2;
+  margin: 15px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.6s;
+  font-weight: bold;
+  border-radius: 30% 10%; }
+
+.advBtu:hover {
+  box-shadow: 70vh 0 0 0 whitesmoke inset;
+  border: 2px whitesmoke solid;
+  color: black; }
+
+.homeLogoImg {
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+  top: 2vh;
+  left: 60vh; }
 
 .modalBackground {
   position: fixed;
@@ -45,21 +140,22 @@ footer {
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 2; }
+  z-index: 3; }
 
 .signInWrap {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 280px;
-  height: 400px;
+  height: 50vh;
+  width: 45vh;
   background-color: white;
   position: relative;
   box-sizing: border-box;
-  margin: 17% auto;
+  margin: 13% auto;
   padding: 20px;
   background: #fff;
-  align-items: center; }
+  align-items: center;
+  border-radius: 10%; }
 
 .signInbutton {
   display: flex;
@@ -71,8 +167,70 @@ footer {
   justify-content: space-around;
   width: 100%; }
 
-.socialLoginNone {
+.permission {
+  width: calc(100%/3);
+  height: 5vh;
+  border-bottom: 3px solid #D6B2B2;
+  line-height: 5.5vh;
+  font-size: 2vh;
+  text-align: center;
+  color: #333333;
+  display: block;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.2s ease; }
+
+.permission:hover {
+  opacity: 0.75; }
+
+input[name="permission"] {
   display: none; }
+
+.signInChoiseWrap input:checked + .permission {
+  background-color: #D6B2B2;
+  color: #fff; }
+
+.loginBtn {
+  display: block;
+  width: 10vh;
+  height: 5vh;
+  border-radius: 5%;
+  line-height: 5vh;
+  border: 2px #D6B2B2 solid;
+  margin: 15px;
+  text-align: center;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.6s; }
+
+.loginBtn:hover {
+  box-shadow: 11vh 0 0 0 #D6B2B2 inset;
+  border: 2px #D6B2B2 solid;
+  color: white; }
+
+.loginText {
+  color: #535353; }
+
+.signInInputWrap input {
+  width: 30vh;
+  margin-bottom: 1vh;
+  font-size: 1.8vh; }
+
+.signUpWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60vh;
+  width: 45vh;
+  background-color: white;
+  position: relative;
+  box-sizing: border-box;
+  margin: 10% auto;
+  padding: 20px;
+  background: #fff;
+  align-items: center;
+  border-radius: 10%; }
 
 .star-rating {
   display: flex;
@@ -201,7 +359,8 @@ footer {
 
 .mypageInfoName {
   padding: 3px;
-  width: 30vh; }
+  width: 30vh;
+  font-weight: bold; }
 
 .mypageInfo {
   padding: 3px;
@@ -376,7 +535,7 @@ footer {
   font: italic 1.1em "Hi Melody"; }
 
 .App {
-  height: 100vh; }
+  height: 90vh; }
 
 nav {
   position: fixed;
@@ -385,6 +544,8 @@ nav {
   right: 0; }
 
 .body {
+  display: flex;
+  justify-content: center;
   margin-top: 10vh; }
 
 section {

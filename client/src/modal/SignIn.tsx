@@ -59,25 +59,25 @@ function SignIn (props: LoginModal):JSX.Element {
       ? (
       <div className="modalBackground" onClick={() => props.setIsSignInVisible(false)}>
         <div className="signInWrap" onClick={(e) => e.stopPropagation()}>
-          <div className="signInLogo">로그인</div>
+          <h1 className="signInLogo">로그인</h1>
           <div className="signInChoiseWrap">
               <input type="radio" id="perLogin" name="permission" value="person" defaultChecked onChange={controlInput('permission')} />
-              <label htmlFor="perLogin" className="permissionPerson">개인회원</label>
+              <label htmlFor="perLogin" className="permission">개인회원</label>
               <input type="radio" id="orgLogin" name="permission" value="org" onChange={controlInput('permission')} />
-              <label htmlFor="orgLogin" className="permissionOrg">단체회원</label>
+              <label htmlFor="orgLogin" className="permission">단체회원</label>
           </div>
           <div className="signInInputWrap">
-              <div>아이디</div>
+              <div className="loginText">아이디</div>
               <input type="text" placeholder="아이디를 입력하시오" value={loginInfo.id} onChange={controlInput('id')} />
-              <div>비밀번호</div>
+              <div className="loginText">비밀번호</div>
               <input type="password" placeholder="비밀번호를 입력하시오" value={loginInfo.pw} onChange={controlInput('pw')} />
           </div>
           <div className="errMessage">
           {errorMessage}
           </div>
           <div className="signInbutton">
-              <div className="btn" onClick={changeModal}>회원가입</div>
-              <div className="btn" onClick={handleLogin}>로그인</div>
+              <div className="loginBtn" onClick={changeModal}>회원가입</div>
+              <div className="loginBtn" onClick={handleLogin}>로그인</div>
           </div>
         </div>
       </div>) : null}

@@ -66,13 +66,13 @@ function SignUp( props:LoginModal ):JSX.Element {
       {props.isSignUpVisible
         ? (
           <div className="modalBackground" onClick={() => props.setIsSignUpVisible(false)}>
-            <div className="signInWrap" onClick={(e) => e.stopPropagation()}>
-            <div className="signInLogo">회원가입</div>
+            <div className="signUpWrap" onClick={(e) => e.stopPropagation()}>
+            <h1 className="signInLogo">회원가입</h1>
               <div className="signInChoiseWrap">
                 <input type="radio" id="perLogin" name="permission" value="person" onChange={controlInput('permission')} />
-                <label htmlFor="perLogin" className="permissionPerson">개인회원</label>
+                <label htmlFor="perLogin" className="permission">개인회원</label>
                 <input type="radio" id="orgLogin" name="permission" value="org" onChange={controlInput('permission')} />
-                <label htmlFor="orgLogin" className="permissionOrg">단체회원</label>
+                <label htmlFor="orgLogin" className="permission">단체회원</label>
               </div>
               <div className="signInInputWrap">
                 <div>아이디</div>
@@ -88,7 +88,7 @@ function SignUp( props:LoginModal ):JSX.Element {
                 {errorMessage}
               </div>
               <div className="signInbutton">
-                <div className="btn" onClick={handleSignUp}>회원가입</div>
+                <div className="loginBtn" onClick={handleSignUp}>회원가입</div>
               </div>
             </div>
           </div>

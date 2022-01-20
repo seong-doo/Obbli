@@ -53,8 +53,9 @@ function App() {
   return (
     
     <div className="App">
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet" /> 
       <nav>
         <TopNavigation {...{ userState, setUserState, setIsSignInVisible, onClickSignOut}} />
       </nav>
@@ -63,7 +64,7 @@ function App() {
         <SignUp {... {isSignUpVisible, setIsSignUpVisible, setUserState}} />
         <Routes>
           <Route path="/">
-            <Route index element={<Home />} />
+            <Route index element={<Home {... { userState, setUserState, setIsSignInVisible, setIsSignUpVisible, onClickSignOut }} />} />
             <Route path="/mypageperson" element={<MypagePerson {... {userState, setUserState }}/>} />
             <Route path="/mypageorg" element={<MypageOrg {... {userState, setUserState }}/>} />
             <Route path="advert" element={<Advertise/>}></Route>
