@@ -32,29 +32,23 @@ function App() {
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
   const [userState, setUserState] = useState(JSON.parse(localStorage.getItem('auth') as string));
 
-  const onClickSignOut = () => {
-    axios.post(`/sign-out`, {})
-    .then(res => {
-      setUserState({
-        isSignedIn: false,
-        accessToken: '',
-      })
-    })
-    .then(()=> {
-      navigate('/')
-    })
-    }
+  function signOut() {
+    setUserState(null);
+    localStorage.removeItem('auth');
+    axios.post('/sign-out')
+      .then((resp) => { setIsSignInVisible(false); navigate('/'); });
+  }
 
   return (
     <div className="App">
       <nav>
-        <TopNavigation {...{ userState, setUserState, setIsSignInVisible}} />
+        <TopNavigation {...{ userState, setUserState, setIsSignInVisible, signOut }} />
       </nav>
       <div className="body">
         <SignIn {... {isSignInVisible, setIsSignInVisible, setIsSignUpVisible, setUserState}} />
         <SignUp {... {isSignUpVisible, setIsSignUpVisible, setUserState}} />
         <Routes>
-          <Route index element={<Home {... { userState, setUserState, setIsSignInVisible, setIsSignUpVisible, onClickSignOut }} />} />
+          <Route index element={<Home {... { userState, setUserState, setIsSignInVisible, setIsSignUpVisible, signOut }} />} />
           <Route path="/mypage/person" element={<MypagePerson {... {userState, setUserState }}/>} />
           <Route path="/mypage/org" element={<MypageOrg {... {userState, setUserState }}/>} />
           <Route path="advert" element={<Advertise/>}></Route>

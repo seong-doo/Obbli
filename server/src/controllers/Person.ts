@@ -103,24 +103,28 @@ const UserInfo = {
     }
     const row = await Person.findOne({
       where: { uuid: person.uuid },
-      select: ["uuid", "name", "professional", "history"],
-      relations: ["Skill"],
+      select: [
+        'uuid',
+        'user_id',
+        'name',
+        'professional',
+        'history',
+        'Skill',
+        'Application',
+        'Person_review',
+        'Org_review',
+      ],
+      relations: ["Skill", "Org_review", "Application", "Person_review"],
     });
 
     if (!row) {
       return res.status(404).json({});
-    } else {
-      const {
-        name,
-        professional,
-        history,
-        Skill: { name: skill },
-      } = row;
-
-      return res
-        .status(200)
-        .json({ name, professional, history, skill, uuid: person });
     }
+
+    return res
+      .status(200)
+      .send(row);
+      // .json({ name, professional, history, skill, uuid: person });
   },
 
   patch: async (req, res) => {

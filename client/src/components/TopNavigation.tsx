@@ -1,18 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function TopNavigation({ userState, setUserState, setIsSignInVisible }) {
+function TopNavigation({ userState, setUserState, setIsSignInVisible, signOut }) {
   const navigate = useNavigate();
   if (window.location.pathname === '/') { return null; }
 
   const handleModal = () => {
     setIsSignInVisible(true)
-  }
-  function signOut() {
-    setUserState(null);
-    localStorage.removeItem('auth');
-    axios.post('/sign-out')
-      .then((resp) => { setIsSignInVisible(false); navigate('/'); });
   }
 
   return (

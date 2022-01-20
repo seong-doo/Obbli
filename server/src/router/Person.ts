@@ -19,7 +19,7 @@ router.delete("/", UserInfo.delete);
 //review 작성
 router.post("/review/:person_uuid", PersonReview.post);
 //user가 작성된 review 가져오기
-router.get("/review/:person_uuid", PersonReview.get);
+router.get("/review", PersonReview.get);
 //작성한 review 수정하기 (:query를 하나로 합치는것 건의 & || - 사용 )
 router.patch("/review/:person_uuid", PersonReview.patch);
 //작성한 review 삭제하기
