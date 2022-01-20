@@ -7,8 +7,16 @@ import reportWebVitals from './reportWebVitals';
 import axios from 'axios'
 import config from './app.config';
 import Footer from './components/Footer';
+import { refresh } from './utils';
 
 axios.defaults.baseURL = config.API_HOST;
+axios.defaults.withCredentials = true;
+axios.defaults.validateStatus = (status) => true;
+
+axios.interceptors.request.use(
+  refresh(axios.create()),
+  error => Promise.reject(error),
+);
 
 ReactDOM.render(
   <React.StrictMode>
