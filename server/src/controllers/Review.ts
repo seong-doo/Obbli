@@ -193,4 +193,15 @@ const OrgReview = {
   },
 };
 
+export async function getPersonReview(req, res) {
+  const { person_uuid } = req.params;
+  const rows = await Person_review.find({
+    select: ['comment', 'rating'],
+    where: { person_uuid },
+  });
+
+  return res.status(200).send(rows);
+
+}
+
 export { PersonReview, OrgReview };
