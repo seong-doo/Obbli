@@ -61,13 +61,45 @@
     height: 10em;
 }
 
-.advSkill{
+.positionWrapper{
     margin-top: 1em;
     width:  30em;
     font-size: 1.5em;
     display: flex;
     align-items: center;
     flex-direction:row;
+
+    .verticalWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .addedPosition {
+            display: flex;
+            flex-direction: row;
+
+            span {
+                display: inline-block;
+                margin: auto 3em;
+            }
+        }
+        .controllerWrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+    // .skill_quntity{
+    //     margin-right: 1em;
+    //     width: 20em;
+    //     height: 1.5em;
+    // }
+
+    // .skillPlus{
+    //     width: 0.5em;
+    //     height: 1em;
+    //     margin-top: -0.3em;
+    // }
 }
 
 
@@ -97,19 +129,6 @@
     text-align:  center;
     font-size: 0.6em;
 }
-
-.skill_quntity{
-    margin-right: 1em;
-    width: 20em;
-    height: 1.5em;
-}
-
-.skillPlus{
-    width: 0.5em;
-    height: 1em;
-    margin-top: -0.3em;
-}
-
 
 
 .time_Select{

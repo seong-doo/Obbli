@@ -148,44 +148,31 @@ const AdvertiseWrite: React.FC = () => {
             ></textarea>
           </div>
         </div>
-        <div className="advSkill">
+        <div className="positionWrapper">
           <div> 악기(종류/갯수)</div>
-          {userInput.positions.map((each) => {
-            return (
-              <tr>
-                <td>{each.skill_name}</td>
-                <td>{each.quota}</td>
-              </tr>
-            );
-          })}
-          <div className="selectSkill">
-            <div className="skill_quntity">
+          <div className="verticalWrapper">
+              {userInput.positions.map((each) => {
+                return (
+                  <div className="addedPosition">
+                    <span>{each.skill_name}</span>
+                    <span>{each.quota}</span>
+                  </div>
+                );
+              })}
+            <div className="controllerWrapper">
               <select
                 className="skillName"
                 value={position.skill_name}
-                onChange={(e) =>
-                  setPosition((prev) => ({
-                    ...prev,
-                    skill_name: e.target.value,
-                  }))
-                }
+                onChange={(e) => setPosition((prev) => ({ ...prev, skill_name: e.target.value, })) }
               >
                 <option value="">==== 악기 ====</option>
                 {skills.map((each) => (
                   <option value={each.name}>{each.name}</option>
                 ))}
               </select>
-              <input
-                className="Quantity"
-                type="number"
-                value={position.quota}
-                onChange={controlQuota}
-              ></input>
+              <input className="Quantity" type="number" value={position.quota} onChange={controlQuota} ></input>
+              <div className="skillPlus" onClick={addPosition}>+</div>
             </div>
-              <div className="skillPlus" onClick={addPosition}>
-                {" "}
-                +{" "}
-              </div>
           </div>
         </div>
         <div className="time_Select">
