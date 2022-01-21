@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function MypageOrgInfo({ data }):JSX.Element {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const navigate = useNavigate();
   const [userInput, setUserInput] = useState({
     name: data.name,
     description: data.description,
@@ -25,9 +27,12 @@ function MypageOrgInfo({ data }):JSX.Element {
     })
   }
 
-  const onClickCancel = () => {
-    // TODO: axios로 수정하기 않고 닫기
-    setIsEditing(false);
+  const unregister = () => {
+    // TODO: axios delete 보내기
+    axios.delete(`/person`)
+    .then((res) => {
+      navigate('/')
+    })
   }
 
   return (
@@ -36,50 +41,54 @@ function MypageOrgInfo({ data }):JSX.Element {
     <div>
       <div className="userInfoWrap">
         <div>
-          <div className="mypageInfoName">단체 이름</div>
-          <input type="name" value={userInput.name} onChange={controlInput('name')} />
-          <div className="mypageInfoName">단체인원수</div>
-          <input type="headcount" value={userInput.headcount} onChange={controlInput('headcount')} />
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">단체 이름 :</div>
+            <input type="name" value={userInput.name} onChange={controlInputValue('name')} />
+          </div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">단체인원수 :</div>
+            <input type="headcount" value={userInput.headcount} onChange={controlInput('headcount')} />
+          </div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">단체설립일 :</div>
+            <input type="since" value={userInput.since} onChange={controlInput('since')} />
+          </div>
         </div>
-        <div>
-          <div className="mypageInfoName">단체설립일</div>
-          <input type="since" value={userInput.since} onChange={controlInput('since')} />
+        <div className="pwChangeWrap">
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">비밀번호 :</div>
+            <input type="password" value={userInput.pw} onChange={controlInput('pw')} />
+          </div>
+          <div className="inputWrap">
+            <div className="mypageInfoNameEdit">비밀번호 확인 :</div>
+            <input type="password" value={userInput.pw_check} onChange={controlInput('pw_check')} />
+          </div>
         </div>
       </div>
-      <div className="pwChangeWrap">
-          <div className="mypageInfoName">비밀번호</div>
-          <input type="password" value={userInput.pw} onChange={controlInput('pw')} />
-          <div className="mypageInfoName">비밀번호 확인</div>
-          <input type="password" value={userInput.pw_check} onChange={controlInput('pw_check')} />
-        </div>
-      <div className="userHistory">
-        {userInput.description}
+      <div className="userHistoryWrap">
+        <textarea className="userHistoryText">{userInput.description}</textarea>
       </div>
-      <div className="btu" onClick={onClickUpdate}>확인</div>
-      <div className="btu" onClick={() => setIsEditing(false)}>취소하기</div>
+      <button type='button' className="mypageBtu delete" onClick={unregister}>탈퇴하기</button>
+      <button type='button' className="mypageBtu" onClick={onClickUpdate}>확인</button>
+      <button type='button' className="mypageBtu" onClick={() => setIsEditing(false)}>취소하기</button>
     </div>
     ) : (
     <div>
       <div className="userInfoWrap">
         <div>
-          <div className="mypageInfoName">단체 이름</div>
-          <div className="mypageInfo">{userInput.name}</div>
-          <div className="mypageInfoName">단체인원수</div>
-          <div className="mypageInfo">{userInput.headcount}</div>
+          <div className="mypageInfoName">단체 이름 : {data.name}</div>
+          <div className="mypageInfoName">단체인원수 : {data.headcount}</div>
         </div>
         <div>
-          <div className="mypageInfoName">단체설립일</div>
-          <div className="mypageInfo">{userInput.since}</div>
+          <div className="mypageInfoName">단체설립일 : {data.since}</div>
         </div>
       </div>
       <div className="userHistory">
-        {/* 엔터로 구분?? */}
         {userInput.description}
       </div>
-      <div className="btu" onClick={() => setIsEditing(true)}>수정하기</div>
+      <button type='button' className="mypageBtu" onClick={() => setIsEditing(true)}>수정하기</button>
     </div>
     )}
-      
     </>
   )
 }

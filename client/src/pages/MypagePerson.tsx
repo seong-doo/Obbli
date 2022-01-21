@@ -10,6 +10,8 @@ function MypagePerson(props: any):JSX.Element {
   if (!props.auth) { navigate('/') }
   const placeHolder = <p>내용이 없습니다</p>;
   const [data, setData] = useState(null as any);
+  const [selectMenu, setSelectMenu] = useState<string>('adv');
+  const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false);
   const [tabs, setTabs] = useState({
     Application: placeHolder,
     Person_review: placeHolder,
@@ -18,7 +20,7 @@ function MypagePerson(props: any):JSX.Element {
   const [tab, setTab] = useState('Application');
   const [reviewModalVisibility, setReviewModalVilibility] = useState(false);
 
-  const controlAccount = () => {
+  const unregister = () => {
     // TODO: axios delete 보내기
   }
 
@@ -34,26 +36,55 @@ function MypagePerson(props: any):JSX.Element {
   }, []);
 
   return (
-    <div className="mypageWrap">
-      {/* <p>{ JSON.stringify(data['Application']) }</p> */}
-      {/* { reviewModalVisibility ? <ReviewModal {... {data}} /> : null } */}
-      <div className="mypageProfileWrap">
-        <div className="mypageProfile">
-          <img className="profileImg" src={require('../img/user.png')} />
-          <div className="btu" onClick={controlAccount}>탈퇴하기</div>
+    <>
+    {
+      <div className="mypageWrap">
+        <ReviewModal {... {isReviewVisible, setIsReviewVisible, data, selectMenu}} />
+        <div className="mypageProfileWrap">
+          <div className="mypageProfile">
+            <img className="profileImg" src={require('../img/user.png')} />
+          </div>
+          <div className="mypageHistoryWrap">
+            <MypageHistory {...{ mypageInfo, setMypageInfo }} />
+          </div>
         </div>
-        <div className="mypageHistoryWrap">
-          { data ? <MypageHistory data={data} /> : null }
-        </div>
-      </div>
-      <div className="mypageMenuWrap">
-        <div className="mypageNav">
-            <span className="mypageBtu" onClick={() => {setTab('Application')}}>공고</span>
-            <span className="mypageBtu" onClick={() => {setTab('Person_review')}}>나에대한리뷰</span>
-            <span className="mypageBtu" onClick={() => {setTab('Org_review')}}>내가쓴리뷰</span>
-        </div>
-        <div className="mypageMenu">
-          { tabs[tab] }
+        <div className="mypageMenuWrap">
+          <div className="mypageNav">
+            <input type="radio" id="advView" name="mypageTab" value="adv" defaultChecked onChange={() => {setSelectMenu('adv')}} />
+            <label htmlFor="advView" className="mypageTab">공고보기</label>
+            <input type="radio" id="reviewToMe" name="mypageTab" value="reviewToMe" onChange={() => setSelectMenu('reviewToMe')} />
+            <label htmlFor="reviewToMe" className="mypageTab">나에대한리뷰</label>
+            <input type="radio" id="reviewFromMe" name="mypageTab" value="reviewFromMe" onChange={() => {setSelectMenu('reviewFromMe')}} />
+            <label htmlFor="reviewFromMe" className="mypageTab">내가쓴리뷰</label>
+          </div>
+          <div className="mypageMenu">
+            {/* 공고 메뉴 + 리뷰 상태(써야하는지 썼는지 수정할지)
+                리뷰만 모아서 보기 */
+              selectMenu === 'adv' ? (
+                <div>advadv</div>
+              ) : selectMenu === 'reviewToMe' ? (
+                // TODO: 가져온 리뷰를 연결
+                <ul className="reviewList">
+                  {reviewInfoList.map((data, key)=>{
+                    return (
+                    <li onClick={()=>clickReview(data)} key={key}>
+                      <ReviewItem  {... {data}} />
+                    </li>)
+                  })}
+                </ul>
+              ) : selectMenu === 'reviewFromMe' ? (
+                // TODO: 가겨온 리뷰를 연결
+                <ul className="reviewList">
+                  {reviewInfoList.map((data, key)=>{
+                    return (
+                    <li onClick={()=>clickReview(data)} key={key}>
+                      <ReviewItem  {... {data}} />
+                    </li>)
+                  })}
+                </ul>
+              ) : null
+              }
+          </div>
         </div>
       </div>
     </div>
