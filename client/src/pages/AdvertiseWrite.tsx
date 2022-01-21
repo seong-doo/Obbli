@@ -6,37 +6,51 @@ import AdvMap from "../components/AdvMap";
 const  kakao  = (window as any).kakao;
 const  daum  = (window as any).daum;
 
-
-
 const AdvertiseWrite: React.FC =  () => {
 
-    const {uuid} =useParams();
+    const { uuid } = useParams();
     const navigate = useNavigate();
-    const [skills, setSkills] = useState([]);
-    const [positions, setPositions] = useState([]);
-    
+    const [skills, setSkills] = useState([] as any);
+    const [position, setPosition] = useState({
+      skill_name: '',
+      quota: 1,
+    });
 
     const [userInput, setUserInput] = useState({
-        
-        location:'',
-        positions:[{
-
-        }],
+        location: '',
+        positions: [] as any,
         active_until:'',
         event_at:'',
         title:'',
         body:'',
     })
 
+    const controlInput = (e:any, key:string) => {
+        setUserInput({...userInput, [key]:e.target.value})
+    }
+
+    function controlQuota(e) {
+     setPosition(prev => {
+       return {
+         ...prev,
+         quota: e.target.value,
+       }
+      }) ;
+    }
+
+    function addPosition() {
+      if (!position.skill_name) { return; }
+      setUserInput(prev => {
+        return {
+          ...prev,
+          positions: [...prev.positions, { ...position }]
+        }
+      });
+      setPosition({ skill_name: '', quota: 1 });
+    }
+
     const [userLocation, setUserLocation] = useState()
-       
-
-
-    
-    
-    
     //주소-좌표 변환 객체를 생성
-    
 
     function sample5_execDaumPostcode() {
         const mapContainer = document.querySelector('.inputMap'), // 지도를 표시할 div
@@ -80,57 +94,29 @@ const AdvertiseWrite: React.FC =  () => {
             }
         }).open();
     }
-    
-    
-
-    
-    
-
-
-
-
-
-
-
-
-    const controlInputValue = (e:any, key:string) => {
-        setUserInput({...userInput, [key]:e.target.value})
-        
-    }
     const fetchAdvertise = () => {
-        axios.get(`/advert/${uuid}`)
-          .then((res) => {
-              console.log(res.data)
-            setUserInput(prev => ({...prev, ...res.data}));
-          })
-    } 
+    }
 
-    const [addPosition, setaddPosition] = useState([1])
-    const [position, setPosition] = useState([])
-    
-    
     const onClickWrite = () => {
-
         const data = {
             location: userLocation,
             active_until: userInput.active_until,
             event_at: userInput.event_at,
             title: userInput.title,
             body: userInput.body,
-            positions:position
-        }
-    
-        console.log(data);
-    
+            positions: userInput.positions,
+        };
         (uuid ? axios.patch : axios.post)(`/advert/${uuid || ''}`, data)
           .then((resp) => { navigate(`/advert/${uuid || resp.data.uuid}`) })
-        ///Users/jeonghun/Desktop/project/Obbli/server/build/Util.js:15
-        //const target = token.split(' ')[1]; 오류 발생했습니다....아마 액세스 토큰 문제인것 같아요...
-        //
     }
-    
+
     useEffect(()=>{
-        if(uuid) {fetchAdvertise();}
+      if(uuid) {
+        axios.get(`/advert/${uuid}`)
+          .then((res) => {
+            setUserInput(prev => ({...prev, ...res.data}));
+          })
+      }
       axios.get('/skill').then(resp => setSkills(resp.data));
     }, [])
 
@@ -145,7 +131,7 @@ const AdvertiseWrite: React.FC =  () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input value={userInput.title} onChange={(e)=>{controlInputValue(e, 'title')}}></input></td>
+                        <td><input value={userInput.title} onChange={(e)=>{controlInput(e, 'title')}}></input></td>
                     </tr>
                 </tbody>
             </table>
@@ -153,11 +139,11 @@ const AdvertiseWrite: React.FC =  () => {
                 <thead>
                     <tr>
                         <th>공고 상세 내용</th>
-                    </tr>        
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><textarea value={userInput.body} onChange={(e)=>{controlInputValue(e, 'body')}}></textarea></td>
+                        <td><textarea value={userInput.body} onChange={(e)=>{controlInput(e, 'body')}}></textarea></td>
                     </tr>
                 </tbody>
             </table>
@@ -165,18 +151,18 @@ const AdvertiseWrite: React.FC =  () => {
                 <thead>
                     <tr>
                         <th>공연 장소</th>
-                    </tr>        
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
-                      {/* <td><input type="text" value={userInput.location} onChange={(e)=>{controlInputValue(e, 'location')}}></input></td> */}
+                      {/* <td><input type="text" value={userInput.location} onChange={(e)=>{controlInput(e, 'location')}}></input></td> */}
                       <td>
                         <input className ="inputAddress" type="text" id="sample5_address" placeholder="주소" value={userLocation}/>
                         <button className="inputAddressbtn" type="button"  value="주소 검색" onClick={()=>{sample5_execDaumPostcode()}}>검색</button>
                       </td>
                     </tr>
                         <tr>
-                        <td><div className="inputMap" ></div></td>    
+                        <td><div className="inputMap" ></div></td>
                         </tr>
                 </tbody>
                     {/* <tr>
@@ -198,7 +184,7 @@ const AdvertiseWrite: React.FC =  () => {
                 type="datetime-local"
                 value={userInput.active_until}
                 onChange={(e) => {
-                  controlInputValue(e, "active_until");
+                  controlInput(e, "active_until");
                 }}
               ></input>
             </td>
@@ -207,7 +193,7 @@ const AdvertiseWrite: React.FC =  () => {
                 type="datetime-local"
                 value={userInput.event_at}
                 onChange={(e) => {
-                  controlInputValue(e, "event_at");
+                  controlInput(e, "event_at");
                 }}
               ></input>
             </td>
@@ -222,29 +208,25 @@ const AdvertiseWrite: React.FC =  () => {
           </tr>
         </thead>
         <tbody>
-          {addPosition.map((el, key) => {
-            return (
-              <AdvPositionAdd
-                key={key}
-                userPosition={userInput.positions}
-                addPosition={addPosition}
-                setaddPosition={setaddPosition}
-                position={position}
-                setPosition={setPosition}
-              />
-            );
-          })}
+          { userInput.positions.map((each) => { return (
+                <tr>
+                  <td>{each.skill_name}</td>
+                  <td>{each.quota}</td>
+                </tr>
+            ); })
+          }
+          <tr>
+            <td>
+              <select value={position.skill_name} onChange={(e) => setPosition(prev => ({ ...prev, skill_name: e.target.value }))}>
+                <option value="">==== 악기 ====</option>
+                { skills.map((each) => <option value={each.name}>{each.name}</option>)}
+              </select>
+            </td>
+            <td><input type="number" value={position.quota} onChange={controlQuota}></input></td>
+            <td className="btn" onClick={addPosition}>+</td>
+          </tr>
         </tbody>
-        <button
-          className="advwritebtn"
-          type="button"
-          onClick={() => {
-            onClickWrite();
-          }}
-        >
-          작성 하기
-        </button>
-      
+        <button className="advwritebtn" type="button" onClick={() => { onClickWrite(); }}>작성하기</button>
       </table>
     </div>
   );
