@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function TopNavigation({ auth, setIsSignInVisible, signOut }) {
   const navigate = useNavigate();
-  if (window.location.pathname === '/') { return null; }
 
   const handleModal = () => {
     setIsSignInVisible(true)
