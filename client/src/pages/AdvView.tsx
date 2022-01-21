@@ -23,14 +23,13 @@ interface Advert {
   ],
 };
 
-const AdvView : React.FC =  () => {
+const AdvView = ({ auth }) => {
     const { uuid } = useParams();
     const navigate = useNavigate();
     // TODO: error handling for invalid url
-    
+
     const [advert, setAdvert] = useState({ reviews: [], positions:[]} as any);
-    
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [position, setPosition] = useState('');
 
     const onClickDelete = () => {
         axios.delete(`/advert/${uuid}`)
@@ -39,8 +38,9 @@ const AdvView : React.FC =  () => {
         })
     }
 
-    function apply(uuid) {
-      axios.post(`/application/${uuid}`)
+    function apply() {
+      if (!position) { return }
+      axios.post(`/application/${position}`)
         .then(resp => navigate('/'));
     }
 
@@ -52,12 +52,13 @@ const AdvView : React.FC =  () => {
     return (
         <div className="advView">
             <h2>{ advert.title }</h2>
-            {isAdmin ? 
-                <div className="advViewbtn">
+            {(auth?.permission === 'org' && auth?.uuid === uuid)
+                ? <div className="advViewbtn">
                     <button type="button" onClick={()=>navigate(`/advert/edit/${uuid}`)}>수정하기</button>
                     <button type="button" onClick={()=>onClickDelete()}>삭제하기</button>
                 </div>
-                : null}    
+                : null
+            }
             <table className="advViewTable">
                 <colgroup>
                     <col className="col1"></col>
@@ -72,12 +73,13 @@ const AdvView : React.FC =  () => {
                         <td>{ advert.body }</td>
                         <td>{ advert.active_until }</td>
                         <td>
-                            <select>
+                            <select onChange={(e) => setPosition(e.target.value)}>
+                                <option value="">==지원 부문==</option>
                                 {advert.positions.map((el)=>{
-                                    return <option>{el.skill_name}</option>
+                                    return <option value={el.uuid}>{el.skill_name}</option>
                                 })}
                             </select>
-                            <button type="button" >지원하기</button>
+                            <button type="button" onClick={apply}>지원하기</button>
                         </td>
                     </tr>
             </table>

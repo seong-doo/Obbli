@@ -24,7 +24,7 @@ function ReviewsModal({ reviews }) {
   // );
 }
 
-export default function AdvertModal({ data }) {
+export default function AdvertModal({ data, setAdvertModalVisibility }) {
   const [reviews, setReviews] = useState([]);
   const [reviewsModalVisibility, setReviewsModalVisibility] = useState(false);
 
@@ -41,7 +41,7 @@ export default function AdvertModal({ data }) {
   }
 
   return (
-    <div className="modalBackground">
+    <div className="modalBackground" onClick={() => setAdvertModalVisibility(false)}>
       { reviewsModalVisibility ? <ReviewsModal reviews={reviews}/> : null}
       <div className="applicationWrap">
         { data.map(({uuid, skill_name, person}) => { return (

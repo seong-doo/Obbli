@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import MypageOrgInfo from '../components/MypageOrgInfo'
 import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
-import AdvertModal from '../modal/AdvertModal'
+import AdvertModal from '../modal/AdvertModal';
 import axios from 'axios';
 
-function MypageOrg(props: any):JSX.Element {
+function MypageOrg(props) {
   const navigate = useNavigate();
   const [data, setData] = useState({
     Advert: [],
@@ -48,7 +48,7 @@ function MypageOrg(props: any):JSX.Element {
 
   return (
     <div className="mypageWrap">
-      { advertModalVisibility ? <AdvertModal data={advertModalData}/> : null }
+      { advertModalVisibility ? <AdvertModal {...{ data: advertModalData, setAdvertModalVisibility }}/> : null }
       { reviewModalData ? <ReviewModal {... {isReviewVisible, setIsReviewVisible, data: reviewModalData, selectMenu}} /> : null }
       <div className="mypageProfileWrap">
         <div className="mypageProfile">
