@@ -43,7 +43,7 @@ function MypageOrgInfo({ data }):JSX.Element {
         <div>
           <div className="inputWrap">
             <div className="mypageInfoNameEdit">단체 이름 :</div>
-            <input type="name" value={userInput.name} onChange={controlInputValue('name')} />
+            <input type="name" value={userInput.name} onChange={controlInput('name')} />
           </div>
           <div className="inputWrap">
             <div className="mypageInfoNameEdit">단체인원수 :</div>
