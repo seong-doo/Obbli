@@ -59,7 +59,7 @@ function MypageHistory({ data }):JSX.Element {
         <div>
           <div className="inputWrap">
             <div className="mypageInfoNameEdit">이름 : </div>
-            <input type="text" value={userInput.name} onChange={controlInput('realname')} />
+            <input type="text" value={userInput.name} onChange={controlInput('name')} />
           </div>
           <div className="inputWrap">
             <div className="mypageInfoNameEdit">악기 : </div>
@@ -85,7 +85,7 @@ function MypageHistory({ data }):JSX.Element {
         <textarea className="userHistoryText">{userInput.history}</textarea>
       </div>
       <button type='button' className="mypageBtu delete" onClick={unregister}>탈퇴하기</button>
-      <button type='button' className="mypageBtu" onClick={onClickUpdate}>확인</button>
+      <button type='button' className="mypageBtu" onClick={update}>확인</button>
       <button type='button' className="mypageBtu" onClick={() => setIsEditing(false)}>취소하기</button>
     </div>
     ) : (
