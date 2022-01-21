@@ -8,6 +8,7 @@
 
 .App{
     height: 90vh;
+    scroll-behavior: smooth;
 }
 
 nav {
@@ -21,6 +22,8 @@ nav {
     display: flex;
     justify-content: center;
     margin-top: 10vh;
+    margin-bottom: 15vh;
+    min-height:100%;
 }
 
 section {
@@ -30,9 +33,9 @@ section {
 }
 
 footer {
-    position: relative;
-
-
+  height: 10vh;
+  position : relative;
+  transform : translateY(-100%);
 }
 
 
