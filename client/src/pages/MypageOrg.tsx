@@ -3,15 +3,24 @@ import { useNavigate } from 'react-router-dom';
 import MypageOrgInfo from '../components/MypageOrgInfo'
 import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
+import AdvertModal from '../modal/AdvertModal'
 import axios from 'axios';
 
 function MypageOrg(props: any):JSX.Element {
   const navigate = useNavigate();
-  const [data, setData] = useState(null as any);
+  const [data, setData] = useState({
+    Advert: [],
+    Org_review: [],
+    Person_review: [],
+  } as any);
   const [selectMenu, setSelectMenu] = useState<string>('adv');
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false);
+  const [reviewModalData, setReviewModalData] = useState(null as any);
+  const [advertModalVisibility, setAdvertModalVisibility] = useState(false);
+  const [advertModalData, setAdvertModalData] = useState();
+
   const clickReview = (data: any) => {
-    setData({
+    setReviewModalData({
       rating: data.rating,
       comment: data.comment
     })
@@ -23,6 +32,15 @@ function MypageOrg(props: any):JSX.Element {
 
     // TODO: axios get 공고 및 리뷰 가져오기
 
+  function popAdvertModal(uuid) {
+    axios.get(`/org/advert/${uuid}`)
+      .then(resp => {
+        setAdvertModalData(resp.data);
+        setAdvertModalVisibility(true);
+      })
+      .catch(() => {})
+  }
+
   useEffect(() => {
     if (!props.auth) { navigate('/'); }
     axios.get('/org').then(resp => { setData(resp.data); });
@@ -30,7 +48,8 @@ function MypageOrg(props: any):JSX.Element {
 
   return (
     <div className="mypageWrap">
-      <ReviewModal {... {isReviewVisible, setIsReviewVisible, data, selectMenu}} />
+      { advertModalVisibility ? <AdvertModal data={advertModalData}/> : null }
+      { reviewModalData ? <ReviewModal {... {isReviewVisible, setIsReviewVisible, data: reviewModalData, selectMenu}} /> : null }
       <div className="mypageProfileWrap">
         <div className="mypageProfile">
           <img className="profileImg" src={require('../img/user.png')} />
@@ -49,30 +68,37 @@ function MypageOrg(props: any):JSX.Element {
           <label htmlFor="reviewFromMe" className="mypageTab">내가쓴리뷰</label>
         </div>
         <div className="mypageMenu">
-          {/* 공고 메뉴 + 리뷰 상태(써야하는지 썼는지 수정할지)
-              리뷰만 모아서 보기 */
-            selectMenu === 'adv' ? (
-              <div>advadv</div>
+          { selectMenu === 'adv' ? (
+            <div>
+              <ul>
+                { data.Advert.map(advert => { return (
+                    <li onClick={() => popAdvertModal(advert.uuid)}>
+                      <span>{advert.event_at}</span>
+                      <span>{advert.active_until}</span>
+                      <span>{advert.title}</span>
+                    </li>
+                  ); })
+                }
+              </ul>
+            </div>
             ) : selectMenu === 'reviewToMe' ? (
-              // TODO: 가져온 리뷰를 reviewItem에 하나씩 넘겨줌
-              <ul className="reviewList">
-                {data.Org_review.map((data, key)=>{
-                  return (
-                  <li onClick={()=>clickReview(data)} key={key}>
-                    <ReviewItem  {... {data}} />
-                  </li>)
-                })}
-              </ul>
+            <ul className="reviewList">
+              {data.Org_review.map((data, key)=>{
+                return (
+                <li onClick={()=>clickReview(data)} key={key}>
+                  <ReviewItem  {... {data}} />
+                </li>)
+              })}
+            </ul>
             ) : selectMenu === 'reviewFromMe' ? (
-              // TODO: 가져온 리뷰를 reviewItem에 하나씩 넘겨줌
-              <ul className="reviewList">
-                {data.Person_review.map((data, key)=>{
-                  return (
-                  <li onClick={()=>clickReview(data)} key={key}>
-                    <ReviewItem  {... {data}} />
-                  </li>)
-                })}
-              </ul>
+            <ul className="reviewList">
+              {data.Person_review.map((data, key)=>{
+                return (
+                <li onClick={()=>clickReview(data)} key={key}>
+                  <ReviewItem  {... {data}} />
+                </li>)
+              })}
+            </ul>
             ) : null
           }
         </div>
