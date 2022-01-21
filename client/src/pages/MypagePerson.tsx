@@ -9,7 +9,11 @@ function MypagePerson(props: any):JSX.Element {
   const navigate = useNavigate();
   if (!props.auth) { navigate('/') }
   const placeHolder = <p>내용이 없습니다</p>;
-  const [data, setData] = useState(null as any);
+  const [data, setData] = useState({
+    Application: [],
+    Person_review: [],
+    Org_review: [],
+  } as any);
   const [selectMenu, setSelectMenu] = useState<string>('adv');
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false);
   const [reviewModalData, setReviewModalData] = useState(null as any);
@@ -64,15 +68,22 @@ function MypagePerson(props: any):JSX.Element {
 
         <div className="mypageMenu">
           { selectMenu === 'adv' ? (
-              <ul>{data.Application.map(each =>
-                <li>
-                  <span>{ each.org_name }</span>
-                  <span>{ each.skill_name }</span>
-                  <span>{ each.active_until }</span>
-                  <span>{ getApplicationStatus(each) }</span>
-                </li>
+              <table>
+                <tr>
+                  <th>단체명</th>
+                  <th>부문</th>
+                  <th>모집기한</th>
+                  <th>상태</th>
+                </tr>
+                {data.Application.map(each =>
+                <tr>
+                  <td>{ each.org_name }</td>
+                  <td>{ each.skill_name }</td>
+                  <td>{ each.active_until }</td>
+                  <td>{ getApplicationStatus(each) }</td>
+                </tr>
               )}
-              </ul>
+              </table>
             ) : selectMenu === 'reviewToMe' ? (
               // TODO: 가져온 리뷰를 연결
               <ul className="reviewList">
