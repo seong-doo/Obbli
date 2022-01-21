@@ -123,7 +123,7 @@ const UserInfo = {
       name: row.name,
       professional: row.professional,
       history: row.history,
-      skill_name: row.Skill.name,
+      skill_name: row?.Skill?.name,
       Application: row.Application.map(each => ({
         org_uuid: each.Position.Advert.Org.uuid,
         org_name: each.Position.Advert.Org.name,
@@ -139,7 +139,6 @@ const UserInfo = {
       Org_review: row.Org_review,
     }
 
-    console.log(data);
     if (!row) {
       return res.status(404).json({});
     }
