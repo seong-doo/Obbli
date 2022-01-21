@@ -29,7 +29,6 @@ const AdvView : React.FC =  () => {
     // TODO: error handling for invalid url
     
     const [advert, setAdvert] = useState({ reviews: [], positions:[]} as any);
-    console.log(advert)
     
     const [isAdmin, setIsAdmin] = useState(true);
 

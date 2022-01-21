@@ -25,11 +25,9 @@ const AdvMap: React.FC<AddressProps> =  ({location, event_at}) => {
 
         var ps = new kakao.maps.services.Places(); 
 
-        console.log(location)
         ps.keywordSearch(location, placesSearchCB); 
         
         function placesSearchCB (data:any, status:any, pagination:any ) {
-            console.log(data)
             if (status === kakao.maps.services.Status.OK) {
         
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
