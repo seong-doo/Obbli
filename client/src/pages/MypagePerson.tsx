@@ -5,59 +5,35 @@ import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
 import axios from 'axios';
 
-const listData = [
-  {
-    key : 1,
-    username : '김코딩',
-    rating : 4,
-    comment : "K-오케스트라 여윽시 최고다, 역시 이런 무대를 설수 있다니"
-  },
-  {
-    key : 2,
-    username : '나코딩',
-    rating : 4,
-    comment : "역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
-  },
-  {
-    key : 3,
-    username : '박코딩',
-    rating : 4,
-    comment : "아무리 그래도 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
-  },
-  {
-    key : 4,
-    username : '이코딩',
-    rating : 4,
-    comment : "역시는 역시 K-오케스트라 여윽시 최고다, 이런 무대를 설수 있다니"
-  }
-]
-
 function MypagePerson(props: any):JSX.Element {
   const navigate = useNavigate();
-  if (!props.userState) { navigate('/') }
-  const [mypageInfo, setMypageInfo] = useState({});
-  const [selectMenu, setSelectMenu] = useState<string>('adv')
-  const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false)
-  const [reviewInfoList, setReviewInfoList] = useState([] as any[])
-  const [data, setData] = useState({
-    rating : 0,
-    comment : ''
-  })
+  if (!props.auth) { navigate('/') }
+  const placeHolder = <p>내용이 없습니다</p>;
+  const [data, setData] = useState(null as any);
+  const [selectMenu, setSelectMenu] = useState<string>('adv');
+  const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false);
+  const [tabs, setTabs] = useState({
+    Application: placeHolder,
+    Person_review: placeHolder,
+    Org_review: placeHolder,
+  });
+  const [tab, setTab] = useState('Application');
+  const [reviewModalVisibility, setReviewModalVilibility] = useState(false);
 
-  const clickReview = (data: any) => {
-    setData({
-      rating: data.rating,
-      comment: data.comment
-    })
-    setIsReviewVisible(true)
+  const unregister = () => {
+    // TODO: axios delete 보내기
   }
 
-    // TODO: axios get 공고 및 리뷰 가져오기
-
   useEffect(() => {
-    console.log(axios.defaults.headers.common);
-    axios.get('/person').then(resp => setMypageInfo(resp.data));
-  }, [])
+    axios.get('/person').then(resp => {
+      setData(resp.data);
+      setTabs({
+        Application: <p>{ JSON.stringify(resp.data.Application) }</p>,
+        Person_review: <>{ resp.data.Person_review.map(v => <ReviewItem data={v} />) }</>,
+        Org_review: <>{ resp.data.Org_review.map(v => <ReviewItem data={v} />) }</>,
+      });
+    });
+  }, []);
 
   return (
     <>
@@ -111,8 +87,7 @@ function MypagePerson(props: any):JSX.Element {
           </div>
         </div>
       </div>
-    }
-    </>
+    </div>
   )
 }
 
