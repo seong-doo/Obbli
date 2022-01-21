@@ -1,5 +1,4 @@
-import { Org } from "../entity/Org";
-import { Person } from "../entity";
+import { Advert, Org, Person } from "../entity";
 import { signToken, verifyToken, hashPassword } from "../Util";
 
 interface TokenInfo {
@@ -183,5 +182,32 @@ const OrgInfo = {
       }
   },
 };
+
+export async function getOrgAdvert(req, res) {
+  const token = verifyToken(req.headers.authorization);
+  if (!token) { return res.status(401).send(); }
+  const uuid = req.params.advert_uuid;
+
+  const row = await Advert.findOne({
+    where: { uuid },
+    relations: ['Position', 'Position.Skill', 'Position.Application', 'Position.Application.Person', 'Position.Application.Person.Person_review'],
+  })
+  const data = [] as any;
+  for (const position of row.Position) {
+    data.push({
+      skill_name: position.Skill.name,
+      person: (position.Application as any).map(application => ({
+        uuid: application.Person.uuid,
+        name: application.Person.name,
+        reviews: application.Person.Person_review.map(review => ({
+          comment: review.comment,
+          rating: review.rating,
+        })),
+      })),
+    });
+  }
+
+  return res.status(200).send(data);
+}
 
 export { SignIn, SignUp, SignOut, OrgInfo };

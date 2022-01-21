@@ -1,5 +1,5 @@
 import { AppPerson } from '../controllers/Application';
-import { PersonReview } from '../controllers/Review'
+import { PersonReview, getPersonReview } from '../controllers/Review'
 import { SignIn, SignUp, SignOut, UserInfo } from '../controllers/Person'
 
 const router = require("express").Router();
@@ -24,6 +24,8 @@ router.get("/review", PersonReview.get);
 router.patch("/review/:person_uuid", PersonReview.patch);
 //작성한 review 삭제하기
 router.delete("/review/:person_uuid", PersonReview.delete);
+
+router.get('/review/:person_uuid', getPersonReview);
 
 //Application 부분
 //참여 목록 가져오기
