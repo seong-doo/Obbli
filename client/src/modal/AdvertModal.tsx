@@ -36,11 +36,15 @@ export default function AdvertModal({ data }) {
       });
   }
 
+  function markApplication(person_uuid, position_uuid, state) {
+    axios.patch('/application', { person_uuid, position_uuid, state })
+  }
+
   return (
     <div className="modalBackground">
       { reviewsModalVisibility ? <ReviewsModal reviews={reviews}/> : null}
       <div className="applicationWrap">
-        { data.map(({skill_name, person}) => { return (
+        { data.map(({uuid, skill_name, person}) => { return (
           <div>
             <h3>{ skill_name }</h3>
             <ul>
@@ -49,8 +53,8 @@ export default function AdvertModal({ data }) {
                   <span>{ each.name }</span>
                   <span>{ each.uuid }</span>
                   <span><button onClick={() => showReviews(each.uuid)}>평가 보기</button></span>
-                  <span><button>연락처 보기</button></span>
-                  <span><button>계약하기</button></span>
+                  <span><button onClick={() => markApplication(each.uuid, uuid, 'received')}>연락처 보기</button></span>
+                  <span><button onClick={() => markApplication(each.uuid, uuid, 'hired')}>계약하기</button></span>
                 </li>
               ); }) }
             </ul>

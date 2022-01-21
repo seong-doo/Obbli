@@ -186,79 +186,30 @@ const AppPosition = {
   },
 
   patch: async (req, res): Promise<void> => {
-    
-    if(!req.headers.authorization){
-      return res.status(401).json({})
-    }
-    
-    interface incomingData {
-      position_uuid: string;
-      person_uuid: string;
-      state: string;
-    }
-    
-    const { position_uuid, person_uuid, state }: incomingData = req.body;
-    const org:TokenInfo = verifyToken(req.headers.authorization);
-    
-    if( !org ){
-      return res.status(401).json({})
-    }
-    
-    const checkUnauth = await getRepository(Position)
-    .createQueryBuilder('Position')
-    .select(["Advert.uuid as uuid"])
-    .leftJoin("Position.Advert","Advert")
-    .leftJoin("Advert.Org","Org")
-    .where({uuid: position_uuid})
-    .andWhere("Org.uuid =:uuid",{uuid:org.uuid})
-    .execute()
+    if(!req.headers.authorization){ return res.status(401).send(); }
 
-    if(checkUnauth.length === 0){
-      return res.status(401).json({})
-    }
-    console.log(req.body)
-    console.log("Person" + person_uuid)
-    console.log("Position::" + position_uuid)
-    console.log("Org::" + org.uuid)
-    const checkData = await getRepository(Application)
-      .createQueryBuilder("Application")
-      .select([
-        "Application.person_uuid as person_uuid",
-        "Advert.org_uuid",
-        "Application.received_at as received_at",
-        "Application.hired_at as hired_at",
-        "Application.position_uuid as position_uuid",
-      ])
-      .leftJoin("Application.Position", "Position")
-      .leftJoin("Position.Advert", "Advert")
-      .where({ position_uuid })
-      .andWhere({ person_uuid })
-      .andWhere("Advert.org_uuid =: org_uuid", { org_uuid:org.uuid })
-      .getQuery();
+    const token = verifyToken(req.headers.authorization);
+    if(!token) { return res.status(401).send(); }
 
-    console.log(checkData)
-    //토큰,유효하지 않은 Application에 대해 분기처리
-    if (!checkData) {
-      return res.status(400).json({});
-    }
-    //received를 건너뛴 hired요청
-    else if (state === "hired" && checkData["received_at"] === null) {
-      return res.status(400).json({});
-    }
-    //이미 완료된 요청에 대한 재응답 요청
-    else if (checkData[state] !== null) {
-      return res.status(204).json({});
-    } 
-    else {
-      const newDate = {};
-      newDate[state] = Date();
-      const before = await Application.findOne({person_uuid, position_uuid})
-      console.log(before)
-      await Application.update({ person_uuid, position_uuid }, newDate);
-      const after = await Application.findOne({person_uuid, position_uuid})
-      console.log(after)
-      return res.status(200).json();
-    }
+    const { position_uuid, person_uuid, state } = req.body;
+
+    if (!position_uuid || !person_uuid || !state) { return res.status(400).send(); }
+    if (state !== 'received' && state !== 'hired') { return res.status(400).send(); }
+
+    const row = await Application.findOne({
+      where: { person_uuid, position_uuid },
+      relations: ['Position', 'Position.Advert', 'Position.Advert.Org'],
+    });
+
+    console.log(row);
+    if (!row) { return res.status(400).send(); }
+    if (token.uuid !== row.Position.Advert.Org.uuid) { return res.status(401).send(); }
+    if (token.state === 'hired' && !row.received_at) { return res.status(400).send(); }
+
+    row[`${state}_at`] = new Date();
+    await row.save();
+
+    return res.status(204).send();
   },
 };
 
