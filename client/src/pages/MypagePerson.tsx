@@ -9,15 +9,14 @@ function MypagePerson(props: any):JSX.Element {
   const navigate = useNavigate();
   if (!props.auth) { navigate('/') }
   const placeHolder = <p>내용이 없습니다</p>;
-  const [data, setData] = useState(null as any);
+  const [data, setData] = useState({
+    Application: [],
+    Person_review: [],
+    Org_review: [],
+  } as any);
   const [selectMenu, setSelectMenu] = useState<string>('adv');
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false);
   const [reviewModalData, setReviewModalData] = useState(null as any);
-  const [tabs, setTabs] = useState({
-    Application: placeHolder,
-    Person_review: placeHolder,
-    Org_review: placeHolder,
-  });
   const clickReview = (data: any) => {
     setReviewModalData({
       rating: data.rating,
@@ -25,21 +24,21 @@ function MypagePerson(props: any):JSX.Element {
     })
     setIsReviewVisible(true)
   }
-  const [tab, setTab] = useState('Application');
   const [reviewModalVisibility, setReviewModalVilibility] = useState(false);
 
   const unregister = () => {
     // TODO: axios delete 보내기
   }
 
+  function getApplicationStatus({ received_at, hired_at }) {
+    if (hired_at) { return 'hired'; }
+    if (received_at) { return 'received'; }
+    return 'pending';
+  }
+
   useEffect(() => {
     axios.get('/person').then(resp => {
       setData(resp.data);
-      setTabs({
-        Application: <p>{ JSON.stringify(resp.data.Application) }</p>,
-        Person_review: <>{ resp.data.Person_review.map(v => <ReviewItem data={v} />) }</>,
-        Org_review: <>{ resp.data.Org_review.map(v => <ReviewItem data={v} />) }</>,
-      });
     });
   }, []);
 
@@ -69,7 +68,22 @@ function MypagePerson(props: any):JSX.Element {
 
         <div className="mypageMenu">
           { selectMenu === 'adv' ? (
-              <div>advadv</div>
+              <table>
+                <tr>
+                  <th>단체명</th>
+                  <th>부문</th>
+                  <th>모집기한</th>
+                  <th>상태</th>
+                </tr>
+                {data.Application.map(each =>
+                <tr>
+                  <td>{ each.org_name }</td>
+                  <td>{ each.skill_name }</td>
+                  <td>{ each.active_until }</td>
+                  <td>{ getApplicationStatus(each) }</td>
+                </tr>
+              )}
+              </table>
             ) : selectMenu === 'reviewToMe' ? (
               // TODO: 가져온 리뷰를 연결
               <ul className="reviewList">

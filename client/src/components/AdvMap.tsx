@@ -2,12 +2,13 @@ import React, {useEffect} from "react";
 const  kakao  = (window as any).kakao;
 
 type AddressProps = {
-    location:string
+    location:string,
+    event_at:string,
 }
 
 
 
-const AdvMap: React.FC<AddressProps> =  ({location}) => {
+const AdvMap: React.FC<AddressProps> =  ({location, event_at}) => {
 
     
 
@@ -24,11 +25,9 @@ const AdvMap: React.FC<AddressProps> =  ({location}) => {
 
         var ps = new kakao.maps.services.Places(); 
 
-        console.log(location)
         ps.keywordSearch(location, placesSearchCB); 
         
         function placesSearchCB (data:any, status:any, pagination:any ) {
-            console.log(data)
             if (status === kakao.maps.services.Status.OK) {
         
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -71,7 +70,18 @@ const AdvMap: React.FC<AddressProps> =  ({location}) => {
 
     return(
         <div className="advMap">
-            <div><span>공연 장소 : {location}</span></div>
+            <table>
+                <thead>
+                    <tr>
+                        <td>공연 장소</td>
+                        <td>공연 시간</td>
+                    </tr>
+                </thead>
+                    <tr>
+                        <td>{location}</td>
+                        <td>{event_at}</td>
+                    </tr>
+            </table>
             <div  className="advMap location"></div>
        </div>
         
