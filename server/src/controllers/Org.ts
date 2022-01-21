@@ -195,6 +195,7 @@ export async function getOrgAdvert(req, res) {
   const data = [] as any;
   for (const position of row.Position) {
     data.push({
+      uuid: position.uuid,
       skill_name: position.Skill.name,
       person: (position.Application as any).map(application => ({
         uuid: application.Person.uuid,
