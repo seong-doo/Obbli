@@ -96,7 +96,7 @@ function MypageHistory({ data }):JSX.Element {
           <div className="mypageInfoName">악기 : {data.skill}</div>
         </div>
         <div>
-          <div className="mypageInfoName">전공 여부 {data.professional ? '✔' : null}</div>
+          <div className="mypageInfoName">전공 여부 {data.professional ? '✔' : '❌'}</div>
         </div>
       </div>
       <div className="userHistory">
