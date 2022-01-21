@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // interface mypageInfoType {
 //     user_id: string,
@@ -14,48 +15,29 @@ import React, {useState, useEffect} from 'react';
 //     setMypageInfo: React.Dispatch<React.SetStateAction<mypageInfoType>>
 // }
 
-function MypageHistory(props):JSX.Element {
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [pwChange, setPwChange] = useState({
-    pw:'',
-    pw_cheke:'',
-  })
-
-  const controlInputValue = (key:string) => (e:any) => {
-    props.setMypageInfo({ ...props.mypageInfo, [key]: e.target.value });
+function MypageHistory({ data }):JSX.Element {
+  const defaultInput = {
+    name: data.name,
+    pw: '',
+    pw_check: '',
   };
+  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false);
+  const [userInput, setUserInput] = useState({ ...defaultInput });
 
-  const controlInputPw = (key:string) => (e:any) => {
-    setPwChange({ ...pwChange, [key]: e.target.value});
-  };
-
-  const onClickUpdate = () => {
-    // TODO: axios fetch 정보 수정
-    if(pwChange.pw !== pwChange.pw_cheke){
-      alert('비밀번호가 다릅니다.')
-      return;
+  function controlInput(key) {
+    return function (ev) {
+      setUserInput(prev => ({ ...prev, [key]: ev.target.value }));
     }
-    axios.patch(`/person`)
-    .then((res)=> {
-      props.setMypageInfo({
-        uuid: props.mypageInfo.uuid,
-        name:props.mypageInfo.name,
-        professional: props.mypageInfo.professional,
-        skill:props.mypageInfo.skill,
-        history: props.mypageInfo.history
+  }
+
+  function update() {
+    axios.patch('/person', Object.fromEntries(Object.entries(userInput).filter(pair => pair[1])))
+      .then(resp => {
+        if (resp.status !== 200) { /* Error */ }
+        navigate('/');
       })
-      setIsEditing(false)
-    })
   }
-
-  const onClickCancel = () => {
-    // TODO: axios로 수정하기 않고 닫기
-    setIsEditing(false);
-  }
-
-  useEffect(() => {
-    
-  }, [])
 
   return (
     <>
@@ -64,55 +46,50 @@ function MypageHistory(props):JSX.Element {
       <div className="userInfoWrap">
         <div>
           <div className="mypageInfoName">아이디</div>
-          <div className="mypageInfo">{}</div>
+          <div className="mypageInfo">{data.user_id}</div>
           <div className="mypageInfoName">이름</div>
-          <input type="text" value={props.mypageInfo.name} onChange={controlInputValue('realname')} />
+          <input type="text" value={userInput.name} onChange={controlInput('name')} />
         </div>
         <div>
           <div className="mypageInfoName">악기</div>
-          <input type="text" value={props.mypageInfo.skill} onChange={controlInputValue('skill')} />
+          <input type="text" value={data.skill_name} />
           <div className="mypageInfoName">전공 여부</div>
-          <div className="mypageInfo">{props.mypageInfo.professional ? '전공' : null}</div>
+          <div className="mypageInfo">{data.professional ? '전공' : null}</div>
         </div>
         <div className="pwChangeWrap">
           <div className="mypageInfoName">비밀번호</div>
-          <input type="password" value={pwChange.pw} onChange={controlInputPw('pw')} />
+          <input type="password" value={userInput.pw} onChange={controlInput('pw')} />
           <div className="mypageInfoName">비밀번호 확인</div>
-          <input type="password" value={pwChange.pw_cheke} onChange={controlInputPw('pw_cheke')} />
+          <input type="password" value={userInput.pw_check} onChange={controlInput('pw_check')} />
         </div>
       </div>
-      <div className="userHistory">
-        {/* 엔터로 구분?? */}
-        {props.mypageInfo.history}
-        
-      </div>
-      <div className="btu" onClick={onClickUpdate}>확인</div>
-      <div className="btu" onClick={onClickCancel}>취소하기</div>
+      <div className="userHistory">{ 'TODO' }</div>
+      <div className="btu" onClick={update}>확인</div>
+      <div className="btu" onClick={() => setIsEditing(false)}>취소하기</div>
     </div>
     ) : (
     <div>
       <div className="userInfoWrap">
         <div>
           <div className="mypageInfoName">아이디</div>
-          <div className="mypageInfo">{}</div>
+          <div className="mypageInfo">{data.user_id}</div>
           <div className="mypageInfoName">이름</div>
-          <div className="mypageInfo">{props.mypageInfo.name}</div>
+          <div className="mypageInfo">{data.name}</div>
         </div>
         <div>
           <div className="mypageInfoName">악기</div>
-          <div className="mypageInfo">{props.mypageInfo.skill}</div>
+          <div className="mypageInfo">{data.skill_name}</div>
           <div className="mypageInfoName">전공 여부</div>
-          <div className="mypageInfo">{props.mypageInfo.professional ? '전공' : null}</div>
+          <div className="mypageInfo">{data.professional ? '전공' : null}</div>
         </div>
       </div>
       <div className="userHistory">
         {/* 엔터로 구분?? */}
-        {props.mypageInfo.history}
+        {data.history}
       </div>
       <div className="btu" onClick={() => setIsEditing(true)}>수정하기</div>
     </div>
     )}
-      
     </>
   )
 }

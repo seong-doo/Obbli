@@ -39,7 +39,7 @@ const SignIn = {
       const refresh_token:string = signToken(data, "1h");
 
       return res
-        .cookie("refresh_Token", refresh_token, { httpOnly: true })
+        .cookie("refresh_token", refresh_token, { httpOnly: true })
         .status(200)
         .json({
           access_token,
@@ -113,23 +113,15 @@ const OrgInfo = {
       return res.status(401).json({});
     } else {
       const { uuid } = tokenCheck;
-      const OrgData: search_OrgInfo = await Org.findOne({ uuid });
+      const row = await Org.findOne({
+        where: { uuid },
+        relations: ['Advert', 'Org_review', 'Person_review'],
+      });
       // TODO: error handling when nothing is selected
-      if (!OrgData) {
-        return res.status(404).json({});
-      } else {
-        interface response_OrgInfo {
-          name: string;
-          description: string;
-          since: Date;
-          headcount: number;
-        }
+      if (!row) { return res.status(404).send(); }
 
-        const { name, description, since, headcount }: response_OrgInfo =
-          OrgData;
-
-        return res.status(200).send({ name, description, since, headcount });
-      }
+      console.log(row);
+      return res.status(200).send(row);
     }
   },
 
