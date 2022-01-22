@@ -30,6 +30,7 @@ const AdvView = ({ auth }) => {
 
     const [advert, setAdvert] = useState({ reviews: [], positions:[]} as any);
     const [position, setPosition] = useState('');
+    const [applied, setApplied] = useState(true);
 
     const onClickDelete = () => {
         axios.delete(`/advert/${uuid}`)
@@ -47,6 +48,10 @@ const AdvView = ({ auth }) => {
     useEffect(() => {
         axios.get(`/advert/${uuid}`)
             .then((resp) => { setAdvert(resp.data); });
+        if (auth?.permission === 'person') {
+            axios.get(`/person/applied/${uuid}`)
+                .then(resp => setApplied(resp.data.applied));
+        }
     }, []);
 
     return (
@@ -73,13 +78,15 @@ const AdvView = ({ auth }) => {
                         <td>{ advert.body }</td>
                         <td>{ advert.active_until }</td>
                         <td>
-                            <select onChange={(e) => setPosition(e.target.value)}>
-                                <option value="">==지원 부문==</option>
-                                {advert.positions.map((el)=>{
-                                    return <option value={el.uuid}>{el.skill_name}</option>
-                                })}
-                            </select>
-                            <button type="button" onClick={apply}>지원하기</button>
+                            { applied ? null : <>
+                                <select onChange={(e) => setPosition(e.target.value)}>
+                                    <option value="">==지원 부문==</option>
+                                    {advert.positions.map((el)=>{
+                                        return <option value={el.uuid}>{el.skill_name}</option>
+                                    })}
+                                </select>
+                                <button type="button" onClick={apply}>지원하기</button>
+                            </>}
                         </td>
                     </tr>
             </table>

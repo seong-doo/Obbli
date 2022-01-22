@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { getConnection } from "typeorm";
-import { Person } from "../entity/Person";
-import { Skill } from "../entity/Skill";
+import { Application, Person, Skill } from "../entity";
 import { signToken, verifyToken, hashPassword } from "../Util";
 
 interface TokenInfo {
@@ -228,5 +227,21 @@ const UserInfo = {
     }
   },
 };
+
+export async function checkApplication(req, res) {
+  const token = verifyToken(req.headers.authorization);
+  if (!token?.uuid) { return res.status(401).send(); }
+  const rows = await Application.createQueryBuilder('application')
+    .select()
+    .innerJoin('Position', 'position', 'application.position_uuid = position.uuid')
+    .innerJoin('Advert', 'advert', 'position.advert_uuid = advert.uuid')
+    .where(
+      'Application.person_uuid = :person_uuid and Advert.uuid = :advert_uuid',
+      { person_uuid: token.uuid, advert_uuid: req.params.advert_uuid }
+    )
+    .execute();
+
+  return res.status(200).send({ applied: (rows.length ? true : false) });
+}
 
 export { SignIn, SignUp, SignOut, UserInfo };
