@@ -87,8 +87,8 @@ function SignIn (props: any):JSX.Element {
               </div>
               <div className="errMessage">{errorMessage}</div>
               <div className="buttonWrapper">
-                  <div className="loginBtn" onClick={changeModal}>회원가입</div>
-                  <div className="loginBtn" onClick={handleLogin}>로그인</div>
+                  <button className="loginBtn" onClick={changeModal}>회원가입</button>
+                  <button className="loginBtn" onClick={handleLogin}>로그인</button>
               </div>
             </div>
           </div>

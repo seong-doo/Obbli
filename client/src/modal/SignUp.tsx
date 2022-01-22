@@ -92,7 +92,7 @@ function SignUp(props: any):JSX.Element {
                 {errorMessage}
               </div>
               <div className="signInbutton">
-                <div className="loginBtn" onClick={handleSignUp}>회원가입</div>
+                <button className="loginBtn" onClick={handleSignUp}>회원가입</button>
               </div>
             </div>
           </div>
