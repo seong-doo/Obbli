@@ -23,14 +23,15 @@ interface Advert {
   ],
 };
 
-const AdvView : React.FC =  () => {
+const AdvView = ({ auth }) => {
     const { uuid } = useParams();
     const navigate = useNavigate();
     // TODO: error handling for invalid url
     
+
     const [advert, setAdvert] = useState({ reviews: [], positions:[]} as any);
-    
-    const [isAdmin, setIsAdmin] = useState(true);
+    const [position, setPosition] = useState('');
+    const [applied, setApplied] = useState(true);
 
     const onClickDelete = () => {
         axios.delete(`/advert/${uuid}`)
@@ -39,25 +40,32 @@ const AdvView : React.FC =  () => {
         })
     }
 
-    function apply(uuid) {
-      axios.post(`/application/${uuid}`)
+    function apply() {
+      if (!position) { return }
+      axios.post(`/application/${position}`)
         .then(resp => navigate('/'));
     }
 
     useEffect(() => {
         axios.get(`/advert/${uuid}`)
             .then((resp) => { setAdvert(resp.data); });
+        if (auth?.permission === 'person') {
+            axios.get(`/person/applied/${uuid}`)
+                .then(resp => setApplied(resp.data.applied));
+        }
     }, []);
 
     return (
         <div className="advView">
+            <div>
             <h2>{ advert.title }</h2>
-            {isAdmin ? 
-                <div className="advViewbtn">
+            {(auth?.permission === 'org' && auth?.uuid === uuid)
+                ? <div className="advViewbtn">
                     <button type="button" onClick={()=>navigate(`/advert/edit/${uuid}`)}>수정하기</button>
                     <button type="button" onClick={()=>onClickDelete()}>삭제하기</button>
                 </div>
-                : null}    
+                : null
+            }
             <table className="advViewTable">
                 <colgroup>
                     <col className="col1"></col>
@@ -66,19 +74,10 @@ const AdvView : React.FC =  () => {
                 <thead>
                     <th>상세 내용</th>
                     <th>모집 기한</th>
-                    <th></th>
                 </thead>
                     <tr className="advViewbtn join">
                         <td>{ advert.body }</td>
                         <td>{ advert.active_until }</td>
-                        <td>
-                            <select>
-                                {advert.positions.map((el)=>{
-                                    return <option>{el.skill_name}</option>
-                                })}
-                            </select>
-                            <button type="button" >지원하기</button>
-                        </td>
                     </tr>
             </table>
             <table className="advViewTable">
@@ -133,6 +132,21 @@ const AdvView : React.FC =  () => {
                 </thead>
                 <tr><td>{ 'Lorem ipsum dolor sit amet' }</td></tr>
             </table>
+            </div>
+            { applied ? null : 
+                <div className="advViewJoin">
+                    <div className="advViewJoinSelect">
+                        <select onChange={(e) => setPosition(e.target.value)}>
+                            <option value="">==지원 부문==</option>
+                            {advert.positions.map((el)=>{
+                                return <option value={el.uuid}>{el.skill_name}</option>
+                            })}
+                        </select>
+                    </div>
+                    <div className="advViewJoinBtn">
+                        <button type="button" onClick={apply}>지원하기</button>
+                    </div>
+                </div>}
             
             
         </div>

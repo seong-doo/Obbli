@@ -31,6 +31,7 @@ const Mainadvert = {
 
     const positions = await Advert.createQueryBuilder()
       .select([
+        'Advert.uuid as uuid',
         "title",
         "body",
         "skill.name as skill_name",
@@ -54,6 +55,7 @@ const Mainadvert = {
     });
 
     const data: {
+      uuid?: string;
       title?: string;
       body?: string;
       positions?: Array<Object>;
@@ -65,6 +67,7 @@ const Mainadvert = {
     } = { reviews };
 
     for (const key of [
+      'uuid',
       "title",
       "body",
       "active_until",

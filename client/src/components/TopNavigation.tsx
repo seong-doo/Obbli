@@ -3,7 +3,6 @@ import axios from 'axios';
 
 function TopNavigation({ auth, setIsSignInVisible, signOut }) {
   const navigate = useNavigate();
-  if (window.location.pathname === '/') { return null; }
 
   const handleModal = () => {
     setIsSignInVisible(true)
@@ -14,6 +13,7 @@ function TopNavigation({ auth, setIsSignInVisible, signOut }) {
       <img className="logoImg" src={require('../img/logo.png')} onClick={() => navigate('/')} />
       <div className="naviList">
         <ul className="naviList">
+        <li className="naviButtom" onClick={() => navigate('/filter')}>지도로보기</li>
           <li className="naviButtom" onClick={() => navigate('/advert')}>공고보기</li>
           { auth
             ? <>

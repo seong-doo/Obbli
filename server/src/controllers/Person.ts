@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { getConnection } from "typeorm";
-import { Person } from "../entity/Person";
-import { Skill } from "../entity/Skill";
+import { Application, Person, Skill } from "../entity";
 import { signToken, verifyToken, hashPassword } from "../Util";
 
 interface TokenInfo {
@@ -103,20 +102,19 @@ const UserInfo = {
     }
     const row = await Person.findOne({
       where: { uuid: person.uuid },
-      // select: [
-      //   // 'uuid',
-      //   // 'user_id',
-      //   // 'name',
-      //   // 'professional',
-      //   // 'history',
-      //   // 'Skill',
-      //   // 'Application',
-      //   // 'Person_review',
-      //   // 'Org_review',
-      // ],
-      relations: ["Skill", "Org_review", "Application", "Application.Position", "Person_review", 'Application.Position.Skill', 'Application.Position.Advert', 'Application.Position.Advert.Org'],
+      relations: [
+        "Skill",
+        "Org_review",
+        "Application",
+        "Application.Position",
+        "Person_review",
+        'Application.Position.Skill',
+        'Application.Position.Advert',
+        'Application.Position.Advert.Org',
+      ],
     });
 
+    console.log(row.Org_review);
     const data = {
       uuid: row.uuid,
       user_id: row.user_id,
@@ -133,7 +131,7 @@ const UserInfo = {
         hired_at: each.hired_at,
         active_until: each.Position.Advert.active_until,
         event_at: each.Position.Advert.event_at,
-        // reviewed: TODO
+        reviewed: row.Org_review.some(review => (review.person_uuid === row.uuid && review.org_uuid === each.Position.Advert.Org.uuid)),
       })),
       Person_review: row.Person_review,
       Org_review: row.Org_review,
@@ -228,5 +226,21 @@ const UserInfo = {
     }
   },
 };
+
+export async function checkApplication(req, res) {
+  const token = verifyToken(req.headers.authorization);
+  if (!token?.uuid) { return res.status(401).send(); }
+  const rows = await Application.createQueryBuilder('application')
+    .select()
+    .innerJoin('Position', 'position', 'application.position_uuid = position.uuid')
+    .innerJoin('Advert', 'advert', 'position.advert_uuid = advert.uuid')
+    .where(
+      'Application.person_uuid = :person_uuid and Advert.uuid = :advert_uuid',
+      { person_uuid: token.uuid, advert_uuid: req.params.advert_uuid }
+    )
+    .execute();
+
+  return res.status(200).send({ applied: (rows.length ? true : false) });
+}
 
 export { SignIn, SignUp, SignOut, UserInfo };

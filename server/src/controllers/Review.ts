@@ -102,20 +102,17 @@ const PersonReview = {
 const OrgReview = {
   post: async (req, res):Promise<void> => {
     //review 작성(person ===> Org)
+    const token = verifyToken(req.headers.authorization)
+    if (!token?.uuid) { return res.status(401).send(); }
 
-    if(!req.headers.authorization){
-      return res.status(401).json({})
-    }
-
-    const person:TokenInfo= verifyToken(req.headers.authorization)
     const org_uuid: string = req.params.org_uuid
-    const checkReview = await Org_review.findOne({ org_uuid, person_uuid:person.uuid })
+    const checkReview = await Org_review.findOne({ org_uuid, person_uuid:token.uuid })
 
     if (checkReview !== undefined) {
       return res.status(200).send(checkReview);
     }
     const { rating, comment }: { rating: number, comment: string } = req.body;
-    await Org_review.insert({ person_uuid:person.uuid, org_uuid, comment, rating })
+    await Org_review.insert({ person_uuid: token.uuid, org_uuid, comment, rating })
       .catch((err) => {
         return res.status(500).json({ message: 'server ERROR, Please retry' });
       });

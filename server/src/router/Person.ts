@@ -1,6 +1,6 @@
 import { AppPerson } from '../controllers/Application';
 import { PersonReview, getPersonReview } from '../controllers/Review'
-import { SignIn, SignUp, SignOut, UserInfo } from '../controllers/Person'
+import { SignIn, SignUp, SignOut, UserInfo, checkApplication } from '../controllers/Person'
 
 const router = require("express").Router();
 
@@ -26,6 +26,7 @@ router.patch("/review/:person_uuid", PersonReview.patch);
 router.delete("/review/:person_uuid", PersonReview.delete);
 
 router.get('/review/:person_uuid', getPersonReview);
+router.get('/applied/:advert_uuid', checkApplication);
 
 //Application 부분
 //참여 목록 가져오기

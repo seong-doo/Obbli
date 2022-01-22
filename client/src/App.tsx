@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import TopNavigation from './components/TopNavigation';
-// import Footer from './components/Footer';
+import Footer from './components/Footer';
 import SignIn from './modal/SignIn';
 import SignUp from './modal/SignUp';
 import MypagePerson from './pages/MypagePerson';
@@ -65,12 +65,15 @@ function App() {
           <Route path="/mypage/person" element={<MypagePerson {... { auth }}/>} />
           <Route path="/mypage/org" element={<MypageOrg {... { auth }}/>} />
           <Route path="advert" element={<Advertise/>}></Route>
-          <Route path="advert/:uuid" element={<AdvView />} />
+          <Route path="advert/:uuid" element={<AdvView auth={auth} />} />
           <Route path="advert/write" element={<AdvertiseWrite />} />
           <Route path="advert/edit/:uuid" element={<AdvertiseWrite />} />
           <Route path="filter" element={<AdvFilter />} />
         </Routes>
       </div>
+      <footer>
+      <Footer />
+      </footer>
     </div>
   );
 }

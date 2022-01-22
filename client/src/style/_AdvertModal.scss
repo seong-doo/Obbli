@@ -1,0 +1,155 @@
+.advertModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width:100vw;
+    height:100vh;
+    display: block;
+}
+
+@keyframes applicationWrapEffect {
+    0%{
+        top:-40em;
+    }
+    100% {
+        top:0em
+    }
+}
+
+@keyframes reviewSideviewEffect{
+    0%{
+        right:-40em;
+    }
+    100% {
+        right:0em
+    }
+    
+
+}
+
+.applicationWrap{
+    height: 23em;
+    width: 35em;
+    background-color: white;
+    position: relative;
+    margin: 13% auto;
+    border-radius: 2em;
+    animation: 0.7s ease-in-out applicationWrapEffect;
+    
+}
+
+.reviewSideviewWrap {
+    position: fixed;
+    right:0em;
+    width:18em;
+    background-color: #fff;
+    height:60em;
+    animation: 0.7s ease-in-out reviewSideviewEffect;
+    z-index: 5;
+    border-left: 1.8vh solid #036;
+}
+
+.reviewSideContent{
+    padding:1.5em 1.5em
+}
+.reviewSideContent h2 {
+    border-bottom: 2px solid #000;
+}
+.reviewSideList {
+    margin:0; 
+    padding:0;
+    list-style:none;
+    border-bottom: 1px solid #aaa;
+}
+
+.reviewSideRating {
+    font-size: 0.8em;
+    width:100%;
+    color:rgb(58, 58, 58);
+    
+}
+.reviewSidecomment {
+    margin: 0.4em 0;
+    font-weight: bold;
+    
+}
+
+
+
+
+
+
+
+.modalcontent {
+    width:100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    
+}
+.modalcontent h3 {
+    padding-top: 1em;
+    text-align: center;
+
+}
+.modalcontent table {
+    width:100%
+}
+
+.modalcontent table td {
+    padding:0.2em 0.2em;
+    border-color: 1px solid #000;
+}
+
+
+.advertModalBtn {
+    cursor: pointer;
+    background-color: #fff;
+    color: #0d6efd;
+    border-color: #0d6efd;
+    font-weight: bold;
+    border-radius: 6px;
+    width:8em;
+    height: 2em;
+}
+
+.advertModalBtn:hover {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.advertModalBtn:focus {
+    color: #fff;
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+    box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+
+}
+
+
+.advertModalBtn.confirm {
+    color: #dc3545;
+    border-color: #dc3545;
+
+}
+.advertModalBtn.confirm:hover {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+
+}
+.advertModalBtn.confirm:focus {
+    color: #fff;
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+    box-shadow: 0 0 0 0.25rem rgba(225, 83, 97, 0.5);
+
+}
+
+
+
+
+

@@ -22,9 +22,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
-      <footer>
+      {/* <footer>
       <Footer />
-      </footer>
+      </footer> */}
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

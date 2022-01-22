@@ -73,7 +73,7 @@ function SignUp(props: any):JSX.Element {
             <div className="signUpWrap" onClick={(e) => e.stopPropagation()}>
             <h1 className="signInLogo">회원가입</h1>
               <div className="signInChoiseWrap">
-                <input type="radio" id="perLogin" name="permission" value="person" onChange={controlInput('permission')} />
+                <input type="radio" id="perLogin" name="permission" value="person" defaultChecked onChange={controlInput('permission')} />
                 <label htmlFor="perLogin" className="permission">개인회원</label>
                 <input type="radio" id="orgLogin" name="permission" value="org" onChange={controlInput('permission')} />
                 <label htmlFor="orgLogin" className="permission">단체회원</label>
@@ -92,7 +92,7 @@ function SignUp(props: any):JSX.Element {
                 {errorMessage}
               </div>
               <div className="signInbutton">
-                <div className="loginBtn" onClick={handleSignUp}>회원가입</div>
+                <button className="loginBtn" onClick={handleSignUp}>회원가입</button>
               </div>
             </div>
           </div>

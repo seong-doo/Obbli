@@ -1,17 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function ReviewsModal({ reviews }) {
+  const ratingStar = ['','★☆☆☆☆','★★☆☆☆','★★★☆☆','★★★★☆','★★★★★']
   return (
-    <div className="reviewSideviewWrap">
-      <ul>
-        { reviews.map(review => 
-          <li>
-            <span>{ review.rating }</span>
-            <span>{ review.comment }</span>
-          </li>
-        )}
-      </ul>
+    <div className="reviewSideviewWrap" onClick={e => e.stopPropagation()}>
+      <div className='reviewSideContent'>
+        <h2>Review</h2>
+        <ul className='reviewSideList'>
+          {console.log(reviews)}
+          { reviews.map(review => 
+            <li >
+              <span className='reviewSideRating'>{ ratingStar[review.rating] }</span>
+              <p className='reviewSidecomment'>{ review.comment }</p>
+            </li>
+          )}
+        </ul>
+      </div>
     </div>
   )
   // return reviews.map(review =>
@@ -24,9 +29,10 @@ function ReviewsModal({ reviews }) {
   // );
 }
 
-export default function AdvertModal({ data }) {
+export default function AdvertModal({ data, setAdvertModalVisibility }) {
   const [reviews, setReviews] = useState([]);
   const [reviewsModalVisibility, setReviewsModalVisibility] = useState(false);
+  
 
   function showReviews(person_uuid) {
     axios.get(`/person/review/${person_uuid}`)
@@ -39,28 +45,40 @@ export default function AdvertModal({ data }) {
   function markApplication(person_uuid, position_uuid, state) {
     axios.patch('/application', { person_uuid, position_uuid, state })
   }
-
+  
   return (
-    <div className="modalBackground">
-      { reviewsModalVisibility ? <ReviewsModal reviews={reviews}/> : null}
-      <div className="applicationWrap">
+    <div className="advertModalBackground " onClick={() => setAdvertModalVisibility(false)}>
+      { reviewsModalVisibility ? <ReviewsModal reviews={reviews} /> : null}
+        <div className='applicationWrap' onClick={e => e.stopPropagation()}>
+      
         { data.map(({uuid, skill_name, person}) => { return (
-          <div>
-            <h3>{ skill_name }</h3>
-            <ul>
-              { person.map(each => { return (
-                <li>
-                  <span>{ each.name }</span>
-                  <span>{ each.uuid }</span>
-                  <span><button onClick={() => showReviews(each.uuid)}>평가 보기</button></span>
-                  <span><button onClick={() => markApplication(each.uuid, uuid, 'received')}>연락처 보기</button></span>
-                  <span><button onClick={() => markApplication(each.uuid, uuid, 'hired')}>계약하기</button></span>
-                </li>
-              ); }) }
-            </ul>
+          <div className="modalcontent">
+            <h3>{ skill_name }</h3>  
+            <table className='advertmodaltable'>
+              <thead>
+                  <colgroup>
+                  </colgroup>
+                  <tr>
+                    <td>이름</td>
+                    <td>리뷰</td>
+                    <td>1차 합격</td>
+                    <td>최종 계약</td>
+                  </tr>
+              </thead>
+                { person.map(each => { return (
+                  <tr>
+                    <td><span>{ each.name }</span></td>
+                    {/* <span>{ each.uuid }</span> */}
+                    <td><span><button className='advertModalBtn' onClick={() => showReviews(each.uuid)}>리뷰 보기</button></span></td>
+                    <td><span><button className='advertModalBtn' onClick={() => markApplication(each.uuid, uuid, 'received')}>연락처 보기</button></span></td>
+                    <td><span><button className='advertModalBtn confirm' onClick={() => markApplication(each.uuid, uuid, 'hired')}>계약하기</button></span></td>
+                  </tr>
+                ); }) }
+            </table>
           </div>
         ); })}
       </div>
+      
     </div>
   );
 }

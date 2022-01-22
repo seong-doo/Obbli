@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import MypageOrgInfo from '../components/MypageOrgInfo'
 import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
-import AdvertModal from '../modal/AdvertModal'
+import AdvertModal from '../modal/AdvertModal';
 import axios from 'axios';
 
-function MypageOrg(props: any):JSX.Element {
+function MypageOrg(props) {
   const navigate = useNavigate();
   const [data, setData] = useState({
     Advert: [],
@@ -40,15 +40,15 @@ function MypageOrg(props: any):JSX.Element {
       })
       .catch(() => {})
   }
-
+  
   useEffect(() => {
     if (!props.auth) { navigate('/'); }
     axios.get('/org').then(resp => { setData(resp.data); });
+    
   }, [])
-
   return (
     <div className="mypageWrap">
-      { advertModalVisibility ? <AdvertModal data={advertModalData}/> : null }
+      { advertModalVisibility ? <AdvertModal {...{ data: advertModalData, setAdvertModalVisibility }}/> : null }
       { reviewModalData ? <ReviewModal {... {isReviewVisible, setIsReviewVisible, data: reviewModalData, selectMenu}} /> : null }
       <div className="mypageProfileWrap">
         <div className="mypageProfile">
@@ -69,17 +69,26 @@ function MypageOrg(props: any):JSX.Element {
         </div>
         <div className="mypageMenu">
           { selectMenu === 'adv' ? (
-            <div>
-              <ul>
-                { data.Advert.map(advert => { return (
-                    <li onClick={() => popAdvertModal(advert.uuid)}>
-                      <span>{advert.event_at}</span>
-                      <span>{advert.active_until}</span>
-                      <span>{advert.title}</span>
-                    </li>
+            <div className='mypagetablewrab'>
+              <table className='mypagetable'>
+                <thead>
+                  <tr>
+                    <td>공연 일자</td>
+                    <td>모집 기한</td>
+                    <td>공고 제목</td>
+                  </tr>
+                </thead>
+                <tbody>
+                { data.Advert.map((advert, key) => { return (
+                    <tr onClick={() => popAdvertModal(advert.uuid)} key={key}>
+                      <td>{advert.event_at}</td>
+                      <td>{advert.active_until}</td>
+                      <td>{advert.title}</td>
+                    </tr>
                   ); })
                 }
-              </ul>
+                </tbody>
+              </table>
             </div>
             ) : selectMenu === 'reviewToMe' ? (
             <ul className="reviewList">
