@@ -140,20 +140,20 @@ Table tr td{
 
 button {
     cursor: pointer;
-    background-color: #036;
-    color: white;
-    width:7rem;
-    font-size: 1rem;
-    font-weight: bold;
+//     background-color: #036;
+//     color: white;
+//     width:7rem;
+//     font-size: 1rem;
+//     font-weight: bold;
 }
 
 
-button:hover {
-    background-color: #fff;
-    color: #036;
-    font-size: 1.1rem;
-    font-weight: bold;
-}
+// button:hover {
+//     background-color: #fff;
+//     color: #036;
+//     font-size: 1.1rem;
+//     font-weight: bold;
+// }
 
 textarea {
     width: 90%;
@@ -223,23 +223,3 @@ input {
     color: white;
     background-color: #036;
 }
-
-.inputAddress {
-    width:30em;
-    height: 2em;
-    
-}
-.inputAddressbtn {
-    background-color: #444;
-    border:none;
-    width: 5em;
-}
-
-
-// .inputMap {
-//     width:20em;
-//     margin:10px auto;
-//     height:300px;
-//     border: 1px solid #000;
-    
-// }

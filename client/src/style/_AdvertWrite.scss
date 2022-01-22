@@ -1,6 +1,8 @@
 $elementcolor: rgb(233, 240, 252);
 $skillelement: rgb(233,255,512);
 $inputline: 1px solid rgba(0, 0, 0, 0.3);
+$dimGray: rgba(30, 30, 30, 0.1);
+$sidebarVerticalMargin: 2.5vh auto;
 
 
 .advAndsubmit{
@@ -15,70 +17,6 @@ $inputline: 1px solid rgba(0, 0, 0, 0.3);
     justify-content: center;
 }
 
-.submitbtn {
-    background-color:rgb(187, 252, 174);
-    height: 5vh;
-    width: 8vw;
-    margin-top: 3em;
-    align-items: center;
-    font-size: 1.5em;
-    margin-left: 3.5em;
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px 3px gray;
-}
-
-.submitbtn:hover{
-    height: 5vh;
-    width: 8vw;
-    margin-top: 3em;
-    align-items: flex-start;
-    font-size: 1.5em;
-    border-radius: 5px;
-    box-shadow: 0px 0px 0px 0px ;
-}
-
-.tiSelect{
-    margin-top: 5vh;
-    padding-left: 1.5vw;
-    .tiTitle{
-        margin-top: 2.5vh;
-        margin-left: 4.8vw;
-    }
-}
-
-
-.skillChart{
-    background-color: $elementcolor;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3vw;
-    padding-bottom: 1.6vh;
-    padding-top: 1.3vh;
-    width: 15vw;
-
-    .skillelement{
-        margin-top: 1vh;
-        height: 3vh;
-        width: 15vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-
-        span{
-            background-color: white;
-            border-radius: 10px;
-            padding-top: 0.3vw;
-            padding-left: 0.5vw;
-            text-align: center;
-            width: 6.5vw;
-            height: 2.5vh;
-            display: inline-block;
-        }
-    }
-
-}
 
 .advertiseWrite {
     margin-top: 3px;
@@ -86,230 +24,354 @@ $inputline: 1px solid rgba(0, 0, 0, 0.3);
     // padding: 10px 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     width: 43vw;
     height: 90vh;
 
 
-.PostTitle{
-    margin-top: 1em;
-    font-size: 1.5em;
-    display: flex;
-    align-items: center;
+    .row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 1.5vh 0;
+
+        p {
+            margin: 0;
+        }
+
+        .header {
+            font-size: 1.5rem;
+        }
+
+        .controller {
+            width: 80%;
+        }
+    }
+
+    .title input {
+        font-size: 1.5rem;
+        background-color: white;
+        border: none;
+        border-bottom: 2px solid $dimGray;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .content textarea {
+        font-size: 1rem;
+        border: 1px solid $dimGray;
+        resize: none;
+        max-width: 100vh;
+    }
+
+    .location .controller {
+        display: flex;
+        flex-direction: column;
+
+        .inputMap {
+            width:30vw;
+            height:30vh;
+            // margin-left: 9.3vw;
+            border: 1px solid #000;
+            margin-top: 1rem;
+        }
+
+        input[type=text] {
+            width: 15rem;
+            height: 3vh;
+            text-indent: 0.3rem;
+            background-color: $elementcolor;
+            border:0px;
+
+            // border-bottom: $inputline;
+            // border-radius: 10px;
+        }
+
+
+        button {
+            font-size: 1rem;
+            margin-left: 2em;
+            width: 5rem;
+            height:3vh;
+            border: none;
+
+            // &: hover { }
+        }
+
+    }
+    // .title{
+    //     margin-top: 1em;
+    //     font-size: 1.5em;
+    //     display: flex;
+    //     align-items: center;
+    // }
+
+    // .titleTitle{
+    //     width: 6vw;
+    // }
+
+    // .InputTitle{
+    //     font-size: 0.9em;
+    //     height: 4vh;
+    //     width: 28vw;
+    //     margin-left: 3.5em;
+    //     border: 0px;
+    //     // border-bottom:$inputline;
+    //     background-color: $elementcolor;
+    //     outline: none;
+    // }
+
+
+
+    // .content{
+    //     margin-top: 1em;
+    //     font-size: 1.5em;
+    //     display: flex;
+    //     align-items: center;
+    //     width: 50vw;
+    //     height: 20vh;
+    // }
+
+
+    // .InputContent{ 
+    //     margin-left: 5.8em;
+    //     width: 27.5vw;
+    //     height: 15vh;
+    //     border: 0px;
+    //     // border:$inputline;
+    //     background-color: $elementcolor;
+    //     border-radius: 10px;
+    //     font-size: 1em;
+    // }
+
+
+    // .skillTitle{
+    //     width: 10vw;
+    //     font-size: 0.9em;
+    // }
+
+    // .addedPosition {
+    //     // border: black 0.1em solid;
+    //     padding-top: 0.8em;
+    //     padding-bottom: 1.2em;
+    //     margin-bottom: 0.5em;
+    //     height: 1vh;
+    //     width:  24.5vw;
+    //     display: flex;
+    //     flex-direction: row;
+    //     font-size: 0.7em;
+    //     border-radius: 10px;
+    //     background-color: $skillelement;
+    //     border-bottom:$inputline;
+
+        
+
+    //     span {
+    //         padding-left:7.5em;
+    //         padding-bottom: 0.5em;
+    //         width: 6vw;
+    //         display: inline-block;
+    //         margin-bottom:  3em;
+    //     }
+    // }
+
+
+
+    .Quantity{
+        margin-right: 3em;
+        margin-left: 7em;
+        width: 3vw;
+        height: 2vh;
+        text-align:  center;
+        font-size: 0.6em;
+    }
+
+
+
+
+    .time_Select{
+        margin-top: 3em;
+        padding-bottom: 2em;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border: solid 1px black;
+    }
+
+
+    .timeTitle{
+    margin-left: 4vw;
+    }
+
+    .untillSelect{
+    margin-top: 3vh;
+    margin-left: 1vw;
+    }
+
+    .advLocationTit{
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        width: 50vw;
+        // padding-left: 6em;
+    }
+
+    .emptyMap{
+        width: 10vw;
+    }
+
 }
+.advWriteSidebar {
 
-.titleTitle{
-    width: 6vw;
-}
-
-.InputTitle{
-    font-size: 0.9em;
-    height: 4vh;
-    width: 28vw;
-    margin-left: 3.5em;
-    border: 0px;
-    // border-bottom:$inputline;
-    background-color: $elementcolor;
-    outline: none;
-}
-
-
-
-.PostContent{
-    margin-top: 1em;
-    font-size: 1.5em;
-    display: flex;
-    align-items: center;
-    width: 50vw;
-    height: 20vh;
-}
-
-
-.InputContent{ 
-    margin-left: 5.8em;
-    width: 27.5vw;
-    height: 15vh;
-    border: 0px;
-    // border:$inputline;
-    background-color: $elementcolor;
-    border-radius: 10px;
-    font-size: 1em;
-}
-
-
-.skillTitle{
     width: 10vw;
-    font-size: 0.9em;
-}
-
-.positionWrapper{
-    margin-top: 1em;
-    width:  42.5vw;
-    font-size: 1.5em;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    flex-direction:row;
 
-    .verticalWrapper {
-        margin-left: -1.6vw;
+    .submitbtn {
+        background-color: #fff;
+        height: 5vh;
+        width: 8vw;
+        margin: $sidebarVerticalMargin;
+        font-size: 1.5em;
+        // border-radius: 5px;
+        border: 1px solid $dimGray;
+        // box-shadow: 3px 3px 3px 3px gray;
+
+        &:hover {
+            background-color:rgb(187, 252, 174);
+        }
+    }
+
+    .dateControllerWrapper {
+        width: 100%;
+        margin: $sidebarVerticalMargin;
+        // margin-top: 5vh;
+        // padding-left: 1.5vw;
+        // .tiTitle{
+        //     margin-top: 2.5vh;
+        //     margin-left: 4.8vw;
+        // }
+        .dateController {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            // margin-left: 1vw;
+            input[type="datetime-local"] {
+                width: 100%;
+                padding: 0;
+                border: none;
+                border-bottom: 1px solid $dimGray;
+
+                &:hover {
+                    background-color: $elementcolor;
+                }
+            }
+        }
+    }
+
+    .positionControllerWrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: $sidebarVerticalMargin;
+        // padding-bottom: 0.4em;
+        // padding-top: 0.4em;
+        // border: 1px solid rgba(30, 30, 30, 0.1);
+        // background-color: $elementcolor;
+        // border:$inputline;
+        // border-radius: 10px;
+
+        .skillName{
+            font-size: 0.7.5em;
+            height: 3vh;
+            width: 50%;
+            text-align: center;
+            border: none;
+            background-color: rgba(121, 121, 255, 0.1);
+        }
+
+        input[type=number] {
+            text-align: center;
+            font-size: 1rem;
+            height: 3vh;
+            width: 3rem;
+            padding: 0;
+            border: none;
+            border-bottom: 2px solid $dimGray;
+            &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+                // -webkit-appearance: none;
+                appearance: none;
+            }
+        }
+
+        .Quantity{
+            // margin-left: 1vw;
+            width: 3vw;
+            height: 2vh;
+            font-size: 0.7rem;
+        }
+
+        .skillPlus{
+            font-size: 1.5rem;
+            // margin-right: 1rem;
+            // width: 2vw;
+            // height: 3.5vh;
+        }
+
+    }
+
+    .positionListWrapper {
+        width: 100%;
+        // border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        // background-color: $elementcolor;
-        outline: none;
-        border-radius: 15px;
-        width: 30vw;
+        // margin-top: 3vw;
+        padding-bottom: 1.6vh;
+        padding-top: 1.3vh;
 
-        .addedPosition {
-            // border: black 0.1em solid;
-            padding-top: 0.8em;
-            padding-bottom: 1.2em;
-            margin-bottom: 0.5em;
-            height: 1vh;
-            width:  24.5vw;
-            display: flex;
-            flex-direction: row;
-            font-size: 0.7em;
-            border-radius: 10px;
-            background-color: $skillelement;
-            border-bottom:$inputline;
-
-         
-
-            span {
-                padding-left:7.5em;
-                padding-bottom: 0.5em;
-                width: 6vw;
-                display: inline-block;
-                margin-bottom:  3em;
-            }
-        }
-        .controllerWrapper {
-            width: 28vw;
-            display: flex;
-            align-items: center;
-            flex-direction: row;
-            justify-content: space-between;
-            padding-bottom: 0.4em;
-            padding-top: 0.4em;
+        .header {
+            margin: 0;
+            font-size: 1.3rem;
+            text-align: center;
+            width: 100%;
+            padding: 0.6rem 0;
             background-color: $elementcolor;
-            // border:$inputline;
-            border-radius: 10px;
-
-            .skillName{
-                font-size: 0.7.5em;
-                margin-left: 5em;
-                height: 3vh;
-                width: 11vw;
-                text-align: center;
-            }
-            
-            .Quantity{
-                margin-left: 1vw;
-                width: 3vw;
-                height: 2vh;
-                font-size: 0.7em;
-            }
-            
-            .skillPlus{
-                font-size: 1.5em;
-                width: 2vw;
-                height: 3.5vh;
-            }
-
         }
+        ul {
+            width: 100%;
+            padding: 0.3rem 0;
+            margin: 0;
+            border: 1px solid $dimGray;
+            border-top: none;
+
+            li {
+                // margin-top: 1vh;
+                // height: 3vh;
+                // width: 15vw;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+
+                span{
+                    background-color: white;
+                    border-radius: 10px;
+                    padding-top: 0.3vw;
+                    padding-left: 0.5vw;
+                    text-align: center;
+                    width: 6.5vw;
+                    height: 2.5vh;
+                    display: inline-block;
+                }
+            }
+        }
+
     }
-}
 
-
-
-.Quantity{
-    margin-right: 3em;
-    margin-left: 7em;
-    width: 3vw;
-    height: 2vh;
-    text-align:  center;
-    font-size: 0.6em;
-}
-
-
-
-
-.time_Select{
-    margin-top: 3em;
-    padding-bottom: 2em;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    border: solid 1px black;
-}
-
-
-.timeTitle{
-  margin-left: 4vw;
-}
-
-.atSelect{
-  margin-left: 1vw;
-}
-
-.untillSelect{
-  margin-top: 3vh;
-  margin-left: 1vw;
-}
-
-
-
-
-.advLocation{
-    margin-top: 2em;
-    font-size: 1.5em;
-    display: flex;
-    // align-items: center;
-    flex-direction: column; 
-}
-
-
-.advLocationTit{
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    width: 50vw;
-    // padding-left: 6em;
-}
-
-.inputAddress {
-    width:22svw;
-    height: 3vh;
-    margin-left: 6.3em;
-    font-size: 0.7em;
-    background-color: $elementcolor;
-    border:0px;
-    // border-bottom: $inputline;
-    border-radius: 10px;
-}
-
-
-.inputAddressbtn {
-    margin-left: 2em;
-    width:6vw;
-    height:3vh;
-}
-
-.inputAddressbtn:hover{
-    margin-left: 2em;
-    width:5vw;
-    height:2.5vh;
-}
-
-.emptyMap{
-    width: 10vw;
-}
-
-.inputMap {
-    width:30vw;
-    height:30vh;
-    margin-left: 9.3vw;
-    border: 1px solid #000;
-}
 }
