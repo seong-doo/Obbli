@@ -48,7 +48,7 @@ function App() {
       .then((resp) => {
         if (resp.status !== 200) { return; }
         storeAccessToken(resp.data);
-        axios.defaults.headers.common['Authorization'] = resp.data.access_token;
+        axios.defaults.headers.common['Authorization'] = `${resp.data.token_type} ${resp.data.access_token}`;
       })
   }, []);
 

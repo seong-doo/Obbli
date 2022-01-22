@@ -146,19 +146,14 @@ const AppPosition = {
 
     const position_uuid: string = req.params.position_uuid;
     const person:TokenInfo = verifyToken(req.headers.authorization);
-    // console.log("토큰은!!!!!" + req.headers.authorization)
-    console.log(person)
 
     if( !person ){
       return res.status(401).json({})
     }
 
     const invalidUser = await Person.findOne({uuid:person.uuid})
-    console.log("유저확인!!!" + invalidUser)
     const findPosition = await Position.findOne({uuid: position_uuid})
-    console.log("포지션확인!!!!" + findPosition)    
     const invaliudAdv = await Advert.findOne({uuid: findPosition.advert_uuid})
-    console.log("게시글확인!!!!" + invaliudAdv)
 
     if( !invalidUser || !invaliudAdv || !findPosition){
       return res.status(404).json({})
@@ -201,7 +196,6 @@ const AppPosition = {
       relations: ['Position', 'Position.Advert', 'Position.Advert.Org'],
     });
 
-    console.log(row);
     if (!row) { return res.status(400).send(); }
     if (token.uuid !== row.Position.Advert.Org.uuid) { return res.status(401).send(); }
     if (token.state === 'hired' && !row.received_at) { return res.status(400).send(); }
