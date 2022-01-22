@@ -102,20 +102,19 @@ const UserInfo = {
     }
     const row = await Person.findOne({
       where: { uuid: person.uuid },
-      // select: [
-      //   // 'uuid',
-      //   // 'user_id',
-      //   // 'name',
-      //   // 'professional',
-      //   // 'history',
-      //   // 'Skill',
-      //   // 'Application',
-      //   // 'Person_review',
-      //   // 'Org_review',
-      // ],
-      relations: ["Skill", "Org_review", "Application", "Application.Position", "Person_review", 'Application.Position.Skill', 'Application.Position.Advert', 'Application.Position.Advert.Org'],
+      relations: [
+        "Skill",
+        "Org_review",
+        "Application",
+        "Application.Position",
+        "Person_review",
+        'Application.Position.Skill',
+        'Application.Position.Advert',
+        'Application.Position.Advert.Org',
+      ],
     });
 
+    console.log(row.Org_review);
     const data = {
       uuid: row.uuid,
       user_id: row.user_id,
@@ -132,7 +131,7 @@ const UserInfo = {
         hired_at: each.hired_at,
         active_until: each.Position.Advert.active_until,
         event_at: each.Position.Advert.event_at,
-        // reviewed: TODO
+        reviewed: row.Org_review.some(review => (review.person_uuid === row.uuid && review.org_uuid === each.Position.Advert.Org.uuid)),
       })),
       Person_review: row.Person_review,
       Org_review: row.Org_review,

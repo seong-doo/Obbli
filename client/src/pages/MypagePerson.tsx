@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import MypageHistory from '../components/MypageHistory'
 import ReviewItem from '../components/ReviewItem'
 import ReviewModal from '../modal/ReviewModal';
+import NewReviewModal from '../modal/NewReviewModal';
 import axios from 'axios';
 
 function MypagePerson(props: any):JSX.Element {
@@ -17,6 +18,9 @@ function MypagePerson(props: any):JSX.Element {
   const [selectMenu, setSelectMenu] = useState<string>('adv');
   const [isReviewVisible, setIsReviewVisible] = useState<boolean>(false);
   const [reviewModalData, setReviewModalData] = useState(null as any);
+  const [reviewModalVisibility, setReviewModalVilibility] = useState(false);
+  const [newReviewTarget, setNewReviewTarget] = useState(null as any);
+
   const clickReview = (data: any) => {
     setReviewModalData({
       rating: data.rating,
@@ -24,7 +28,6 @@ function MypagePerson(props: any):JSX.Element {
     })
     setIsReviewVisible(true)
   }
-  const [reviewModalVisibility, setReviewModalVilibility] = useState(false);
 
   const unregister = () => {
     // TODO: axios delete 보내기
@@ -45,6 +48,7 @@ function MypagePerson(props: any):JSX.Element {
   return (
     <div className="mypageWrap">
       { reviewModalData ? <ReviewModal {... {isReviewVisible, setIsReviewVisible, data: reviewModalData, selectMenu}} /> : null }
+      { newReviewTarget ? <NewReviewModal {...{ target: newReviewTarget, setNewReviewTarget }}/> : null }
 
       <div className="mypageProfileWrap">
         <div className="mypageProfile">
@@ -75,6 +79,7 @@ function MypagePerson(props: any):JSX.Element {
                     <td>부문</td>
                     <td>모집기한</td>
                     <td>상태</td>
+                    <td></td>
                   </tr>
                 </thead>
                 {data.Application.map(each =>
@@ -83,6 +88,10 @@ function MypagePerson(props: any):JSX.Element {
                   <td>{ each.skill_name }</td>
                   <td>{ each.active_until }</td>
                   <td>{ getApplicationStatus(each) }</td>
+                  <td>{ each.reviewed
+                    ? null
+                    : <button onClick={ () => setNewReviewTarget({ type: 'org', uuid: each.org_uuid, name: each.org_name }) }>리뷰 작성하기</button>
+                  }</td>
                 </tr>
               )}
               </table>
