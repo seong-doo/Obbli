@@ -78,7 +78,6 @@ export default {
     columns: ['person_uuid', 'org_uuid', 'rating', 'comment', 'created_at'],
     rows: [
       ['c68dad62-f25f-4e62-8320-43c7bed458fe', '9c200b48-11bf-4500-adf3-f4f20ac592ad', 5, '귀여워요', new Date('2021-12-03T12:11:23.576Z')],
-      ['8d74acce-3b44-42ad-a739-237cc7c1b098', '9c200b48-11bf-4500-adf3-f4f20ac592ad', 4, '이게뭐요', new Date('2021-12-03T12:11:23.576Z')],
     ],
   },
   Org_review:
