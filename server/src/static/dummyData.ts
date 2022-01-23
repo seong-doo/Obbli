@@ -71,14 +71,13 @@ export default {
     rows: [
       ['c68dad62-f25f-4e62-8320-43c7bed458fe', 'd19061fe-6c80-41bc-9940-6e8eb2ac96e5', new Date('2021-12-01T17:38:01.192Z'), new Date('2021-12-01T17:38:32.091Z'), new Date('2021-12-01T17:38:41.193Z')],
       ['654d1f39-a3f4-4f23-8312-ceafdaaa007d','4d34cbe4-f93b-4e18-a016-5e70847bb63a', new Date('2021-12-01T17:38:01.192Z'), new Date('2021-12-01T17:38:32.091Z'),null],
-      ['8d74acce-3b44-42ad-a739-237cc7c1b098','f5be84c1-9d77-48a3-8d94-a65da2ffe289', new Date('2021-12-03T12:11:23.576Z'),new Date('2021-12-01T17:38:32.091Z'),null]
+      ['8d74acce-3b44-42ad-a739-237cc7c1b098','f5be84c1-9d77-48a3-8d94-a65da2ffe289', new Date('2021-12-03T12:11:23.576Z'),new Date('2021-12-01T17:38:32.091Z'), new Date('2021-12-01T17:42:15.432Z')],
     ],
   },
   Person_review: {
     columns: ['person_uuid', 'org_uuid', 'rating', 'comment', 'created_at'],
     rows: [
       ['c68dad62-f25f-4e62-8320-43c7bed458fe', '9c200b48-11bf-4500-adf3-f4f20ac592ad', 5, '귀여워요', new Date('2021-12-03T12:11:23.576Z')],
-      ['8d74acce-3b44-42ad-a739-237cc7c1b098', '9c200b48-11bf-4500-adf3-f4f20ac592ad', 4, '이게뭐요', new Date('2021-12-03T12:11:23.576Z')],
     ],
   },
   Org_review:

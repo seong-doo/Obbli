@@ -119,7 +119,6 @@ const OrgInfo = {
       // TODO: error handling when nothing is selected
       if (!row) { return res.status(404).send(); }
 
-      console.log(row);
       return res.status(200).send(row);
     }
   },
@@ -204,6 +203,9 @@ export async function getOrgAdvert(req, res) {
           comment: review.comment,
           rating: review.rating,
         })),
+        received_at: application.received_at,
+        hired_at: application.hired_at,
+        reviewed: application.Person.Person_review.some(review => (review.org_uuid === token.uuid)),
       })),
     });
   }

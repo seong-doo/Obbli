@@ -40,12 +40,12 @@ function MypageOrg(props) {
       })
       .catch(() => {})
   }
-  
+
   useEffect(() => {
-    if (!props.auth) { navigate('/'); }
+    if (!props.auth) { return navigate('/'); }
     axios.get('/org').then(resp => { setData(resp.data); });
-    
   }, [])
+
   return (
     <div className="mypageWrap">
       { advertModalVisibility ? <AdvertModal {...{ data: advertModalData, setAdvertModalVisibility }}/> : null }

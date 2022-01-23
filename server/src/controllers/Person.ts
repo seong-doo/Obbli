@@ -114,7 +114,6 @@ const UserInfo = {
       ],
     });
 
-    console.log(row.Org_review);
     const data = {
       uuid: row.uuid,
       user_id: row.user_id,

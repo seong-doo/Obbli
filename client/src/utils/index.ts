@@ -18,7 +18,7 @@ export function refresh(axiosInstance: Axios) {
       const { data, status } = await axiosInstance.post('/auth');
       if (status !== 200) { return config; }
       storeAccessToken(data);
-      axios.defaults.headers.common['Authorization'] = data.access_token;
+      axios.defaults.headers.common['Authorization'] = `${data.token_type} ${data.access_token}`;
     }
     return config;
   }

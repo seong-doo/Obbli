@@ -1,28 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-// interface UserStateType {
-//     isSignedIn: boolean,
-//     accessToken: string,
-//     uuid: string,
-//   }
-
-// interface LoginModal {
-//   isSignUpVisible: boolean;
-//   setIsSignUpVisible: React.Dispatch<React.SetStateAction<boolean>>;
-//   setUserState: React.Dispatch<React.SetStateAction<UserStateType>>;
-// }
-
-// interface SignUPType {
-//     user_id: string,
-//     pw: string,
-//     pw_check: string,
-//     name: string,
-//     permission: string
-//   }
-
-  const API_SERVER:string = '';
-  
+import { storeAccessToken } from '../utils';
 
 function SignUp(props: any):JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string>('');  
@@ -40,7 +19,7 @@ function SignUp(props: any):JSX.Element {
 
   const handleSignUp = () => {
     const {user_id, pw, pw_check, name, permission} = signUpInfo;
-    
+
     if(pw !== pw_check){
       setErrorMessage('비밀번호가 다릅니다.')
       return;
@@ -50,19 +29,13 @@ function SignUp(props: any):JSX.Element {
       return ;
     }
     // TODO: axios:post 할때 맨드포인트에 permission으로 단체와 개인회원 구분
-    setErrorMessage('가입 가능합니다!')
-    axios.post(`/${permission}`, {
-      user_id,
-      pw,
-      pw_check,
-      name
-    })
-    .then(({data: {access_token: accessToken}})=>{
-      axios.defaults.headers.common.authorization = accessToken;
-      props.setUserState({ isSignedIn: true, accessToken })
-      props.setIsSignUpVisible(false);
-    })
-    .catch((err)=> console.log(err))
+    axios.post(`/${permission}`, { user_id, pw, pw_check, name })
+      .then(({data})=>{
+        storeAccessToken(data);
+        axios.defaults.headers.common.authorization = `${data.token_type} ${data.access_token}`;
+        props.setIsSignUpVisible(false);
+      })
+      .catch((err)=> console.log(err));
   }
 
   return (
