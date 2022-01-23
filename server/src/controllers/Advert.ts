@@ -74,6 +74,7 @@ const Mainadvert = {
       "location",
       "event_at",
       "org_name",
+      'org_uuid',
     ]) {
       data[key] = positions[0][key];
     }

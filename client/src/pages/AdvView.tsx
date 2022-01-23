@@ -59,8 +59,7 @@ const AdvView = ({ auth }) => {
         <div className="advView">
             <div>
             <h2>{ advert.title }</h2>
-            {console.log(auth)}
-            {(auth?.permission === 'org' && auth?.uuid === uuid)
+            {(auth?.permission === 'org' && auth?.uuid === advert?.org_uuid)
                 ? <div className="advViewbtn">
                     <button type="button" onClick={()=>navigate(`/advert/edit/${uuid}`)}>수정하기</button>
                     <button type="button" onClick={()=>onClickDelete()}>삭제하기</button>

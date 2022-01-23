@@ -64,7 +64,7 @@ function App() {
           <Route index element={<Home {... { auth, setIsSignInVisible, setIsSignUpVisible, signOut }} />} />
           <Route path="/mypage/person" element={<MypagePerson {... { auth }}/>} />
           <Route path="/mypage/org" element={<MypageOrg {... { auth }}/>} />
-          <Route path="advert" element={<Advertise/>}></Route>
+          <Route path="advert" element={<Advertise {... { auth }} />}></Route>
           <Route path="advert/:uuid" element={<AdvView auth={auth} />} />
           <Route path="advert/write" element={<AdvertiseWrite />} />
           <Route path="advert/edit/:uuid" element={<AdvertiseWrite />} />

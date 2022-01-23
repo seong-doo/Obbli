@@ -33,7 +33,7 @@ export async function refreshToken(req, res) {
 
 export function signOut(req, res) {
   res.clearCookie(
-    'refreshToken',
+    'refresh_token',
     { httpOnly: true },
   );
   return res.status(204).send();

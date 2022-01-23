@@ -5,8 +5,7 @@ import Filter from "../components/Filter";
 import {Link} from "react-router-dom"
 import Pagination from "../components/Pagination";
 
-const Advertise: React.FC =  () => {
-    const [isAdmin, setIsAdmin] = useState(true);
+const Advertise =  ({ auth }) => {
     const [adverts, setAdverts] = useState([]);
 
     useEffect(() => {
@@ -21,7 +20,7 @@ const Advertise: React.FC =  () => {
               ? <div>아직 작성된 글이 없습니다.</div>
               : <AdvList adverts={ adverts }/>
             }
-                { isAdmin
+                { (auth && auth.permission === 'org')
                   ? <Link to={`/advert/write`}><button className="advwritebtn" type="button">작성하기</button></Link>
                   : null
                 }
