@@ -77,7 +77,9 @@ export default function AdvertModal({ data, setAdvertModalVisibility }) {
                     {/* <span>{ each.uuid }</span> */}
                     <td><span><button className='advertModalBtn' onClick={() => showReviews(each.uuid)}>리뷰 보기</button></span></td>
                     <td><span><button className='advertModalBtn' onClick={() => markApplication(each.uuid, uuid, 'received')}>연락처 보기</button></span></td>
-                    <td><span><button className='advertModalBtn confirm' onClick={() => markApplication(each.uuid, uuid, 'hired')}>계약하기</button></span></td>
+                    <td>{ each.hired_at ? '✅' :
+                      <span><button className='advertModalBtn confirm' onClick={() => markApplication(each.uuid, uuid, 'hired')}>계약하기</button></span>
+                    }</td>
                     <td>{ !each.hired_at ? null :
                       each.reviewed ? '✅' : <button className="newReviewButton" onClick={() => popReviewModal(each.uuid, each.name)}>리뷰 남기기</button>
                     }</td>
