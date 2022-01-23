@@ -8,7 +8,6 @@ import axios from 'axios';
 
 function MypagePerson(props: any):JSX.Element {
   const navigate = useNavigate();
-  if (!props.auth) { navigate('/') }
   const placeHolder = <p>내용이 없습니다</p>;
   const [data, setData] = useState({
     Application: [],
@@ -21,6 +20,16 @@ function MypagePerson(props: any):JSX.Element {
   const [reviewModalVisibility, setReviewModalVilibility] = useState(false);
   const [newReviewTarget, setNewReviewTarget] = useState(null as any);
   const [file,setFile] =useState('')
+  const [imageURL, setImageURL] = useState(`https://obbli-image.s3.ap-northeast-2.amazonaws.com/${props.auth?.uuid}`);
+
+  useEffect(() => {
+    if (!props.auth) { return navigate('/'); }
+    axios.get('/person').then(resp => {
+      setData(resp.data);
+    });
+  }, []);
+
+
   const clickReview = (data: any) => {
     setReviewModalData({
       org_uuid:data.org_uuid,
@@ -39,14 +48,13 @@ function MypagePerson(props: any):JSX.Element {
     if (received_at) { return 'received'; }
     return 'pending';
   }
-  
-  useEffect(() => {
-    axios.get('/person').then(resp => {
-      setData(resp.data);
-    });
-  }, []);
 
-  const [imageURL, setImageURL] = useState(`https://obbli-image.s3.ap-northeast-2.amazonaws.com/${props.auth.uuid}`);
+
+  const saveImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file)
+    await axios.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+  }
 
   const upload = async (event) => {
     event.preventDefault()
@@ -58,17 +66,9 @@ function MypagePerson(props: any):JSX.Element {
     setFile(file)
   }
 
-  const saveImage = async (file) => {
-    const formData = new FormData();
-  formData.append("image",file)
-
-  await axios.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
-  }
-
-
   return (
     <div className="mypageWrap">
-      { reviewModalData ? <ReviewModal {... {isReviewVisible, setIsReviewVisible, data: reviewModalData, selectMenu, target:'org', token:props.auth.access_token}} /> : null }
+      { reviewModalData ? <ReviewModal {... {isReviewVisible, setIsReviewVisible, data: reviewModalData, selectMenu, target:'org', token:props.auth?.access_token}} /> : null }
       { newReviewTarget ? <NewReviewModal {...{ target: newReviewTarget, setNewReviewTarget }}/> : null }
 
       <div className="mypageProfileWrap">
@@ -113,9 +113,9 @@ function MypagePerson(props: any):JSX.Element {
                   <td>{ each.skill_name }</td>
                   <td>{ each.active_until }</td>
                   <td>{ getApplicationStatus(each) }</td>
-                  <td>{ each.reviewed
-                    ? null
-                    : <button onClick={ () => setNewReviewTarget({ type: 'org', uuid: each.org_uuid, name: each.org_name }) }>리뷰 작성하기</button>
+                  <td>{ (each.hired_at && !each.reviewed)
+                    ? <button onClick={ () => setNewReviewTarget({ type: 'org', uuid: each.org_uuid, name: each.org_name }) }>리뷰 작성하기</button>
+                    : null
                   }</td>
                 </tr>
               )}

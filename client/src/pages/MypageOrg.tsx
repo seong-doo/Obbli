@@ -42,7 +42,7 @@ function MypageOrg(props) {
   }
 
   useEffect(() => {
-    if (!props.auth) { navigate('/'); }
+    if (!props.auth) { return navigate('/'); }
     axios.get('/org').then(resp => { setData(resp.data); });
   }, [])
 

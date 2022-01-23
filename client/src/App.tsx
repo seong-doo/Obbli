@@ -36,10 +36,11 @@ function App() {
   // const [userState, setUserState] = useState(JSON.parse(localStorage.getItem('auth') as string));
 
   function signOut() {
-    setUserState(null);
-    localStorage.removeItem('auth');
     axios.post('/sign-out')
-      .then((resp) => { setIsSignInVisible(false); navigate('/'); });
+      .then((resp) => { setUserState(null); });
+    localStorage.removeItem('auth');
+    setIsSignInVisible(false);
+    navigate('/');
   }
 
   useEffect(() => {
