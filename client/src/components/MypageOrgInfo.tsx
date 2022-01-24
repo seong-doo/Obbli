@@ -21,10 +21,11 @@ function MypageOrgInfo({ data }):JSX.Element {
   const onClickUpdate = () => {
     // TODO: axios fetch 정보 수정
     // TODO: pw check
-    axios.patch(`/org`)
-    .then((res)=> {
-      setIsEditing(false)
-    })
+    axios.patch('/org', Object.fromEntries(Object.entries(userInput).filter(pair => pair[1])))
+      .then(resp => {
+        if (resp.status !== 200) { /* Error */ }
+        navigate('/');
+      });
   }
 
   const unregister = () => {
@@ -66,7 +67,7 @@ function MypageOrgInfo({ data }):JSX.Element {
         </div>
       </div>
       <div className="userHistoryWrap">
-        <textarea className="userHistoryText">{userInput.description}</textarea>
+        <textarea className="userHistoryText" value={userInput.description} onChange={controlInput('description')}></textarea>
       </div>
       <button type='button' className="mypageBtu delete" onClick={unregister}>탈퇴하기</button>
       <button type='button' className="mypageBtu" onClick={onClickUpdate}>확인</button>

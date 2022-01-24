@@ -55,7 +55,7 @@ function MypageOrg(props) {
           <img className="profileImg" src={require('../img/user.png')} />
         </div>
         <div className="mypageHistoryWrap">
-          { data ? <MypageOrgInfo {...{ data }} /> : null }
+          { data?.uuid ? <MypageOrgInfo {...{ data }} /> : null }
         </div>
       </div>
       <div className="mypageMenuWrap">
