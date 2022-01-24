@@ -30,10 +30,15 @@ function MypageOrgInfo({ data }):JSX.Element {
 
   const unregister = () => {
     // TODO: axios delete 보내기
-    axios.delete(`/person`)
-    .then((res) => {
-      navigate('/')
-    })
+    axios.delete(`/org`)
+      .then((res) => {
+        if (res.status !== 204) { return }
+        return axios.post('/sign-out');
+      })
+      .then((resp) => {
+        localStorage.removeItem('auth');
+        window.location.replace(window.location.origin);
+      });
   }
 
   return (

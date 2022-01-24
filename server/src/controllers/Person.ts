@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { getConnection } from "typeorm";
+import { IsNull, Not, getConnection } from "typeorm";
 import { Application, Person, Skill } from "../entity";
 import { signToken, verifyToken, hashPassword } from "../Util";
 
@@ -10,7 +10,7 @@ interface TokenInfo {
 }
 
 const SignIn = {
-  post: (req, res): void => {
+  post: async (req, res) => {
     const { user_id, pw } = req.body;
     // TODO: check types
 
@@ -19,29 +19,26 @@ const SignIn = {
     }
 
     // TODO: hash pw
-    const member = Person.findOne({ user_id: user_id, pw_hash: pw });
-    member.then((result) => {
-      if (!result) {
-        return res.status(400).send();
-      }
-      const { uuid, user_id, created_at } = result;
-      const data = { uuid, user_id, created_at, permission: 'person' };
-      const access_token = signToken(data, "1h");
-      const refresh_token = signToken(data, "1d");
+    const row = await Person.findOne({ user_id: user_id, pw_hash: pw, deleted_at: IsNull() });
+    console.log(row);
+    if (!row) { return res.status(400).send(); }
+    const { uuid, created_at } = row;
+    const data = { uuid, user_id: row.user_id, created_at, permission: 'person' };
+    const access_token = signToken(data, "1h");
+    const refresh_token = signToken(data, "1d");
 
-      return res
-        .cookie("refresh_token", refresh_token, {
-          httpOnly: true,
-        })
-        .status(200)
-        .send({
-          access_token,
-          token_type: 'Bearer',
-          expires_in: 3600,
-          uuid,
-          permission: 'person',
-        });
-    });
+    return res
+      .cookie("refresh_token", refresh_token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .send({
+        access_token,
+        token_type: 'Bearer',
+        expires_in: 3600,
+        uuid,
+        permission: 'person',
+      });
   },
 };
 
@@ -214,9 +211,7 @@ const UserInfo = {
     const invalid = await Person.findOne({ uuid: person.uuid });
 
     if (!invalid) { return res.status(404).send(); }
-    // await Person.findOne({ uuid: person.uuid });
-    // await Person.update({ uuid: person.uuid }, { deleted_at: Date() });
-    await Person.delete({ uuid: person.uuid });
+    await Person.getRepository().softDelete({ uuid: person.uuid });
     return res.clearCookie("refresh_token").status(204).send();
   },
 };
