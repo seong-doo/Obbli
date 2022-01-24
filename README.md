@@ -9,10 +9,41 @@
 - 연주자 모집에 지원하기 전, 신청을 수락하기 전 연주자의 후기와 단체의 후기를 확인해보세요.
 - 공연이 끝나고, 연주자와 단체 서로에게 후기를 별점과 함께 남길 수 있습니다.
 
-## [App wireframe](https://www.figma.com/file/oIn5SfIE1cBFUzFUv4GvlQ/Obbli?node-id=0%3A1)&#x2197;
-<img src="https://cdn.discordapp.com/attachments/924937876872003587/925911175810646067/unknown.png">
-
 ## [API reference](https://app.swaggerhub.com/apis-docs/org582/Obbli/1.0.0-oas3)&#x2197;
 
 ## Tech stack
 ![image](https://user-images.githubusercontent.com/89199949/150727530-341be0ec-35d8-47d6-bd67-447807cc796e.png)
+
+<details><summary>Common</summary>
+  
+  - TypeScript
+  - Axios
+</details>
+<details><summary>Client</summary>
+
+  - React
+  - Sass
+  - 카카오 지도 API
+</details>
+<details><summary>Server</summary>
+
+  - Node
+  - Express
+  - TypeORM
+  - MySQL
+  - JWT
+  - bcrypt
+  - multer
+  - Mocha
+  - Chai
+</details>
+<details><summary>DevOps</summary>
+
+  - Swagger
+  - nginx
+  - systemd
+  - AWS EC2
+  - AWS RDS
+</details>
+
+## [App wireframe](https://www.figma.com/file/oIn5SfIE1cBFUzFUv4GvlQ/Obbli?node-id=0%3A1)&#x2197;
