@@ -18,4 +18,4 @@
 ## [API reference](https://app.swaggerhub.com/apis-docs/org582/Obbli/1.0.0-oas3)&#x2197;
 
 ## Tech stack
-<img src="https://cdn.discordapp.com/attachments/924937876872003587/925566274296233984/2021-12-28_10.27.01.png">
+![image](https://user-images.githubusercontent.com/89199949/150727530-341be0ec-35d8-47d6-bd67-447807cc796e.png)
