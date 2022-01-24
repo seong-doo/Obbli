@@ -21,6 +21,7 @@ function MypagePerson(props: any):JSX.Element {
   const [newReviewTarget, setNewReviewTarget] = useState(null as any);
   const [file,setFile] =useState('')
   const [imageURL, setImageURL] = useState(`https://obbli-image.s3.ap-northeast-2.amazonaws.com/${props.auth?.uuid}`);
+  const [isEditingImage, setIsEditingImage] = useState(false);
 
   useEffect(() => {
     if (!props.auth) { return navigate('/'); }
@@ -75,10 +76,18 @@ function MypagePerson(props: any):JSX.Element {
       <div className="mypageProfileWrap">
         <div className="mypageProfile">
           <img className="profileImg" alt="" src={imageURL} onError={() => setImageURL(require('../img/user.png'))} />
-          <form onSubmit={upload} encType="multipart/form-data">
-            <input onChange={settingFile} type="file" accept="image/*" />
-            <button type="submit" >사진 업로드하기</button>
-          </form>
+          <div className="imageEditController">
+          { isEditingImage ?
+            <form onSubmit={upload} id="editImageForm" encType="multipart/form-data">
+              <input onChange={settingFile} type="file" accept="image/*" />
+              <div>
+                <button type="submit" form="editImageForm">사진 업로드하기</button>
+                <button className="cancelEditImage" onClick={() => setIsEditingImage(false)}>취소</button>
+              </div>
+            </form>
+            : <button className="editImage" onClick={() => setIsEditingImage(true)}>사진 바꾸기</button>
+          }
+          </div>
         </div>
         <div className="mypageHistoryWrap">
           { data?.uuid ? <MypageHistory {...{ data }}  /> : null }
