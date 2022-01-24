@@ -54,6 +54,7 @@ function MypagePerson(props: any):JSX.Element {
     const formData = new FormData();
     formData.append("image", file)
     await axios.post('/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(resp => window.location.reload())
   }
 
   const upload = async (event) => {

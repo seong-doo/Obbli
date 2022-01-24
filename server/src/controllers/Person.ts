@@ -205,25 +205,19 @@ const UserInfo = {
   delete: async (req, res) => {
     //유저정보 삭제하기
 
-    if (!req.headers.authorization) {
-      return res.status(401).json({});
-    }
+    if (!req.headers.authorization) { return res.status(401).send(); }
 
     const person:TokenInfo = verifyToken(req.headers.authorization);
 
-    if(!person){
-      return res.status(401).json({})
-    }
+    if(!person) { return res.status(401).send(); }
 
     const invalid = await Person.findOne({ uuid: person.uuid });
-    
-    if (!invalid) {
-      return res.status(404).json({});
-    } else {
-      // await Person.findOne({ uuid: person.uuid });
-      // await Person.update({ uuid: person.uuid }, { deleted_at: Date() });
-   res.clearCookie("refresh_token").status(204).send();
-    }
+
+    if (!invalid) { return res.status(404).send(); }
+    // await Person.findOne({ uuid: person.uuid });
+    // await Person.update({ uuid: person.uuid }, { deleted_at: Date() });
+    await Person.delete({ uuid: person.uuid });
+    return res.clearCookie("refresh_token").status(204).send();
   },
 };
 

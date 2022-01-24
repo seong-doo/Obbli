@@ -24,7 +24,7 @@ function MypageOrgInfo({ data }):JSX.Element {
     axios.patch('/org', Object.fromEntries(Object.entries(userInput).filter(pair => pair[1])))
       .then(resp => {
         if (resp.status !== 200) { /* Error */ }
-        navigate('/');
+        window.location.reload();
       });
   }
 
