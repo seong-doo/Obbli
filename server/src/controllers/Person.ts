@@ -163,15 +163,16 @@ const UserInfo = {
         delete targetData[el[0]];
       }
     });
-    // targetData.name = targetData.name;
-    // delete targetData.name;
-    const skill_name = targetData.skill;
-    delete targetData.skill;
 
     // TODO: use subquery from API
+    const { skill_name } = targetData;
+    delete targetData.skill_name;
+
     let setter = Object.entries(targetData)
       .map(([k, v]) => `${k} = '${v}'`)
       .join(",");
+    console.log(req.body);
+
     if (skill_name !== undefined) {
       setter += `, skill_uuid = (SELECT uuid from skill where name = '${skill_name}')`;
     }

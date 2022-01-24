@@ -80,7 +80,7 @@ function MypagePerson(props: any):JSX.Element {
           </form>
         </div>
         <div className="mypageHistoryWrap">
-          { data ? <MypageHistory {...{ data }}  /> : null }
+          { data?.uuid ? <MypageHistory {...{ data }}  /> : null }
         </div>
       </div>
 
