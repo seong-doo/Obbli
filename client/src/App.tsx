@@ -69,7 +69,7 @@ function App() {
           <Route path="advert/:uuid" element={<AdvView auth={auth} />} />
           <Route path="advert/write" element={<AdvertiseWrite />} />
           <Route path="advert/edit/:uuid" element={<AdvertiseWrite />} />
-          <Route path="filter" element={<AdvFilter />} />
+          <Route path="filter" element={<AdvFilter {...{ auth }}/>} />
         </Routes>
       </div>
       <footer>
