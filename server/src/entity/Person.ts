@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -44,6 +45,9 @@ export class Person extends BaseEntity{
 
   @CreateDateColumn()
   readonly created_at: Date;
+
+  @DeleteDateColumn()
+  deleted_at: Date;
 
   @OneToMany(() => Org_review, (Org_review) => Org_review.Person)
   Org_review: Org_review[];

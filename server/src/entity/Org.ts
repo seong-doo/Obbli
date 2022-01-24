@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   OneToMany,
@@ -37,7 +38,7 @@ export class Org extends BaseEntity {
   @CreateDateColumn()
   readonly created_at: Date;
 
-  @Column({ nullable:true })
+  @DeleteDateColumn()
   deleted_at: Date;
 
   @OneToMany(() => Org_review, (Org_review) => Org_review.Org)

@@ -1,3 +1,5 @@
+import { IsNull } from 'typeorm';
+
 import { Advert, Org, Person } from "../entity";
 import { signToken, verifyToken, hashPassword } from "../Util";
 
@@ -160,25 +162,18 @@ const OrgInfo = {
 
   delete: async (req, res): Promise<void> => {
     //단체정보 삭제하기
-    if (!req.headers.authorization) {
-      return res.status(401).json({});
-    } 
-    
-      const orgInfo: TokenInfo = verifyToken(req.headers.authorization);
-      
-      if(!orgInfo){
-        return res.status(401).json({})
-      }
+    if (!req.headers.authorization) { return res.status(401).send({}); }
 
-      const matching = await Org.findOne({ uuid: orgInfo.uuid, deleted_at:null });
-      
-      if (!matching) {
-        return res.status(404).json({});
-      } 
-      else {
-        await Org.update({ uuid: orgInfo.uuid }, { deleted_at: Date() });
-        return res.status(204).send();
-      }
+    const orgInfo: TokenInfo = verifyToken(req.headers.authorization);
+
+    if(!orgInfo) { return res.status(401).send(); }
+
+    const matching = await Org.findOne({ uuid: orgInfo.uuid, deleted_at: IsNull() });
+
+    if (!matching) { return res.status(404).send(); }
+
+    await Org.getRepository().softDelete({ uuid: orgInfo.uuid });
+    return res.status(204).send();
   },
 };
 

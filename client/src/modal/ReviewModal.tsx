@@ -58,7 +58,8 @@ function ReviewModal(props):JSX.Element {
         comment: reviewInfo.comment,
       })
       .then(res => {
-        props.setIsReviewVisible(false)
+        // props.setIsReviewVisible(false)
+        window.location.reload();
       })
       .catch(err => console.log(err))
     }

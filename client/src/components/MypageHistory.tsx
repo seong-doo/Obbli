@@ -40,14 +40,22 @@ function MypageHistory({ data }):JSX.Element {
   }
 
   const unregister = () => {
-    axios.delete(`/person`).then((res) => { navigate('/'); });
+    axios.delete(`/person`)
+      .then((res) => {
+        if (res.status !== 204) { return }
+        return axios.post('/sign-out');
+      })
+      .then((resp) => {
+        localStorage.removeItem('auth');
+        window.location.replace(window.location.origin);
+      });
   }
 
   function update() {
     axios.patch('/person', Object.fromEntries(Object.entries(userInput).filter(pair => pair[1])))
       .then(resp => {
         if (resp.status !== 200) { /* Error */ }
-        navigate('/');
+        window.location.reload();
       });
   }
 
@@ -63,7 +71,7 @@ function MypageHistory({ data }):JSX.Element {
           </div>
           <div className="inputWrap">
             <div className="mypageInfoNameEdit">악기 : </div>
-            <input type="text" value={userInput.skill_name} onChange={controlInput('skill')} />
+            <input type="text" value={userInput.skill_name} onChange={controlInput('skill_name')} />
           </div>
           <div className="inputWrap">
             <div className="mypageInfoNameEdit">전공 여부</div>
@@ -82,7 +90,7 @@ function MypageHistory({ data }):JSX.Element {
         </div>
       </div>
       <div className="userHistoryWrap">
-        <textarea className="userHistoryText">{userInput.history}</textarea>
+        <textarea className="userHistoryText" value={userInput.history} onChange={controlInput('history')}></textarea>
       </div>
       <button type='button' className="mypageBtu delete" onClick={unregister}>탈퇴하기</button>
       <button type='button' className="mypageBtu" onClick={update}>확인</button>
@@ -93,15 +101,13 @@ function MypageHistory({ data }):JSX.Element {
       <div className="userInfoWrap">
         <div>
           <div className="mypageInfoName">이름 : {data.name}</div>
-          <div className="mypageInfoName">악기 : {data.skill}</div>
+          <div className="mypageInfoName">악기 : {data.skill_name}</div>
         </div>
         <div>
           <div className="mypageInfoName">전공 여부 {data.professional ? '✔' : '❌'}</div>
         </div>
       </div>
-      <div className="userHistory">
-        {data.history}
-      </div>
+      <div className="userHistory">{data.history}</div>
       <button type='button' className="mypageBtu" onClick={() => setIsEditing(true)}>수정하기</button>
     </div>
     )}

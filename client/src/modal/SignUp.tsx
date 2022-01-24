@@ -30,7 +30,11 @@ function SignUp(props: any):JSX.Element {
     }
     // TODO: axios:post 할때 맨드포인트에 permission으로 단체와 개인회원 구분
     axios.post(`/${permission}`, { user_id, pw, pw_check, name })
-      .then(({data})=>{
+      .then(({ data, status })=>{
+        if (status !== 201) {
+          setErrorMessage('사용할 수 없는 ID와 비밀번호입니다.');
+          return;
+        }
         storeAccessToken(data);
         axios.defaults.headers.common.authorization = `${data.token_type} ${data.access_token}`;
         props.setIsSignUpVisible(false);
