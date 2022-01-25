@@ -1,7 +1,7 @@
 import { IsNull } from 'typeorm';
 
 import { Advert, Org, Person } from "../entity";
-import { signToken, verifyToken, hashPassword } from "../Util";
+import { signToken, verifyToken, checkPassword, hashPassword } from "../Util";
 
 interface TokenInfo {
   uuid: string;
@@ -24,32 +24,25 @@ interface search_OrgInfo {
 const SignIn = {
   post: async (req, res): Promise<void> => {
     const { user_id, pw }: { user_id: string; pw: string } = req.body;
-    const orgInfo: search_OrgInfo = await Org.findOne({
-      user_id: user_id,
-      pw_hash: pw,
-      deleted_at: null,
-    });
+    const orgInfo: search_OrgInfo = await Org.findOne({ user_id, deleted_at: IsNull() });
 
-    if (!orgInfo) {
-      return res.status(400).json({ message: "Data not found." });
-    }
-    else {
-      const { uuid, user_id,created_at } = orgInfo;
-      const data = { uuid, user_id, created_at, permission: 'org' };
-      const access_token:string = signToken(data, "1d");
-      const refresh_token:string = signToken(data, "1h");
+    if (!orgInfo) { return res.status(400).json({ message: "Data not found." }); }
+    if (!checkPassword(pw, orgInfo.pw_hash)) { return res.status(400).send(); }
+    const { uuid, created_at } = orgInfo;
+    const data = { uuid, user_id: orgInfo.user_id, created_at, permission: 'org' };
+    const access_token:string = signToken(data, "1d");
+    const refresh_token:string = signToken(data, "1h");
 
-      return res
-        .cookie("refresh_token", refresh_token, { httpOnly: true })
-        .status(200)
-        .json({
-          access_token,
-          token_type: 'Bearer',
-          expires_in: 3600,
-          uuid,
-          permission: 'org',
-        });
-    }
+    return res
+      .cookie("refresh_token", refresh_token, { httpOnly: true })
+      .status(200)
+      .json({
+        access_token,
+        token_type: 'Bearer',
+        expires_in: 3600,
+        uuid,
+        permission: 'org',
+      });
   },
 };
 
@@ -70,7 +63,7 @@ const SignUp = {
     } else {
       await Org.create({
         user_id: user_id,
-        pw_hash: pw,
+        pw_hash: hashPassword(pw),
         name: name,
       }).save();
 

@@ -1,6 +1,6 @@
 require("dotenv").config();
 import { sign, verify } from 'jsonwebtoken'
-import { bcrypt } from 'bcrypt'
+import bcrypt from 'bcrypt'
 import { RequestHandler } from 'express';
 
 import multer  from 'multer'
@@ -33,10 +33,14 @@ import aws from 'aws-sdk'
       return undefined;
     }
   }
-  
-  export function hashPassword(word):string{
-    return bcrypt.hashSync(word, 10);
-  } 
+
+export function hashPassword(word):string{
+  return bcrypt.hashSync(word, 10);
+}
+
+export function checkPassword(word, hash) {
+  return bcrypt.compareSync(word, hash);
+}
 
 export const cookieParser: RequestHandler = function (req, res, next) {
   const cookies: string = req.headers.cookie;
