@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { IsNull, Not, getConnection } from "typeorm";
 import { Application, Person, Skill } from "../entity";
-import { signToken, verifyToken, hashPassword } from "../Util";
+import { signToken, verifyToken, checkPassword, hashPassword } from "../Util";
 
 interface TokenInfo {
   uuid: string;
@@ -19,9 +19,9 @@ const SignIn = {
     }
 
     // TODO: hash pw
-    const row = await Person.findOne({ user_id: user_id, pw_hash: pw, deleted_at: IsNull() });
-    console.log(row);
+    const row = await Person.findOne({ user_id, deleted_at: IsNull() });
     if (!row) { return res.status(400).send(); }
+    if (!checkPassword(pw, row.pw_hash)) { return res.status(400).send(); }
     const { uuid, created_at } = row;
     const data = { uuid, user_id: row.user_id, created_at, permission: 'person' };
     const access_token = signToken(data, "1h");
@@ -55,12 +55,10 @@ const SignUp = {
 
     const duplicateID = await Person.findOne({ user_id });
 
-    if (duplicateID) {
-      return res.status(403).json({});
-    }
+    if (duplicateID) { return res.status(403).json({}); }
 
     // TODO: hash pw
-    await Person.insert({ user_id, pw_hash: pw, name });
+    await Person.insert({ user_id, pw_hash: hashPassword(pw), name });
 
     Person.findOne({ user_id }).then((result) => {
       const { uuid, user_id, created_at } = result;
